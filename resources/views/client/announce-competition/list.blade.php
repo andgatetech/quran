@@ -137,10 +137,31 @@
                     <div class="competition-main-name" onclick="toggleDropdown(this)">
                         <p>Competition Name : <span>{{ $competition->main_name }}</span></p>
                     </div>
+                    <!-- curriculam and rules -->
+                    @if($competition->curriculum)
+                    <div class="competition-sub-name">
+                        <p>Curriculum : 
+                          <span>
+                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn">View</a>
+                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn">Download</a>
+                        </span></p>
+                    </div>
+                    @endif
+
+                    @if($competition->rules)
+                    <div class="competition-sub-name">
+                        <p>Rules : <span>
+                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn">View</a>
+                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn">Download</a>
+                        </span></p>
+                    </div>
+                    @endif
+
                     <!-- Sub Name, initially hidden -->
                     <div class="competition-sub-name">
                         <p>From Date : <span>{{ Carbon\Carbon::parse($competition->start_date)->format('d-m-Y') }}</span></p>
                     </div>
+                    
                     <div class="competition-sub-name">
                         <p>To Date : <span>{{ Carbon\Carbon::parse($competition->end_date)->format('d-m-Y') }}</span></p>
                     </div>
@@ -160,21 +181,9 @@
                         </p>
                     </div>
                     <!-- Buttons -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ route('delete-announce-competition', $competition->id) }}" class="btn delete-btn" style="border-radius: 20px">Delete</a>
-                        <a href="{{ route('announce-list.edit', $competition->id) }}" class="btn edit-btn">&nbsp;Edit &nbsp;</a>
-                        <!-- View Rules Button -->
-                        @if($competition->rules)
-                            <a href=" {{ $competition->rules }}" target="_blank" class="btn btn-primary">View Rules</a>
-                        @else
-                            <button class="btn btn-secondary" disabled>No Rules</button>
-                        @endif
-                        <!-- View Curriculum Button -->
-                        @if($competition->curriculum)
-                            <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn btn-primary">View Curriculum</a>
-                        @else
-                            <button class="btn btn-secondary" disabled>No Curriculum</button>
-                        @endif
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                    <a href="{{ route('announce-list.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
+                        <a href="{{ route('delete-announce-competition', $competition->id) }}" class="btn delete-btn">Delete</a>
                     </div>
                 </div>
             @endforeach
