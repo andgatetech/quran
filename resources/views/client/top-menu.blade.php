@@ -76,8 +76,8 @@ position:relative;
     <!-- Menu Buttons -->
     <div class="button-group">
         <button class="btn" onclick="window.location.href='{{ route('client.menu') }}'">Quran Competition</button>
-        <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Poetry Competition</button>
-        <button class="btn btn-main" onclick="window.location.href='{{ route('competition.create') }}'">Quiz Competition</button>
+        <button class="btn" onclick="window.location.href=''">Poetry Competition</button>
+        <button class="btn btn-main" onclick="window.location.href=''">Quiz Competition</button>
     </div>
   </div>
 

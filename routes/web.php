@@ -478,11 +478,11 @@ Route::get('/client/menu', function () {
 
 // Top Layer Menu  After Authentication
 Route::get('/client/top/menu', function () {
-    // if (!Auth::check()) {
-    //     // Redirect to login page if not authenticated
-    //     return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-    // }
-    // Display the menu page if authenticated
+    if (!Auth::check()) {
+        // Redirect to login page if not authenticated
+        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+    }
+    //Display the menu page if authenticated
     return view('client.top-menu');
 })->name('client.top-menu');
 

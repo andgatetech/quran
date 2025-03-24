@@ -40,7 +40,7 @@ class ClientLoginController extends Controller
                     Log::info('Authentication successful for email: ' . $request->email);
                     $request->session()->regenerate();
 
-                    return redirect()->route('client.menu');
+                    return redirect()->route('client.top-menu');
                 }
                 Log::warning('Authentication failed for email: ' . $request->email);
                 return redirect()->back()->withErrors(['password' => 'Invalid password'])->withInput();
