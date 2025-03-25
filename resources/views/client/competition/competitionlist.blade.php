@@ -68,6 +68,11 @@
       margin-bottom: 5px;
       cursor: pointer; /* Add cursor pointer to indicate it is clickable */
     }
+    .competition-main-name p span{
+      display: block;
+      text-align: right;
+      padding-right: 30px;
+    }
 
     .competition-main-name span,
     .competition-sub-name span {
@@ -123,8 +128,9 @@
           <div class="competition-card">
             <!-- Main Name with Dropdown Toggle -->
             <div class="competition-main-name" onclick="toggleDropdown(this)">
-              <p>Competition Main Name: <span>{{ $competition->main_name }}</span><br><span>{{ $competition->sub_name }}</span>
-                <i class="fas fa-chevron-down"></i>
+            <i class="fas fa-chevron-down"></i>
+              <p>Competition Main Name:<span>{{ $competition->main_name }}</span><br><span>{{ $competition->sub_name }}</span>
+              
               </p>
             </div>
             <!-- Sub Name, initially hidden -->
