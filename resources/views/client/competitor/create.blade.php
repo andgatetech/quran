@@ -105,9 +105,6 @@
                             {{ $sideCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-3">
@@ -118,9 +115,6 @@
                             {{ $readCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-3">
@@ -131,9 +125,6 @@
                             {{ $ageCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-4">
