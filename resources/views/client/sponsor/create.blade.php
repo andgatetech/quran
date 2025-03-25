@@ -27,9 +27,6 @@
         <form action="{{ route('sponsors.store') }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
             @csrf
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="name" placeholder="Sponsor Name" value="{{ old('name') }}" required>
-            </div>
-            <div class="form-group mb-3">
                 <label for="competition_id" class="form-label">Competition</label>
                 <select class="form-control" id="competition_id" name="competition_id" required>
                     <option value="">Select Competition</option>
@@ -43,11 +40,15 @@
             </div>
 
             <div class="form-group mb-3">
+                <input type="text" class="form-control" name="name" placeholder="Sponsor Name" value="{{ old('name') }}" required>
+            </div>
+
+            <div class="form-group mb-3">
                 <input type="text" class="form-control" name="Tin" placeholder="Tin# / ID" value="{{ old('Tin') }}" >
             </div>
 
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="Details" placeholder="Details" value="{{ old('Details') }}" >
+                <textarea class="form-control" name="Details" placeholder="Details">{{ old('Details') }}</textarea>
             </div>
 
             <div class="form-group mb-3">

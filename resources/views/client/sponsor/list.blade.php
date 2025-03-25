@@ -89,14 +89,15 @@
             @forelse($sponsors as $sponsor)
                 @if($sponsor->status == 'Enable')  <!-- Exclude if status is 'Disable' -->
                     <div class="list-item mb-3 p-3 border rounded" onclick="toggleDetails(event, this)">
-                        <div class="question-header">
+                        <div class="question-header mt-2">
                             <p>Sponsor Name: <span>{{ $sponsor->name }} <i class="fas fa-chevron-down"></i></span></p>
                         </div>
         
                         <div class="details mt-2" style="display: none;">
                             <p><strong>Tin# / ID:</strong> {{ $sponsor->Tin ?? 'N/A' }}</p>
+                            <p><strong>Competition:</strong> {{ $sponsor->competition->main_name ?? 'N/A' }}</p>
                             <p><strong>Details:</strong> {{ $sponsor->Details ?? 'N/A' }}</p>
-                            <p><strong>Status:</strong> {{ $sponsor->status }}</p>
+                            <p><strong>Slider Option:</strong> {{ $sponsor->status }}</p>
         
                             <div class="button-group-inline mt-3">
                                 <form action="{{ route('sponsors.destroy', $sponsor->id) }}" method="POST" style="display:inline-block;">
@@ -105,7 +106,7 @@
                                     <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Are you sure you want to delete this sponsor?')">Delete</button>
                                 </form>
                                 <a href="{{ route('sponsors.edit', $sponsor->id) }}" class="btn btn-edit btn-primary">Edit</a>
-                                <a href="{{ route('sponsors.show', $sponsor->id) }}" class="btn btn-view btn-info">Photo</a>
+                                <a href="{{ route('sponsors.show', $sponsor->id) }}" class="btn btn-view btn-info">View Photo</a>
                             </div>
                         </div>
                     </div>
