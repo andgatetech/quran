@@ -206,7 +206,7 @@
                 </div>
             </div>
             <div class="tabs">
-                <input type="submit" value="Generate" class="tab-btn active px-5">
+                <input type="submit" value="Search" class="tab-btn active px-5">
             </div>
         </form>
     </div>
@@ -258,19 +258,26 @@
                                 </span>
                             </p>
                             <!-- Add a new row for number_of_questions -->
-                            <p class="pt-3 pb-2">Number of Questions:</p>
+                         <!--   <p class="pt-3 pb-2">Number of Questions:</p>-->
+                           
+                          
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Select dropdown for number_of_questions -->
-                                    <select name="number_of_questions" id="number_of_questions" class="form-control">
-                                        <option value="" disabled selected>Select number of questions</option>
+                                  
+                                  <!--  <select name="number_of_questions" id="number_of_questions" class="form-control">-->
+                                  <!--      <option value="" disabled selected>Select number of questions</option>-->
                                         @for ($i = 1; $i <= 15; $i++) <!-- Loop through options -->
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                          <!--  <option value="{{ $i }}">{{ $i }}</option>-->
                                         @endfor
-                                    </select>
+                                  <!--  </select> -->
+                                   
                                 </div>
                                
                             </div>
+
+                        
+                            
                             @if($status == 'Pending')
                             <input type="text" class="form-control mt-4 mb-2" name="remarks" id="remarks"
                                 placeholder="Remarks">
