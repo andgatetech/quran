@@ -68,7 +68,7 @@
         <form class="competition-form" method="POST" action="{{ route('competition.update') }}">
             @csrf
             <input type="text" name="main_name" placeholder="Competition Main Name" required value="{{ $competition->main_name }}">
-            <input type="text" name="sub_name" placeholder="Competition Sub Name" required value="{{ $competition->sub_name }}">
+            <input type="hidden" name="sub_name" placeholder="Competition Sub Name" required value="{{ $competition->sub_name }}">
             <button type="submit" class="btn save-btn">Save</button>
         </form>
 

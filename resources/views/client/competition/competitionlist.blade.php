@@ -123,14 +123,14 @@
           <div class="competition-card">
             <!-- Main Name with Dropdown Toggle -->
             <div class="competition-main-name" onclick="toggleDropdown(this)">
-              <p>Competition Main Name: <span>{{ $competition->main_name }}</span>
+              <p>Competition Main Name: <span>{{ $competition->main_name }}</span><br><span>{{ $competition->sub_name }}</span>
                 <i class="fas fa-chevron-down"></i>
               </p>
             </div>
             <!-- Sub Name, initially hidden -->
-            <div class="competition-sub-name">
-              <p>Competition Sub Name: <span>{{ $competition->sub_name }}</span></p>
-            </div>
+            <!-- <div class="competition-sub-name">
+              <p>&nbsp;<span>{{ $competition->sub_name }}</span></p>
+            </div> -->
             <!-- Buttons -->
             <div class="card-buttons">
               <form action="{{ route('competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">

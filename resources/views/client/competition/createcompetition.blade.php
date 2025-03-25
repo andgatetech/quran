@@ -74,7 +74,7 @@ $user = User::find(Auth::id());
 
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu') }}"><i class="fas fa-home"></i></a>
-        <h1>Add Competition</h1>
+        <h1>Create Competition</h1>
       </header>
 
       <div class="container1">
@@ -100,7 +100,7 @@ $user = User::find(Auth::id());
 
             @endphp
             <input type="text" name="main_name" placeholder="Competition Main Name" required>
-            <input type="text" name="sub_name" placeholder="Competition Sub Name" required value="{{ $user->company_name }}" readonly>
+            <input type="hidden" name="sub_name" placeholder="Competition Sub Name" required value="{{ $user->company_name }}" readonly>
             <button type="submit" class="btn btn-save">Save</button>
         </form>
 
