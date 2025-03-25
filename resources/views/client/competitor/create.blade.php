@@ -65,7 +65,7 @@
             </div>
 
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="full_name" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_Dhivehi') }}" required> 
+                <input type="text" class="form-control" name="full_name_dhivehi" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_dhivehi') }}" required> 
             </div>
 
             <div class="form-group mb-3">

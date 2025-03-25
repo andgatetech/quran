@@ -138,6 +138,7 @@ public function store(Request $request)
     // Validate the incoming request data
     $validatedData = $request->validate([
         'full_name' => 'required',
+        'full_name_dhivehi' => 'nullable',
         'id_card_number' => 'required',
         'address' => 'required',
         'island_city' => 'required',
