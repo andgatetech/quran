@@ -9,6 +9,7 @@ class CompetitionApplication extends Model
     protected $fillable =[
         'competition_id',
             'name',
+            'name_dhivehi',
             'id_card',
             'permanent_address',
             'current_address',

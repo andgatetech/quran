@@ -165,6 +165,7 @@ class AnnounceCompetitionController extends Controller
         $application = new CompetitionApplication();
         $application->competition_id = $request->competition_id;
         $application->name = $request->name;
+        $application->name_dhivehi = isset($request->name_Dhivehi) ? $request->name_Dhivehi : '';
         $application->id_card = $request->id_card;
         $application->permanent_address = $request->permanent_address;
         $application->current_address = $request->current_address;

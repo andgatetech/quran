@@ -20,6 +20,7 @@ $user = User::find(Auth::id());
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/createcompetition.css">
+    <!-- jQuery CDN -->
     <style>
         .btn {
             font-size: .9rem !important;
@@ -114,18 +115,18 @@ $user = User::find(Auth::id());
     </header>
 
     <div class="container1">
-        <p>Deadline of this Competition is : <span style="font-weight: 700;">  {{$competition->end_date}}</span> </p>
+        
 
         <div class="tabs">
 
                 <button class="tab-btn {{ empty($competition->curriculum) ? 'disabled' : '' }}"
-                        onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
+                        onclick="showCurriculum()"
                         title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
                     Curriculum
                 </button>
                 
                 <button class="tab-btn {{ empty($competition->rules) ? 'disabled' : '' }}"
-                        onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
+                        onclick="showRules()"
                         title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
                     Rules
                 </button>
@@ -138,14 +139,14 @@ $user = User::find(Auth::id());
                                 }
                 </style>
 
-                <button class="tab-btn "
-                onclick="window.location.href='{{ route('competition.announce') }}'">Fill out the form
+                <button class="tab-btn"
+                onclick="showApplicantsForm()">Fill out the form
            </button>
 
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row" id="applicants_form">
             @if(Carbon\Carbon::now()->greaterThan(Carbon\Carbon::parse($competition->end_date)))
             <p class="text-primary">Sorry...<br>
                 The deadline of this competition has been ended</br>
@@ -153,7 +154,8 @@ $user = User::find(Auth::id());
             </p>
             @else
             <div class="col-md-6 col-sm-12 offset-md-3">
-                <h6 class="heading col-12 py-3 my-3">FIll the below from in English Language</h6>
+                <p style="color: #21b68e; font-weight: bold; padding-top:20px;"><span style="text-align: left">{{$competition->end_date}}</span> <span style="padding-left: 50px;">Deadline for submitting names</span></p>
+                <h6 class="heading col-12 py-3 my-3" style="background-color:#21b68e; border-radius: 30px;;">To perticipate in the competition please complete the form below</h6>
                 <div class="form-container px-0">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -168,7 +170,7 @@ $user = User::find(Auth::id());
                         @csrf
                         <input type="hidden" value="{{ $competition->id }}" name="competition_id">
                         <input type="text" value="{{ old('name') }}" class="form-control" id="name" name="name" placeholder="Full name (English)" required>
-                        {{-- <input type="text" value="{{ old('name_Dhivehi') }}" class="form-control" id="name_Dhivehi" name="name_Dhivehi" placeholder="Full name (Dhivehi)" > --}}
+                        <input type="text" value="{{ old('name_Dhivehi') }}" class="form-control" id="name_Dhivehi" name="name_Dhivehi" placeholder="Full name (Dhivehi)" >
 
                         <input type="text" value="{{ old('id_card') }}" class="form-control" id="id_card" name="id_card" placeholder="ID Card / Passport #" required>
                         <input type="text" value="{{ old('permanent_address') }}" class="form-control" id="permanent_address" name="permanent_address" placeholder="Permanent Address" required>
@@ -197,13 +199,13 @@ $user = User::find(Auth::id());
                             @endforeach
                         </select>
                         <select name="side_category" class="form-select text-muted" id="side_category" required>
-                            <option value="" disabled selected>Select Age Category</option>
+                            <option value="" disabled selected>Select Recitation Piece</option>
                             @foreach ($side_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
                         </select>
                         <select name="read_category" class="form-select text-muted" id="read_category" required>
-                            <option value="" disabled selected>Select Age Category</option>
+                            <option value="" disabled selected>Select Method of Recitation</option>
                             @foreach ($read_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
@@ -234,6 +236,46 @@ $user = User::find(Auth::id());
             @endif
         </div>
         <!-- Form Section -->
+
+        <!-- Curriculam -->
+        <div class="row" id="competetion_curriculum">
+        <div class="col-md-6 col-sm-12 offset-md-3">
+                <h6 class="heading col-12 py-3 my-3" style="background-color:#21b68e; border-radius: 30px;;">Curriculum</h6>
+                <div class="form-container px-0">
+                    <button class="tab-btn {{ empty($competition->curriculum) ? 'disabled' : '' }}"
+                        onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
+                        title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
+                    Download
+                </button>
+                <button class="tab-btn {{ empty($competition->curriculum) ? 'disabled' : '' }}"
+                        onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
+                        title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
+                    View
+                </button>
+                </div>
+
+            </div>                 
+        </div>
+        <!-- Rules -->                        
+        <div class="row" id="competetion_rules">
+        <div class="col-md-6 col-sm-12 offset-md-3">
+                <h6 class="heading col-12 py-3 my-3" style="background-color:#21b68e; border-radius: 30px;;">Rules</h6>
+                <div class="form-container px-0">
+                <button class="tab-btn {{ empty($competition->rules) ? 'disabled' : '' }}"
+                        onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
+                        title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
+                    Download
+                </button>
+                <button class="tab-btn {{ empty($competition->rules) ? 'disabled' : '' }}"
+                        onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
+                        title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
+                    View
+                </button>
+                </div>
+
+            </div>                     
+        </div>
+        
     </div>
 
 
@@ -266,6 +308,57 @@ $user = User::find(Auth::id());
             const ageDisplay = document.getElementById('age');
             ageDisplay.value = age;
         });
+    </script>
+    <script>
+        var applicants_form = document.getElementById('applicants_form');
+        var competetion_curriculum = document.getElementById('competetion_curriculum');
+        var competetion_rules = document.getElementById('competetion_rules');
+        console.log("debug.hello");
+
+        applicants_form.style.display = "block";
+        competetion_curriculum.style.display = "none";
+        competetion_rules.style.display = "none";
+
+        function showApplicantsForm(){
+            var applicants_form = document.getElementById('applicants_form');
+            var competetion_curriculum = document.getElementById('competetion_curriculum');
+            var competetion_rules = document.getElementById('competetion_rules');
+            console.log("debug.form");
+
+            applicants_form.style.display = "block";
+            competetion_curriculum.style.display = "none";
+            competetion_rules.style.display = "none";
+        }
+
+        function showCurriculum(){
+            var applicants_form = document.getElementById('applicants_form');
+            var competetion_curriculum = document.getElementById('competetion_curriculum');
+            var competetion_rules = document.getElementById('competetion_rules');
+            console.log("debug.curriculum");
+
+            applicants_form.style.display = "none";
+            competetion_curriculum.style.display = "block";
+            competetion_rules.style.display = "none";
+        }
+
+        function showRules(){
+            var applicants_form = document.getElementById('applicants_form');
+            var competetion_curriculum = document.getElementById('competetion_curriculum');
+            var competetion_rules = document.getElementById('competetion_rules');
+            console.log("debug.rules");
+
+            applicants_form.style.display = "none";
+            competetion_curriculum.style.display = "none";
+            competetion_rules.style.display = "block";
+        }
+    //    $(document).ready(function () {
+    //         $("#applicants_form").show();
+    //         $('#competetion_curriculum').hide();
+    //         $('#competetion_rules').hide();
+    //         $("#btn").click(function () {
+    //         $("#Create").toggle();
+    //         });
+    //     });
     </script>
 
 </body>
