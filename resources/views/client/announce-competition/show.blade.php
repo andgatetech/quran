@@ -148,9 +148,8 @@ $user = User::find(Auth::id());
     <div class="container">
         <div class="row" id="applicants_form">
             @if(Carbon\Carbon::now()->greaterThan(Carbon\Carbon::parse($competition->end_date)))
-            <p class="text-primary">Sorry...<br>
-                The deadline of this competition has been ended</br>
-                - Thank you -
+            <p class="text-primary">Excuse me,<br>
+                The time given for submitting names for the competition has expired.
             </p>
             @else
             <div class="col-md-6 col-sm-12 offset-md-3">
@@ -242,6 +241,9 @@ $user = User::find(Auth::id());
         <div class="col-md-6 col-sm-12 offset-md-3">
                 <h6 class="heading col-12 py-3 my-3" style="background-color:#21b68e; border-radius: 30px;;">Curriculum</h6>
                 <div class="form-container px-0">
+                    @if (empty($competition->curriculum))
+                        <p class="text-primary">There is no curriculum available.</p>
+                    @else
                     <button class="tab-btn {{ empty($competition->curriculum) ? 'disabled' : '' }}"
                         onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
                         title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
@@ -252,6 +254,7 @@ $user = User::find(Auth::id());
                         title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
                     View
                 </button>
+                @endif
                 </div>
 
             </div>                 
@@ -261,6 +264,9 @@ $user = User::find(Auth::id());
         <div class="col-md-6 col-sm-12 offset-md-3">
                 <h6 class="heading col-12 py-3 my-3" style="background-color:#21b68e; border-radius: 30px;;">Rules</h6>
                 <div class="form-container px-0">
+                @if (empty($competition->rules))
+                        <p class="text-primary">There is no rules available.</p>
+                    @else
                 <button class="tab-btn {{ empty($competition->rules) ? 'disabled' : '' }}"
                         onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
                         title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
@@ -271,6 +277,7 @@ $user = User::find(Auth::id());
                         title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
                     View
                 </button>
+                @endif
                 </div>
 
             </div>                     
@@ -351,14 +358,6 @@ $user = User::find(Auth::id());
             competetion_curriculum.style.display = "none";
             competetion_rules.style.display = "block";
         }
-    //    $(document).ready(function () {
-    //         $("#applicants_form").show();
-    //         $('#competetion_curriculum').hide();
-    //         $('#competetion_rules').hide();
-    //         $("#btn").click(function () {
-    //         $("#Create").toggle();
-    //         });
-    //     });
     </script>
 
 </body>
