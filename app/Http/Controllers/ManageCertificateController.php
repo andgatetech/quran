@@ -86,16 +86,32 @@ class ManageCertificateController extends Controller
     return redirect()->back()->with('success', 'Certificate created successfully.');
 }
 
-public function index()
+public function index(Request $request)
 {
+    $competitions = Competition::where('user_id', Auth::id())->get();
+
+    $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
+
+
+if($search_competition_id !== null){
+        // Fetch all certificates for the authenticated user
+        $certificates = ManageCertificate::with('competition')
+        ->whereHas('competition', function ($query) use ($search_competition_id){
+            $query->where('user_id', Auth::id())->where('id', $search_competition_id);
+        })
+        ->get();
+
+}else{
     // Fetch all certificates for the authenticated user
     $certificates = ManageCertificate::with('competition')
         ->whereHas('competition', function ($query) {
             $query->where('user_id', Auth::id());
         })
         ->get();
+}
 
-    return view('client.managenertificate.list', compact('certificates'));
+   
+    return view('client.managenertificate.list', compact('certificates', 'competitions', 'search_competition_id'));
 }
 
 public function destroy($id)
