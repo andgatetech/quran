@@ -624,4 +624,5 @@ Route::prefix('client/managenertificate')->group(function () {
     Route::post('/generate-pdf', [ManageCertificateController::class, 'generatePDF'])->name('certificate.generate');
     // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
     //  ->name('certificate.generate');
+    Route::get('/generated/list', [ManageCertificateController::class, 'generatedList'])->name('managenertificate.generated.list');
 });

@@ -48,8 +48,8 @@
     <div class="nav-buttons">
         <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
         <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
-        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
     </div>
 </div>
 
@@ -127,7 +127,7 @@
         }
     </style>
     <!-- Competition Filter Dropdown -->
-    <form action="{{ route('managenertificate.generate.view') }}" method="get" style="margin-top: 1rem;">
+    <form action="{{ route('managenertificate.generated.list') }}" method="get" style="margin-top: 1rem;">
                             @csrf
         <!-- Competition Filter -->
         <div class="generate_certificate_search">
@@ -193,37 +193,28 @@
     </div>
 
     <div class="list-container" style="margin: 1rem;">
-        @forelse($competitors as $competitor)
-            <div class="list-item mb-3 p-4 border rounded shadow-sm" style="background-color: #fff; cursor: pointer; transition: transform 0.3s ease-in-out;" data-competition-id="{{ $competitor->competition_id }}">
+        @forelse($generatedCertificates as $generatedCertificate)
+            <div class="list-item mb-3 p-4 border rounded shadow-sm" style="background-color: #fff; cursor: pointer; transition: transform 0.3s ease-in-out;" data-competition-id="{{ $generatedCertificate->id }}">
                 <div class="question-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <span><strong>Competition Name :</strong> {{ $competitor->competition->main_name ?? 'N/A' }}</span>
+                    <span><strong>Competition Name :</strong> {{ $generatedCertificate->competition_name ?? 'N/A' }}</span>
                     <i class="fas fa-chevron-down" style="color: #016DA8;"></i>
                 </div>
     
                 <div class="details mt-2" style="margin-top: 1rem; color: #555; background-color: #f9f9f9; padding: 1rem; border-radius: 5px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out;">
                     <!-- Competitor Details -->
                     <div style="margin-bottom: 1rem; padding: 1rem; border-bottom: 1px solid #ddd;">
-                        <p><strong>Place :</strong> {{ isset($competitor->ranking->rank) ? $competitor->ranking->rank : 0 }}</p>
-                        <p><strong>Name :</strong> {{ $competitor->full_name }}</p>
-                        <p><strong>ID Card# :</strong> {{ $competitor->id_card_number }}</p>
-                    
-    
-                        <!-- Certificate Generation Form -->
-                        <form action="{{ route('certificate.generate') }}" method="post" style="margin-top: 1rem;">
-                            @csrf
-                            <input type="hidden" name="competitor_id" value="{{ $competitor->id }}">
-                            <input type="hidden" name="certificate_settings" id="certificate_settings_{{ $competitor->id }}" value="1">
-                            
-                            <div class="input-group" style="margin-bottom: 1rem;">
-                                <select name="certificate_type" class="form-control" style="padding: 0.5rem; border-radius: 0.5rem; font-size: 14px;" required>
-                                    <option value="">Certificate type</option>
-                                    <option value="participation">Participation</option>
-                                    <option value="achievement">Achievement</option>
-                                </select>
-                            </div>
-                            <textarea placeholder="Body content" name="body_content" class="form-control" rows="3" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 0.5rem; font-size: 14px;" required></textarea>
-                            <button type="submit" class="btn btn-primary">Generate Certificate</button>
-                        </form>
+                        <p><strong>Sponsor Name :</strong> {{ $generatedCertificate->sponsor_name }}</p>
+                        <p><strong>Tin#/ID Card# :</strong> {{ $generatedCertificate->id_card_number }}</p>
+                        <p><strong>Certificate Type :</strong> {{ $generatedCertificate->certificate_type }}</p>
+                        <p><strong>Status :</strong> {{ $generatedCertificate->status }}</p>
+                        <br>
+                        <div>
+                            <a href="{{ url('storage/app/private/'.$generatedCertificate->pdf) }}" target="_blank" class="btn btn-primary">View</a>
+                            <a href="{{ url('storage/app/private/'.$generatedCertificate->pdf) }}" class="btn btn-info">Save</a>
+                            <a href="{{ url('storage/app/private/'.$generatedCertificate->pdf) }}" class="btn btn-success">Share</a>
+                            <a href="{{ url('storage/app/private/'.$generatedCertificate->pdf) }}" class="btn btn-danger">Revert</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

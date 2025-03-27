@@ -47,9 +47,9 @@
     </style>
     <div class="nav-buttons">
         <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
-        <button class="nav-btn active">Settings List</button>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
         <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-        <button class="nav-btn" onclick="window.location.href=''">Generated List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
     </div>
     
 </div>
@@ -63,11 +63,7 @@
         @csrf
         <select name="competition_id" class="form-control form-group-lg">
             <option value="">Select Competition</option>
-            @foreach($competitions as $competition)
-                <option value="{{ $competition->id }}" {{ $search_competition_id == $competition->id ? 'selected' : '' }}>
-                    {{ $competition->main_name }}
-                </option>
-            @endforeach
+            
         </select>
 
         <button type="submit" class="btn-save">Search</button>
