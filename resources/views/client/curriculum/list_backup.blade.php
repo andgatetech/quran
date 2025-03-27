@@ -68,26 +68,17 @@
         @forelse($curriculums as $curriculum)
             <div class="list-item mb-3 p-3 border rounded" onclick="this.classList.toggle('active')">
                 <div class="question-header">
-                    
-                    <p><strong>Title:</strong> {{ $curriculum->title }}</p>
+                    <span><strong>{{ $curriculum->title }}</strong></span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
 
                 <div class="details mt-2" style="display: none;">
-                    <p><strong>Total number of books:</strong> <?php $total_book=unserialize($curriculum->book_id); echo count($total_book); ?> </p>
-                    <p><strong>Book/Surah Names:</strong> 
-                      <?php 
-                        $number_of_book=count($total_book);
-                      $i=0; foreach($total_book as $key1=>$value1){ 
-                        $i++;
-                        $book_info=DB::table('books')->where('id',$value1)->first();
-                      ?>
-                      (<?php echo $i; ?>)
-                    {{ $book_info->book_name }}
-                      <?php if($i!==$number_of_book) echo ','; ?>
-                    <?php } ?>
-                    </p>
-                    <p><strong>Total # of Ayah:</strong> {{ $curriculum->total_ayah }}</p>
+                    <p><strong>Competition:</strong> {{ $curriculum->competition->main_name }}</p>
+                    <p><strong>Side Category:</strong> {{ $curriculum->sideCategory->name }}</p>
+                    <p><strong>Read Category:</strong> {{ $curriculum->readCategory->name }}</p>
+                    <p><strong>Age Category:</strong> {{ $curriculum->ageCategory->name }}</p>
+                    <p><strong>Number of Questions:</strong> {{ $curriculum->number_of_questions }}</p>
+                    <p><strong>Total Ayah:</strong> {{ $curriculum->total_ayah }}</p>
                     <p><strong>Remarks:</strong> {{ $curriculum->remarks ?? 'N/A' }}</p>
                     <div class="button-group-inline mt-3">
                         <a href="{{ route('curriculum.edit', $curriculum->id) }}" class="btn btn-edit btn-warning">Edit</a>

@@ -301,6 +301,8 @@ Route::post('/questions/{competition_id}/next', [QuestionController::class, 'nex
 // Route::post('/update-question-status/{competition_id}/{question_id}', [QuestionController::class, 'updateQuestionStatus']);
 // Route::get('/questions/{competition_id}', [QuestionController::class, 'getQuestions']);
 Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+Route::get('/questions/book-ayats', [QuestionController::class, 'getBookAyatAjax'])->name('ajax.bookAyat');//added by alauddin
+Route::get('/questions/curriculum-ayats', [QuestionController::class, 'getCurriculumAyatAjax'])->name('ajax.curriculumAyat');//added by alauddin
 Route::get('/questions/list', [QuestionController::class, 'list'])->name('questions.list');
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 Route::post('/questions/bulk-upload', [QuestionController::class, 'bulkUpload'])->name('questions.bulkUpload');

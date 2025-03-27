@@ -48,8 +48,23 @@
             <input type="text" class="form-control" name="title" placeholder="Title" value="{{ old('title', $curriculum->title) }}" required>
         </div>
 
+        <!--
         <div class="form-group mb-3">
             <input type="number" class="form-control" name="number_of_questions" placeholder="Number of Questions" value="{{ old('number_of_questions', $curriculum->number_of_questions) }}">
+        </div>
+        -->
+
+        <div class="form-group mb-4">
+               <?php  
+                 $total_book=unserialize($curriculum->book_id);
+               ?> 
+                <select multiple class="form-control" id="number_of_questions" name="book[]" required>
+                    <option value="">Select Quran Option by Book</option>
+                    <?php foreach($books as $book){ ?>
+                        <option <?php if(in_array($book->id,$total_book)) echo 'selected'; ?> value="{{ $book->id}}">{{ $book->book_name }}</option>
+                    <?php } ?>
+                    
+                </select>
         </div>
 
         <div class="form-group mb-3">

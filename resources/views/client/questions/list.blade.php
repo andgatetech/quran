@@ -217,7 +217,7 @@ button[type="submit"]:hover {
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+        <button type="submit" class="btn btn-primary mt-4">Search</button>
 
     </form>
 
@@ -231,14 +231,25 @@ button[type="submit"]:hover {
             </div>
 
             <div class="question-details">
+                <p><strong>Question Name:</strong> {{ $question->question_name ? $question->question_name : 'N/A' }}</p>
                 <p><strong>Competition Name:</strong> {{ $question->competition ? $question->competition->main_name : 'N/A' }}</p>
                 <p><strong>Age Category:</strong> {{ $question->ageCategory ? $question->ageCategory->name : 'N/A' }}</p>
                 <p><strong>Side Category:</strong> {{ $question->sideCategory ? $question->sideCategory->name : 'N/A' }}</p>
                 <p><strong>Read Category:</strong> {{ $question->readCategory ? $question->readCategory->name : 'N/A' }}</p>
 
-                <p><strong>Book #:</strong> {{ $question->book_number }}</p>
-                <p><strong>From Ayah#:</strong> {{ $question->from_ayat_number }}</p>
-                <p><strong>To Ayah#:</strong> {{ $question->to_ayat_number }}</p>
+                <p><strong>Option #:</strong> {{ $question->option_name }}</p>
+                <?php if($question->option_name=="Book"){ ?>
+                    <p><strong>Book Name #:</strong>Juz {{ $question->book_number }}</p>
+                <?php }else{ ?>
+                  <?php if($question->curriculum_id){ ?>
+                    <p><strong>Curriculum Name #:</strong><?php $curriculum_info=DB::table('curriculum')->where('id',$question->curriculum_id)->first(); ?> {{ $curriculum_info->title }}</p>
+                  <?php }else{  ?>  
+                    <p><strong>Curriculum Name #:</strong></p>
+                  <?php } ?>
+                <?php } ?>
+                <p><strong>From Ayat#:</strong> {{ $question->from_ayat_number }}</p>
+                <p><strong>To Ayat#:</strong> {{ $question->to_ayat_number }}</p>
+                <p><strong>Hardness of this Question %:</strong> {{ $question->hardness ? $question->hardness : 'N/A' }}</p>
                 <div class="question-actions">
                     <form action="{{ route('questions.delete', $question->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -247,6 +258,7 @@ button[type="submit"]:hover {
                     </form>
                     <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-primary btn-sm mr-2">Edit</a>
                 </div>
+
             </div>
         </div>
         @endforeach
