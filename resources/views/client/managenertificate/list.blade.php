@@ -137,13 +137,14 @@
                     <p><strong>Number of Signature:</strong> {{ $certificate->signature_count }}</p>
                     <p><strong>Option:</strong> {{ $certificate->option }}</p>
                     <p><strong>Template:</strong> <button class="view-btn">View</button></p>
-                    <p><strong>Date of Award:</strong> {{ $certificate->award_date }}</p>
-                    <p><strong>Authorized by:</strong> {{ $certificate->authorize_person_1 }}</p>
+                    <p><strong>Date of Award:</strong> {{ $certificate->award_date }}</p><br>
+                    <p><strong>Authorized by: 1 :</strong> {{ $certificate->authorize_person_1 }}</p>
                     <p><strong>Designation:</strong> {{ $certificate->designation_1 }}</p>
-                    <p><strong>Signature 1:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->signature_1) }}', '_blank')">View</button></p>
-                    @if($certificate->signature_2)
-                        <p><strong>Signature 2:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->signature_2) }}', '_blank')">View</button></p>
-                    @endif
+                    <p><strong>Signature:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->signature_1) }}', '_blank')">View</button></p><br>
+                    <p><strong>Authorized by: 2 :</strong> {{ $certificate->authorize_person_2 }}</p>
+                    <p><strong>Designation:</strong> {{ $certificate->designation_2 }}</p>
+                    <p><strong>Signature:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->signature_2) }}', '_blank')">View</button></p><br>
+            
                     <p><strong>Office Logo:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->office_logo) }}', '_blank')">View</button></p>
                     <p><strong>Office Stamp:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->office_stamp) }}', '_blank')">View</button></p>
                     <!-- Edit and Delete Buttons -->

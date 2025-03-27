@@ -53,6 +53,7 @@
     </div>
 </div>
 
+
 <style>
     .container {
         width: 100%;
@@ -119,12 +120,19 @@
         </div>
     @endif
 
+    <style>
+        .generate_certificate_search{
+            width: 300px;
+            display: inline-block;
+        }
+    </style>
     <!-- Competition Filter Dropdown -->
-    <div style="margin: 1rem; text-align: left; display: flex; gap: 20px; align-items: center;">
+    <form action="{{ route('managenertificate.generate.view') }}" method="get" style="margin-top: 1rem;">
+                            @csrf
         <!-- Competition Filter -->
-        <div>
-            <label for="competition_filter" style="font-weight: bold; margin-right: 10px;">Filter by Competition:</label>
-            <select id="competition_filter" class="form-control" style="width: 300px; display: inline-block;">
+        <div class="generate_certificate_search">
+            <label for="competition_filter_" style="font-weight: bold; margin-right: 10px;">Competition:</label>
+            <select name="competition_filter" id="competition_filter_" class="form-control" style="width: 300px; display: inline-block;">
                 <option value="">All Competitions</option>
                 @foreach($competitions as $competition)
                     <option value="{{ $competition->id }}">{{ $competition->main_name }}</option>
@@ -132,18 +140,56 @@
             </select>
         </div>
     
-        <!-- Apply Settings Dropdown -->
-        <div>
-            <label for="certificate_settings" style="font-weight: bold; margin-right: 10px;">Apply Settings:</label>
-            <select name="certificate_settings" id="certificate_settings" class="form-control" style="width: 300px; display: inline-block;">
-                <option value="">Select Certificate Settings</option>
-                @foreach($manageCertificates as $settings)
-                    <option value="{{ $settings->id }}">
-                        {{ $settings->authorize_person_1 ?? 'Untitled Settings' }}
+        <!-- Apply Participation Option Dropdown -->
+        <div class="generate_certificate_search">
+            <label for="certificate_settings" style="font-weight: bold; margin-right: 10px;">Participant Option:</label>
+            <select name="participation_option_filter" id="certificate_settings" class="form-control" style="width: 300px; display: inline-block;">
+                <option value="">Select Participant Option</option>
+                <option value="1">Public</option>
+                <option value="2">My Garden</option>
+            </select>
+        </div>
+        <!-- Age Category Dropdown -->
+        <div class="generate_certificate_search">
+            <label for="age_category" style="font-weight: bold; margin-right: 10px;">Age Category:</label>
+            <select name="age_category_filter" id="age_category" class="form-control" style="width: 300px; display: inline-block;">
+                <option value="">Select Age Category</option>
+                @foreach($ageCategories as $ageCategory)
+                    <option value="{{ $ageCategory->id }}">
+                        {{ $ageCategory->name ?? 'Untitled Settings' }}
                     </option>
                 @endforeach
             </select>
         </div>
+        <!-- Side Category Dropdown -->
+        <div class="generate_certificate_search">
+            <label for="side_category" style="font-weight: bold; margin-right: 10px;">Side Category:</label>
+            <select name="side_category_filter" id="side_category" class="form-control" style="width: 300px; display: inline-block;">
+                <option value="">Select Side Category</option>
+                @foreach($sideCategories as $sideCategory)
+                    <option value="{{ $sideCategory->id }}">
+                        {{ $sideCategory->name ?? 'Untitled Settings' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <!-- Read Category Dropdown -->
+        <div class="generate_certificate_search">
+            <label for="read_category" style="font-weight: bold; margin-right: 10px;">Read Category:</label>
+            <select name="read_category_filter" id="read_category" class="form-control" style="width: 300px; display: inline-block;">
+                <option value="">Select Read Category</option>
+                @foreach($readCategories as $readCategory)
+                    <option value="{{ $readCategory->id }}">
+                        {{ $readCategory->name ?? 'Untitled Settings' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+         <!-- Search Button -->
+        <div class="generate_certificate_search" style="width: 100px;">
+        <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+</form>
     </div>
 
     <div class="list-container" style="margin: 1rem;">
