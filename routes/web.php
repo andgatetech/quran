@@ -30,6 +30,7 @@ use App\Http\Controllers\RegistrationRequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\ManageCertificateController;
+use App\Http\Controllers\QuranReportController;
 use App\Models\Quran;
 use Illuminate\Http\Request;
 
@@ -599,6 +600,10 @@ Route::post('/client/pointcategory/update', [PointCategoryController::class, 'up
 
 // Delete point category
 Route::post('/client/pointcategory/delete', [PointCategoryController::class, 'destroy'])->name('pointcategory.delete');
+
+//Quran Report
+
+Route::resource('report',QuranReportController::class);
 
 
 
