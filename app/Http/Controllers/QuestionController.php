@@ -143,7 +143,7 @@ class QuestionController extends Controller
     }
     
 
-
+    
 
 
 
@@ -154,6 +154,7 @@ class QuestionController extends Controller
         $sideCategories = SideCategory::where('user_id', Auth::id())->get();
         $readCategories = ReadCategory::where('user_id', Auth::id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        $curriculums = Curriculum::where('user_id', Auth::id())->get(); // Add this line
         $quran = Quran::select('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->groupBy('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->orderBy('surah_no', 'asc')
@@ -161,7 +162,7 @@ class QuestionController extends Controller
 
         $question = Question::findOrFail($id);
 
-        return view('client.questions.edit', compact('question', 'competitions', 'sideCategories', 'readCategories', 'ageCategories', 'quran'));
+        return view('client.questions.edit', compact('question','curriculums', 'competitions', 'sideCategories', 'readCategories', 'ageCategories', 'quran'));
     }
 
 
@@ -408,7 +409,34 @@ public function loginSubmitUser(Request $request)
 
 
 
+    public function getBookAyatAjax(Request $request)
+    {
+        $competition_id = session('competition_id');
+        
+        $book_number= $request->input('book_number');
 
+        $book_ayats = DB::table('the_quran_dataset')
+            ->select('*')
+            ->where('juz_no', $book_number)
+            ->get();
+
+        return response()->json($book_ayats);
+    }
+
+
+    public function getCurriculumAyatAjax(Request $request)
+    {
+        $competition_id = session('competition_id');
+        
+        $curriculum_number= $request->input('curriculum_number');
+
+        $curriculum_ayats = DB::table('curriculum')
+            ->select('*')
+            ->where('id', $curriculum_number)
+            ->get();
+
+        return response()->json($curriculum_ayats);
+    }
 
 
 
@@ -446,9 +474,9 @@ public function store(Request $request)
             'age_category_id' => 'required',
             'side_category_id' => 'required',
             'read_category_id' => 'required',
-            'book_number' => 'required|string',
+            //'book_number' => 'required|string',
             'from_ayat_number' => 'required|integer',
-            'to_ayat_number' => 'required|integer',
+            //'to_ayat_number' => 'required|integer',
             'hardness' => 'required|integer|min:0|max:100',
         ]);
 
@@ -456,7 +484,25 @@ public function store(Request $request)
         $validatedData['user_id'] = Auth::id();
 
         // Create the question
-        Question::create($validatedData);
+       // Question::create($validatedData);
+       $question=new Question();
+       $question->competition_id=$request->competition_id;
+       $question->question_name=$request->question_name;
+       $question->age_category_id=$request->age_category_id;
+       $question->side_category_id=$request->side_category_id;
+       $question->read_category_id=$request->read_category_id;
+       $question->option_name=$request->option_name;
+       if($request->option_name=="Book"){
+            $question->book_number=$request->book_number;
+       }else{
+            $question->curriculum_id=$request->curriculum_id;
+       }
+       $question->from_ayat_number=$request->from_ayat_number;
+       $question->to_ayat_number=$request->to_ayat_number;
+       $question->hardness=$request->hardness;
+       $question->user_id=Auth::id();
+       $question->save();
+
 
         return redirect()->back()->with('success', 'Question saved successfully!');
     } catch (\Illuminate\Validation\ValidationException $e) {
@@ -469,6 +515,25 @@ public function store(Request $request)
 }
 
 
+function bulkImport(){
+    if (isset($_FILES['question'])) {
+        $file = fopen($_FILES['question']['tmp_name'], "r");
+        $i = 0;
+        while (!feof($file)) {
+            $i++;
+            $row = fgetcsv($file);
+            $question=new Question();
+            $question->competition_id=$row[1];
+            $question->question_name=$row[1];
+            $question->age_category_id=$row[1];
+            $question->side_category_id=$row[1];
+            $question->read_category_id=$row[1];
+            $question->option_name=$row[1];
+            $question->save();
+        }    
+    }    
+}
+
 public function update(Request $request, $id)
 {
     try {
@@ -478,17 +543,34 @@ public function update(Request $request, $id)
             'age_category_id' => 'required',
             'side_category_id' => 'required',
             'read_category_id' => 'required',
-            'book_number' => 'required|string', // Now a single value
+            //'book_number' => 'required|string', // Now a single value
             // 'surah' => 'required',
             'from_ayat_number' => 'required|integer',
-            'to_ayat_number' => 'required|integer',
+            //'to_ayat_number' => 'required|integer',
             'hardness' => 'required|integer|min:0|max:100',
         ]);
 
         $question = Question::findOrFail($id);
 
         // Update the question
-        $question->update($validatedData);
+        //$question->update($validatedData);
+
+       $question->competition_id=$request->competition_id;
+       $question->question_name=$request->question_name;
+       $question->age_category_id=$request->age_category_id;
+       $question->side_category_id=$request->side_category_id;
+       $question->read_category_id=$request->read_category_id;
+       $question->option_name=$request->option_name;
+       if($request->option_name=="Book"){
+            $question->book_number=$request->book_number;
+       }else{
+            $question->curriculum_id=$request->curriculum_id;
+       }
+       $question->from_ayat_number=$request->from_ayat_number;
+       $question->to_ayat_number=$request->to_ayat_number;
+       $question->hardness=$request->hardness;
+       $question->user_id=Auth::id();
+       $question->save();
 
         return redirect()->route('questions.list')->with('success', 'Question updated successfully!');
     } catch (\Exception $e) {
@@ -550,10 +632,12 @@ public function update(Request $request, $id)
 
 public function bulkUpload(Request $request)
 {
+
+    
     // Validate the uploaded file
-    $request->validate([
-        'file' => 'required|mimes:csv,txt|max:2048', // Ensure it's a CSV or TXT file
-    ]);
+    // $request->validate([
+    //     'file' => 'required|mimes:csv,txt|max:2048', // Ensure it's a CSV or TXT file
+    // ]);
 
     try {
         $file = $request->file('file');

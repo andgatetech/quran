@@ -58,12 +58,12 @@
             </div>
 
             <div class="form-group mb-4">
-                <select class="form-control" id="number_of_questions" name="number_of_questions" required>
+                <select multiple class="form-control" id="number_of_questions" name="book[]" required>
                     <option value="">Select Quran Option by Book</option>
-                    <option value="1" {{ old('quran_option') == 1 ? 'selected' : '' }}>Alif Lam Meem</option>
-                    <option value="2" {{ old('quran_option') == 2 ? 'selected' : '' }}>Sayaqool</option>
-                    <option value="3" {{ old('quran_option') == 3 ? 'selected' : '' }}>Alif Lam</option>
-                    <option value="4" {{ old('quran_option') == 4 ? 'selected' : '' }}>Meem</option>
+                    <?php foreach($books as $book){ ?>
+                        <option value="{{ $book->id}}">{{ $book->book_name }}</option>
+                    <?php } ?>
+                    
                 </select>
             </div>
             

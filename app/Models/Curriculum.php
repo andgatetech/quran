@@ -27,6 +27,11 @@ class Curriculum extends Model
      */
     protected $guarded = ['id'];
     
+    public function curriulumBook()
+    {
+        return $this->belongsTo(CurriculumBook::class, 'cu_id');
+    }
+
     public function ageCategory()
     {
         return $this->belongsTo(AgeCategory::class, 'age_category_id');
