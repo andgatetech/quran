@@ -96,7 +96,6 @@ position:relative;
         <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award certificates</button>
         <button class="btn" onclick="window.location.href='{{ url('') }}'">To create the curriculum</button>
         <button class="btn" onclick="window.location.href='{{ route('curriculum.create') }}'">Curriculum</button>
-        <button class="btn" onclick="window.location.href='{{ url('') }}'">How to Manage Competition</button>
 
 
 

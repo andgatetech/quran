@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManageCompetitionController;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
@@ -625,4 +626,10 @@ Route::prefix('client/managenertificate')->group(function () {
     // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
     //  ->name('certificate.generate');
     Route::get('/generated/list', [ManageCertificateController::class, 'generatedList'])->name('managenertificate.generated.list');
+});
+
+// Manage Competition
+Route::prefix('client/manage/competition')->group(function () {
+    Route::get('/magyplan', [ManageCompetitionController::class, 'mageyPlan'])->name('managecompitition.mageyPlan');
+    Route::get('/how', [ManageCompetitionController::class, 'howManage'])->name('managecompitition.howManage');
 });
