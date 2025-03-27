@@ -132,11 +132,11 @@
 @endif
 
 <div class="nav-buttons">
-    <button class="nav-btn active">Certificate Settings</button>
-    <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.index') }}'">Certificate List</button>
-    <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-    <button class="nav-btn" onclick="window.location.href=''">Generated List</button>
-</div>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
+    </div>
 
 <div class="container">
     <!-- Success Message -->

@@ -89,7 +89,9 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
         
-                <div class="details mt-2" style="display: none; box-shadow:0 !important;">
+                    <div class="details mt-2" style="display: none; box-shadow:0 !important;">
+                    <p><strong>Name in English:</strong> {{ $competitor->full_name }}</p>
+                    <p><strong>Name in Dhivehi:</strong> {{ $competitor->full_name_dhivehi }}</p>
                     <p><strong>ID Card Number:</strong> {{ $competitor->id_card_number }}</p>
                     <p><strong>Address:</strong> {{ $competitor->address }}</p>
                     <p><strong>Island / City:</strong> {{ $competitor->island_city }}</p>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgeCategory;
 use App\Models\Competition;
+use App\Models\ReadCategory;
+use App\Models\SideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ManageCertificate;
@@ -86,16 +89,33 @@ class ManageCertificateController extends Controller
     return redirect()->back()->with('success', 'Certificate created successfully.');
 }
 
-public function index()
+public function index(Request $request)
 {
+    // $competitions = Competition::where('user_id', Auth::id())->get();
+    $competitions = Competition::get();
+
+    $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
+
+
+if($search_competition_id !== null){
+        // Fetch all certificates for the authenticated user
+        $certificates = ManageCertificate::with('competition')
+        ->whereHas('competition', function ($query) use ($search_competition_id){
+            $query->where('user_id', Auth::id())->where('id', $search_competition_id);
+        })
+        ->get();
+
+}else{
     // Fetch all certificates for the authenticated user
     $certificates = ManageCertificate::with('competition')
         ->whereHas('competition', function ($query) {
             $query->where('user_id', Auth::id());
         })
         ->get();
+}
 
-    return view('client.managenertificate.list', compact('certificates'));
+   
+    return view('client.managenertificate.list', compact('certificates', 'competitions', 'search_competition_id'));
 }
 
 public function destroy($id)
@@ -205,20 +225,100 @@ public function edit($id)
     return view('client.managenertificate.edit', compact('certificate', 'competitions'));
 }
 
-public function generateView(Request $request)
-{
-    // $competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions
-    $competitions = Competition::get(); // Fetch competitions
-    $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
-        // ->whereHas('competition', function ($query) {
-        //     $query->where('user_id', Auth::id());
-        // })
-        ->get();
+    public function generateView(Request $request)
+    {
+
+        //$competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions
+        $competitions = Competition::get(); // Fetch competitions
+        $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
+            // ->whereHas('competition', function ($query) {
+            //     $query->where('user_id', Auth::id());
+            // })
+            ->when(request('competition_filter'), function ($query, $competitionFilter) {
+                return $query->whereHas('competition', function ($q) use ($competitionFilter) {
+                    $q->where('id', $competitionFilter);
+                });
+            })
+            ->when(request('age_category_filter'), function ($query, $ageCategoryFilter) {
+                return $query->where('age_category_id', $ageCategoryFilter);
+            })
+            ->when(request('side_category_filter'), function ($query, $sideCategoryFilter) {
+                return $query->where('side_category_id', $sideCategoryFilter);
+            })
+            ->when(request('read_category_filter'), function ($query, $readCategoryFilter) {
+                return $query->where('read_category_id', $readCategoryFilter);
+            })
+            ->get();
+
+
+            
+
+
         $manageCertificates = ManageCertificate::all();
 
-    return view('client.managenertificate.generateview', compact('competitions', 
-    'competitors', 'manageCertificates'));
-}
+        // $sideCategories = SideCategory::where('user_id', Auth::id())->get();
+        // $readCategories = ReadCategory::where('user_id', Auth::id())->get();
+        // $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+
+        $sideCategories = SideCategory::get();
+        $readCategories = ReadCategory::get();
+        $ageCategories = AgeCategory::get();
+
+
+        return view('client.managenertificate.generateview', compact(
+            'competitions',
+            'sideCategories',
+            'readCategories',
+            'ageCategories',
+            'competitors',
+            'manageCertificates'
+        ));
+    }
+
+public function generatedList(){
+   //$competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions
+   $competitions = Competition::get(); // Fetch competitions
+   $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
+       // ->whereHas('competition', function ($query) {
+       //     $query->where('user_id', Auth::id());
+       // })
+       ->when(request('competition_filter'), function ($query, $competitionFilter) {
+           return $query->whereHas('competition', function ($q) use ($competitionFilter) {
+               $q->where('id', $competitionFilter);
+           });
+       })
+       ->when(request('age_category_filter'), function ($query, $ageCategoryFilter) {
+           return $query->where('age_category_id', $ageCategoryFilter);
+       })
+       ->when(request('side_category_filter'), function ($query, $sideCategoryFilter) {
+           return $query->where('side_category_id', $sideCategoryFilter);
+       })
+       ->when(request('read_category_filter'), function ($query, $readCategoryFilter) {
+           return $query->where('read_category_id', $readCategoryFilter);
+       })
+       ->get();
+
+
+   $generatedCertificates = GenerateCertificate::all();
+
+   // $sideCategories = SideCategory::where('user_id', Auth::id())->get();
+   // $readCategories = ReadCategory::where('user_id', Auth::id())->get();
+   // $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+
+   $sideCategories = SideCategory::get();
+   $readCategories = ReadCategory::get();
+   $ageCategories = AgeCategory::get();
+
+
+   return view('client.managenertificate.generatedList', compact(
+       'competitions',
+       'sideCategories',
+       'readCategories',
+       'ageCategories',
+       'competitors',
+       'generatedCertificates'
+   ));
+}    
 
 public function generatePDF(Request $request)
 {

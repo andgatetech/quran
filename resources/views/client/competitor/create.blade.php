@@ -65,7 +65,7 @@
             </div>
 
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="full_name" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_Dhivehi') }}" required> 
+                <input type="text" class="form-control" name="full_name_dhivehi" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_dhivehi') }}" required> 
             </div>
 
             <div class="form-group mb-3">
@@ -105,9 +105,6 @@
                             {{ $sideCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-3">
@@ -118,9 +115,6 @@
                             {{ $readCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-3">
@@ -131,9 +125,6 @@
                             {{ $ageCategory->name }}
                         </option>
                     @endforeach
-                                        <option value="1">Default</option>
-
-
                 </select>
             </div>
             <div class="form-group mb-4">

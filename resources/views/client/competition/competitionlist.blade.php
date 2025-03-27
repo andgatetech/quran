@@ -68,6 +68,11 @@
       margin-bottom: 5px;
       cursor: pointer; /* Add cursor pointer to indicate it is clickable */
     }
+    .competition-main-name p span{
+      display: block;
+      text-align: right;
+      padding-right: 30px;
+    }
 
     .competition-main-name span,
     .competition-sub-name span {
@@ -123,14 +128,15 @@
           <div class="competition-card">
             <!-- Main Name with Dropdown Toggle -->
             <div class="competition-main-name" onclick="toggleDropdown(this)">
-              <p>Competition Main Name: <span>{{ $competition->main_name }}</span>
-                <i class="fas fa-chevron-down"></i>
+            <i class="fas fa-chevron-down"></i>
+              <p>Competition Main Name:<span>{{ $competition->main_name }}</span><br><span>{{ $competition->sub_name }}</span>
+              
               </p>
             </div>
             <!-- Sub Name, initially hidden -->
-            <div class="competition-sub-name">
-              <p>Competition Sub Name: <span>{{ $competition->sub_name }}</span></p>
-            </div>
+            <!-- <div class="competition-sub-name">
+              <p>&nbsp;<span>{{ $competition->sub_name }}</span></p>
+            </div> -->
             <!-- Buttons -->
             <div class="card-buttons">
               <form action="{{ route('competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">

@@ -59,55 +59,11 @@ class CompetitionController extends Controller
         return redirect()->route('competition.list')->with('success', 'Competition deleted successfully!');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function index()
     {
         $competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions for logged-in user
         return view('client.competition.competitionlist', compact('competitions'));
     }
-
-
 
 
     public function store(Request $request)

@@ -138,6 +138,7 @@ public function store(Request $request)
     // Validate the incoming request data
     $validatedData = $request->validate([
         'full_name' => 'required',
+        'full_name_dhivehi' => 'nullable',
         'id_card_number' => 'required',
         'address' => 'required',
         'island_city' => 'required',
@@ -177,12 +178,12 @@ public function store(Request $request)
     public function edit($id)
     {
         $competitor = Competitor::findOrFail($id);
-        // $competitions = Competition::where('user_id', Auth::id())->get();
-        // $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        // $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        // $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::id())->get();
+        $sideCategories = SideCategory::where('user_id', Auth::id())->get();
+        $readCategories = ReadCategory::where('user_id', Auth::id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
-        return view('client.competitor.edit',compact('competitor'));
+        return view('client.competitor.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
     }
 
     /**
@@ -195,6 +196,7 @@ public function store(Request $request)
         // Validate the incoming request data
         $validatedData = $request->validate([
             'full_name' => 'required',
+            'full_name_dhivehi' => 'nullable',
             'id_card_number' => 'required',
             'address' => 'required',
             'island_city' => 'required',

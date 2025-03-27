@@ -61,6 +61,9 @@
                 <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{ old('full_name', $competitor->full_name) }}" required>
             </div>
             <div class="form-group mb-3">
+                <input type="text" class="form-control" name="full_name_dhivehi" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_dhivehi', $competitor->full_name_dhivehi) }}">
+            </div>
+            <div class="form-group mb-3">
                 <input type="text" class="form-control" name="id_card_number" placeholder="ID Card Number" value="{{ old('id_card_number', $competitor->id_card_number) }}" required>
             </div>
             <div class="form-group mb-3">
@@ -82,48 +85,44 @@
                 <label for="competition_id" class="form-label">Competition</label>
                 <select class="form-control" id="competition_id" name="competition_id" required>
                     <option value="">Select Competition</option>
-                    {{-- @foreach($competitions as $competition)
+                    @foreach($competitions as $competition)
                         <option value="{{ $competition->id }}" {{ old('competition_id', $competitor->competition_id) == $competition->id ? 'selected' : '' }}>
-                            {{ $competition->name }}
+                            {{ $competition->main_name }}
                         </option>
-                    @endforeach --}}
-                    <option value="1">Default</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mb-3">
                 <label for="side_category_id" class="form-label">Side Category</label>
                 <select class="form-control" id="side_category_id" name="side_category_id" required>
                     <option value="">Select Side Category</option>
-                    {{-- @foreach($sideCategories as $sideCategory)
+                    @foreach($sideCategories as $sideCategory)
                         <option value="{{ $sideCategory->id }}" {{ old('side_category_id', $competitor->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
                             {{ $sideCategory->name }}
                         </option>
-                    @endforeach --}}
-                    <option value="1">Default</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mb-3">
                 <label for="read_category_id" class="form-label">Read Category</label>
                 <select class="form-control" id="read_category_id" name="read_category_id" required>
                     <option value="">Select Read Category</option>
-                    {{-- @foreach($readCategories as $readCategory)
+                    @foreach($readCategories as $readCategory)
                         <option value="{{ $readCategory->id }}" {{ old('read_category_id', $competitor->read_category_id) == $readCategory->id ? 'selected' : '' }}>
                             {{ $readCategory->name }}
                         </option>
-                    @endforeach --}}
-                    <option value="1">Default</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mb-4">
                 <label for="age_category_id" class="form-label">Age Category</label>
                 <select class="form-control" id="age_category_id" name="age_category_id" required>
                     <option value="">Select Age Category</option>
-                    {{-- @foreach($ageCategories as $ageCategory)
+                    @foreach($ageCategories as $ageCategory)
                         <option value="{{ $ageCategory->id }}" {{ old('age_category_id', $competitor->age_category_id) == $ageCategory->id ? 'selected' : '' }}>
                             {{ $ageCategory->name }}
                         </option>
-                    @endforeach --}}
-                    <option value="1">Default</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group mb-4">

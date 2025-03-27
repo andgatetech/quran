@@ -13,6 +13,7 @@ class Competitor extends Model
 
     protected $fillable = [
         'full_name',
+        'full_name_dhivehi',
         'id_card_number',
         'address',
         'island_city',

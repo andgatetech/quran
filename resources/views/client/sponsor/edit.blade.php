@@ -47,13 +47,7 @@
         <form action="{{ route('sponsors.update', $sponsor->id) }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
             @csrf
             @method('PUT')
-        
-            <!-- Sponsor Name -->
-            <div class="form-group mb-3">
-                <input type="text" class="form-control" name="name" placeholder="Sponsor Name"
-                       value="{{ old('name', $sponsor->name) }}" required>
-            </div>
-        
+
             <!-- Competition Dropdown -->
             <div class="form-group mb-3">
                 <label for="competition_id" class="form-label">Competition</label>
@@ -67,6 +61,14 @@
                     @endforeach
                 </select>
             </div>
+        
+            <!-- Sponsor Name -->
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" name="name" placeholder="Sponsor Name"
+                       value="{{ old('name', $sponsor->name) }}" required>
+            </div>
+        
+            
         
             <!-- Sponsor Logo -->
             <div class="form-group mb-3">
