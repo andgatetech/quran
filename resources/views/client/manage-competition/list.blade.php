@@ -123,16 +123,16 @@
     <div class="tabs">
       <button class="tab-btn active" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">Magey Plan</button>
       <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.howManage') }}'">How to Manage</button>
-      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">Bulk Upload Drafts</button>
-      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">Buy Addons</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.bulkUpload') }}'">Bulk Upload Drafts</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.buyAddOns') }}'">Buy Addons</button>
     </div>
   </div>
 
   <div class="container">
     <div class="row mb-4">
         <div class="col-md-6 col-sm-12 offset-md-3">
-            <h6 class="heading col-12 py-3 my-3">Magey Plan</h6>
                 <div class="competition-card">
+                <h6 class="heading col-12 py-3 my-3">Magey Plan</h6>
                     <div class="competition-sub-name">
                         <p>Office Name : 
                           <span>

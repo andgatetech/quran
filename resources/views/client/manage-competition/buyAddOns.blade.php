@@ -131,9 +131,9 @@
   <div class="container1">
     <div class="tabs">
     <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">Magey Plan</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('managecompitition.howManage') }}'">How to Manage</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.howManage') }}'">How to Manage</button>
       <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.bulkUpload') }}'">Bulk Upload Drafts</button>
-      <button class="tab-btn" onclick="window.location.href='{{ route('managecompitition.buyAddOns') }}'">Buy Addons</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('managecompitition.buyAddOns') }}'">Buy Addons</button>
     </div>
   </div>
 
@@ -142,12 +142,19 @@
         <div class="col-md-6 col-sm-12 offset-md-3">
             
                 <div class="competition-card">
-                <h6 class="heading col-12 py-3 my-3">Tutorial</h6>
+                <h6 class="heading col-12 py-3 my-3">Custom Certificate</h6>
                     <div class="competition-sub-name">
-                    <div class="pdf-section"><img src="{{url('public/assets/img/pdf.png')}}" alt="Pdf" width="80px"/></div> 
-                    <div class="button-section"><button class="btn btn-primary">View</button>
-                    <button class="btn btn-primary">Download</button></div>
+                    <p>Contact# :<span>+960-0000000</span></p>
+                    <p>Email :<span>+960-0000000</span></p>
                     </div>      
+                </div>
+
+                <div class="competition-card">
+                <h6 class="heading col-12 py-3 my-3">Create Question</h6>
+                <div class="competition-sub-name">
+                    <p>Contact# :<span>+960-0000000</span></p>
+                    <p>Email :<span>+960-0000000</span></p>
+                    </div>     
                 </div>
         </div>
     </div>

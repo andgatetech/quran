@@ -37,6 +37,22 @@ class ManageCompetitionController extends Controller
     }
 
 
+    public function bulkUpload()
+    {
+        $competition_id = session('competition_id');
+
+        return view('client.manage-competition.bulkUpload', compact('competition_id'));
+    }
+
+
+    public function buyAddOns()
+    {
+        $competition_id = session('competition_id');
+
+        return view('client.manage-competition.buyAddOns', compact('competition_id'));
+    }
+
+
 
     public function fetchQuestions()
     {

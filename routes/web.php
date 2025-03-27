@@ -634,4 +634,6 @@ Route::prefix('client/managenertificate')->group(function () {
 Route::prefix('client/manage/competition')->group(function () {
     Route::get('/magyplan', [ManageCompetitionController::class, 'mageyPlan'])->name('managecompitition.mageyPlan');
     Route::get('/how', [ManageCompetitionController::class, 'howManage'])->name('managecompitition.howManage');
+    Route::get('/upload/bulk', [ManageCompetitionController::class, 'bulkUpload'])->name('managecompitition.bulkUpload');
+    Route::get('/buyaddons', [ManageCompetitionController::class, 'buyAddOns'])->name('managecompitition.buyAddOns');
 });
