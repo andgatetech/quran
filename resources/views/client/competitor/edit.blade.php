@@ -2,7 +2,7 @@
 
 @section('content')
 <header class="header">
-    <a class="back-btn" href="{{ route('client.menu') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
     <h1>Edit Competitor</h1>
   </header>
 

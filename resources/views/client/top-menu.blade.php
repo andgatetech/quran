@@ -68,16 +68,11 @@ position:relative;
 </style>
 <body>
   <div class="container">
-
-
-
-
-
     <!-- Menu Buttons -->
     <div class="button-group">
-        <button class="btn" onclick="window.location.href='{{ route('client.menu') }}'">Quran Competition</button>
-        <button class="btn" onclick="window.location.href=''">Poetry Competition</button>
-        <button class="btn btn-main" onclick="window.location.href=''">Quiz Competition</button>
+        <button class="btn" onclick="window.location.href='{{ route('client.menu.quran') }}'">Quran Competition</button>
+        <button class="btn" onclick="window.location.href='{{ route('client.menu.poetry') }}'">Poetry Competition</button>
+        <button class="btn btn-main" onclick="window.location.href='{{ route('client.menu.quiz') }}'">Quiz Competition</button>
         <button class="btn btn-main" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">How to Manage Competition</button>
     </div>
   </div>

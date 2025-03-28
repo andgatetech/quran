@@ -176,7 +176,7 @@
 @endif
 
 <header class="header">
-    <a class="back-btn" href="{{ route('client.menu') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('client.menu.menu') }}"><i class="fas fa-home"></i></a>
     <h1>Point Category List</h1>
 </header>
     <div class="tabs">
