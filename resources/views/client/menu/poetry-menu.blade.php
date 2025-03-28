@@ -79,7 +79,7 @@ Poetry menu
 
     <!-- Menu Buttons -->
     <div class="button-group">
-      <button class="btn" onclick="window.location.href='{{ route('competition.announce') }}'">To announce a
+      <button class="btn" onclick="window.location.href='{{ route('poetry.competition.announce') }}'">To announce a
         competition</button>
       <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Applicants who applied to
         participate</button>

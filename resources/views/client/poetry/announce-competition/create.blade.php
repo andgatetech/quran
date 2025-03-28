@@ -71,7 +71,7 @@ $user = User::find(Auth::id());
 
 
     <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
+        <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
         <h1>Announce Competition</h1>
     </header>
 
@@ -79,7 +79,7 @@ $user = User::find(Auth::id());
         <div class="tabs">
 
             <button class="tab-btn active "
-                onclick="window.location.href='{{ route('competition.announce') }}'">Announce</button>
+                onclick="window.location.href='{{ route('poetry.competition.announce') }}'">Announce</button>
             <button class="tab-btn " onclick="window.location.href='{{ route('announce-list.index') }}'">Announce
                 List</button>
         </div>
@@ -89,15 +89,7 @@ $user = User::find(Auth::id());
             <div class="col-md-6 col-sm-12 offset-md-3">
 
                 <div class="form-container">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                    
                   
                 <form class="competition-form" method="POST" action="{{ isset($competition) ? route('announce-list.update', $competition->id) : route('announce-list.store') }}" enctype="multipart/form-data">
                     @csrf

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Poetry;
-
+use App\Http\Controllers\Controller;
 use App\Models\AgeCategory;
-use App\Models\Competition;
+use App\Models\Poetry\PoetryCompetition;
 use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
@@ -17,7 +17,7 @@ class AnnounceCompetitionController extends Controller
      */
     public function index()
     {
-        $competitions = Competition::where('status','On-Going')
+        $competitions = PoetryCompetition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
         return view('client.poetry.announce-competition.list',compact('competitions')); // Path to your Blade file
@@ -29,7 +29,7 @@ class AnnounceCompetitionController extends Controller
      */
     public function create()
     {
-            $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
+            $competitions = PoetryCompetition::where('status','Pending')->get(); // Fetch competitions for logged-in user
             return view('client.poetry.announce-competition.create',compact('competitions')); // Path to your Blade file
     }
 
@@ -57,7 +57,7 @@ class AnnounceCompetitionController extends Controller
             // }
     
         // Find the competition
-        $competition = Competition::findOrFail($request->competition_id);
+        $competition = PoetryCompetition::findOrFail($request->competition_id);
     
         // Handle curriculum file upload
         if ($request->hasFile('curriculum')) {
@@ -92,7 +92,7 @@ class AnnounceCompetitionController extends Controller
      */
     public function show(string $id)
     {
-        $competition = Competition::where('encrypted_id',$id)->firstOrFail();
+        $competition = PoetryCompetition::where('encrypted_id',$id)->firstOrFail();
         $age_categories = AgeCategory::get();
         $read_categories = ReadCategory::get();
         $side_categories = SideCategory::get();
@@ -106,8 +106,8 @@ class AnnounceCompetitionController extends Controller
      */
     public function edit(string $id)
     {
-        $competition = Competition::findOrFail($id);
-        $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
+        $competition = PoetryCompetition::findOrFail($id);
+        $competitions = PoetryCompetition::where('status','Pending')->get(); // Fetch competitions for logged-in user
         return view('client.poetry.announce-competition.create',compact('competitions','competition')); // Path to your Blade file
     }
 
@@ -123,7 +123,7 @@ class AnnounceCompetitionController extends Controller
             'no_of_days' => 'required',
             'url' => 'required'
         ]);
-        $competition = Competition::findOrFail($id);
+        $competition = PoetryCompetition::findOrFail($id);
         $competition->start_date = $request->start_date;
         $competition->end_date = $request->end_date;
         $competition->no_of_days = $request->no_of_days;
@@ -138,7 +138,7 @@ class AnnounceCompetitionController extends Controller
      */
     public function destroy(string $id)
     {
-        $competition = Competition::findOrFail($id);
+        $competition = PoetryCompetition::findOrFail($id);
         $competition->delete();
         return redirect()->route('announce-list.index')->with('success', 'Competition deleted successfully!');
 
