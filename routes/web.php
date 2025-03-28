@@ -348,18 +348,6 @@ Route::resource('competitors', CompetitorController::class);
 Route::post('/competitors/bulk-store', [CompetitorController::class, 'bulkStore'])->name('competitors.bulkStore');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 Route::resource('client/judge', JudgeController::class);
 
 // Judge Routes
@@ -375,13 +363,6 @@ Route::prefix('client/judge')->group(function () {
 
 
 
-
-
-
-
-
-
-
 // Sponsor Routes
 Route::prefix('client/sponsor')->group(function () {
     Route::get('/create', [SponsorController::class, 'create'])->name('sponsors.create');
@@ -392,9 +373,6 @@ Route::prefix('client/sponsor')->group(function () {
     Route::delete('/{id}', [SponsorController::class, 'destroy'])->name('sponsors.destroy');
     Route::get('/{id}', [SponsorController::class, 'show'])->name('sponsors.show');
 });
-
-
-
 
 
 
@@ -414,58 +392,6 @@ Route::prefix('client/host')->group(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Login Routes
 Route::get('/client/login', [ClientLoginController::class, 'showLoginForm'])->name('client.login');
 Route::post('/client/login', [ClientLoginController::class, 'login'])->name('client.login.submit');
@@ -477,8 +403,28 @@ Route::get('/client/menu', function () {
         return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
     }
     // Display the menu page if authenticated
-    return view('client.menu');
-})->name('client.menu');
+    return view('client.menu.quran-menu');
+})->name('client.menu.quran');
+
+// poetry menu
+Route::get('/client/poetry/menu', function () {
+    if (!Auth::check()) {
+        // Redirect to login page if not authenticated
+        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+    }
+    // Display the menu page if authenticated
+    return view('client.menu.poetry-menu');
+})->name('client.menu.poetry');
+
+// quiz  menu
+Route::get('/client/quiz/menu', function () {
+    if (!Auth::check()) {
+        // Redirect to login page if not authenticated
+        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+    }
+    // Display the menu page if authenticated
+    return view('client.menu.quiz-menu');
+})->name('client.menu.quiz');
 
 // Top Layer Menu  After Authentication
 Route::get('/client/top/menu', function () {
@@ -489,6 +435,8 @@ Route::get('/client/top/menu', function () {
     //Display the menu page if authenticated
     return view('client.top-menu');
 })->name('client.top-menu');
+
+
 
 
 // Route to show the create competition form
@@ -641,4 +589,22 @@ Route::prefix('client/manage/competition')->group(function () {
     Route::get('/how', [ManageCompetitionController::class, 'howManage'])->name('managecompitition.howManage');
     Route::get('/upload/bulk', [ManageCompetitionController::class, 'bulkUpload'])->name('managecompitition.bulkUpload');
     Route::get('/buyaddons', [ManageCompetitionController::class, 'buyAddOns'])->name('managecompitition.buyAddOns');
+});
+
+
+// Poetry routes
+Route::prefix('client/poetry')->group(function () {
+        // Route to display announce competition list
+        Route::get('/compt/{id}', [AnnounceCompetitionController::class, 'show'])->name('competition.show');
+        Route::post('/apply', [AnnounceCompetitionController::class, 'apply'])->name('competition.apply');
+
+        Route::get('/competition/annouce', [AnnounceCompetitionController::class, 'create'])->name('poetry.competition.announce');
+        // Route::get('/client/annouce/list', [AnnounceCompetitionController::class, 'index'])->name('announce.list');
+        // Route::post('/client/annouce/store', [AnnounceCompetitionController::class, 'store'])->name('announce.store');
+        // Route::post('/client/annouce/delete/{id}', [AnnounceCompetitionController::class, 'destroy'])->name('announce.delete');
+        // Route::get('/client/annouce-list/edit/{id}', [AnnounceCompetitionController::class, 'edit'])->name('announce.edit');
+        // Route::post('/client/annouce-list/update', [AnnounceCompetitionController::class, 'update'])->name('announce.update');
+
+        Route::resource('announce-list', AnnounceCompetitionController::class)->except('destroy');
+        Route::get('delete-announce-competition/{id}',[AnnounceCompetitionController::class, 'destroy'])->name('delete-announce-competition');
 });
