@@ -592,19 +592,3 @@ Route::prefix('client/manage/competition')->group(function () {
 });
 
 
-// Poetry routes
-Route::prefix('client/poetry')->group(function () {
-        // Route to display announce competition list
-        Route::get('/compt/{id}', [AnnounceCompetitionController::class, 'show'])->name('competition.show');
-        Route::post('/apply', [AnnounceCompetitionController::class, 'apply'])->name('competition.apply');
-
-        Route::get('/competition/annouce', [AnnounceCompetitionController::class, 'create'])->name('poetry.competition.announce');
-        // Route::get('/client/annouce/list', [AnnounceCompetitionController::class, 'index'])->name('announce.list');
-        // Route::post('/client/annouce/store', [AnnounceCompetitionController::class, 'store'])->name('announce.store');
-        // Route::post('/client/annouce/delete/{id}', [AnnounceCompetitionController::class, 'destroy'])->name('announce.delete');
-        // Route::get('/client/annouce-list/edit/{id}', [AnnounceCompetitionController::class, 'edit'])->name('announce.edit');
-        // Route::post('/client/annouce-list/update', [AnnounceCompetitionController::class, 'update'])->name('announce.update');
-
-        Route::resource('announce-list', AnnounceCompetitionController::class)->except('destroy');
-        Route::get('delete-announce-competition/{id}',[AnnounceCompetitionController::class, 'destroy'])->name('delete-announce-competition');
-});

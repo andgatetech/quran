@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Poetry;
 use App\Http\Controllers\Controller;
-use App\Models\AgeCategory;
+use App\Models\PoetryAgeCategory;
 use App\Models\Poetry\PoetryCompetition;
-use App\Models\CompetitionApplication;
-use App\Models\ReadCategory;
-use App\Models\SideCategory;
+use App\Models\PoetryCompetitionApplication;
+use App\Models\PoetryReadCategory;
+use App\Models\PoetrySideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,9 +93,9 @@ class AnnounceCompetitionController extends Controller
     public function show(string $id)
     {
         $competition = PoetryCompetition::where('encrypted_id',$id)->firstOrFail();
-        $age_categories = AgeCategory::get();
-        $read_categories = ReadCategory::get();
-        $side_categories = SideCategory::get();
+        $age_categories = PoetryAgeCategory::get();
+        $read_categories = PoetryReadCategory::get();
+        $side_categories = PoetrySideCategory::get();
 
         return view("client.poetry.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
 
@@ -162,7 +162,7 @@ class AnnounceCompetitionController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,png|max:2048', // 2MB max
             'id_card_photo' => 'required|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
         ]);
-        $application = new CompetitionApplication();
+        $application = new PoetryCompetitionApplication();
         $application->competition_id = $request->competition_id;
         $application->name = $request->name;
         $application->name_dhivehi = isset($request->name_Dhivehi) ? $request->name_Dhivehi : '';

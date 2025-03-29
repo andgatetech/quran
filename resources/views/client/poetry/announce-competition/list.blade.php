@@ -122,7 +122,7 @@
   <div class="container1">
     <div class="tabs">
 
-      <button class="tab-btn" onclick="window.location.href='{{ route('competition.announce') }}'">Announce</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.competition.announce') }}'">Announce</button>
       <button class="tab-btn active" onclick="window.location.href='{{ route('announce-list.index') }}'">Announce List</button>
     </div>
   </div>
@@ -183,7 +183,7 @@
                     <!-- Buttons -->
                     <div class="d-flex justify-content-center align-items-center mt-3">
                     <a href="{{ route('announce-list.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
-                        <a href="{{ route('delete-announce-competition', $competition->id) }}" class="btn delete-btn">Delete</a>
+                        <a href="{{ route('poetry.delete-announce-competition', $competition->id) }}" class="btn delete-btn">Delete</a>
                     </div>
                 </div>
             @endforeach
