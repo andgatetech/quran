@@ -68,8 +68,6 @@ position:relative;
 </style>
 <body>
   <div class="container">
-quran menu
-
     <!-- Menu Buttons -->
     <div class="button-group">
     <button class="btn" onclick="window.location.href='{{ route('competition.announce') }}'">To announce a
