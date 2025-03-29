@@ -72,11 +72,6 @@
 
 <body>
   <div class="container">
-
-
-Poetry menu
-
-
     <!-- Menu Buttons -->
     <div class="button-group">
       <button class="btn" onclick="window.location.href='{{ route('poetry.competition.announce') }}'">To announce a

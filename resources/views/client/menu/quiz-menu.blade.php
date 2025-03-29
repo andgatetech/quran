@@ -68,7 +68,6 @@ position:relative;
 </style>
 <body>
   <div class="container">
-quiz menu
     <!-- Menu Buttons -->
     <div class="button-group">
     <button class="btn btn-main" onclick="window.location.href='{{ route('competition.create') }}'">Competition</button>
