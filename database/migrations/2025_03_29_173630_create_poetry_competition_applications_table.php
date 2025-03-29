@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('poetry_competition_applications', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->default(0);
+            $table->bigIncrements('id');
             $table->integer('competition_id');
             $table->string('name');
             $table->string('name_dhivehi');

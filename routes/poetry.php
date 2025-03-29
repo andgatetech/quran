@@ -43,3 +43,7 @@ Route::post('/competition/store', [CompetitionController::class, 'store'])->name
 // Route to display competition list
 Route::get('/competition/list', [CompetitionController::class, 'index'])->name('poetry.competition.list');
 
+Route::post('/competition/set-session', [CompetitionController::class, 'setSession'])->name('poetry.competition.setSession');
+Route::get('/competition/edit', [CompetitionController::class, 'edit'])->name('poetry.competition.edit');
+Route::post('/competition/update', [CompetitionController::class, 'update'])->name('poetry.competition.update');
+Route::post('/competition/delete/{id}', [CompetitionController::class, 'destroy'])->name('poetry.competition.delete');

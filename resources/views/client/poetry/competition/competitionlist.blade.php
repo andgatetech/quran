@@ -139,11 +139,11 @@
             </div> -->
             <!-- Buttons -->
             <div class="card-buttons">
-              <form action="{{ route('competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('poetry.competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">
                 @csrf
                 <button type="submit" class="btn delete-btn">Delete</button>
               </form>
-              <form action="{{ route('competition.setSession') }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('poetry.competition.setSession') }}" method="POST" style="display:inline-block;">
                 @csrf
                 <input type="hidden" name="competition_id" value="{{ $competition->id }}">
                 <button type="submit" class="btn edit-btn">Edit</button>

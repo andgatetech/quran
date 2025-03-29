@@ -29,7 +29,7 @@ class CompetitionController extends Controller
         // Store the competition ID in the session
         Session::put('competition_id', $request->competition_id);
 
-        return redirect()->route('competition.edit');
+        return redirect()->route('poetry.competition.edit');
     }
 
     // Edit competition using session ID
@@ -38,7 +38,7 @@ class CompetitionController extends Controller
         $competitionId = Session::get('competition_id');
 
         if (!$competitionId) {
-            return redirect()->route('competition.list')->with('error', 'No competition selected for editing.');
+            return redirect()->route('poetry.competition.list')->with('error', 'No competition selected for editing.');
         }
 
         $competition = PoetryCompetition::findOrFail($competitionId);
@@ -56,12 +56,13 @@ class CompetitionController extends Controller
         $competition = PoetryCompetition::findOrFail($id);
         $competition->delete();
 
-        return redirect()->route('competition.list')->with('success', 'Competition deleted successfully!');
+        return redirect()->route('poetry.competition.list')->with('success', 'Competition deleted successfully!');
     }
 
     public function index()
     {
         $competitions = PoetryCompetition::where('user_id', Auth::id())->get(); // Fetch competitions for logged-in user
+        //$competitions = PoetryCompetition::where('user_id',15)->get();
         return view('client.poetry.competition.competitionlist', compact('competitions'));
     }
 
@@ -75,11 +76,13 @@ class CompetitionController extends Controller
 
         PoetryCompetition::create([
             'user_id' => Auth::id(), // ID of the logged-in user
+            //'user_id' =>15, // ID of the logged-in user
             'main_name' => $request->main_name,
-            'sub_name' => $request->sub_name,
+            'sub_name' =>"test",
+            //'sub_name' => $request->sub_name,
         ]);
 
-        return redirect()->route('competition.list')->with('success', 'Competition created successfully!');
+        return redirect()->route('poetry.competition.list')->with('success', 'Competition created successfully!');
     }
 
 
@@ -90,7 +93,7 @@ class CompetitionController extends Controller
 
     // Check if competition_id exists in the session
     if (!$competitionId) {
-        return redirect()->route('competition.list')->with('error', 'No competition selected for updating.');
+        return redirect()->route('poetry.competition.list')->with('error', 'No competition selected for updating.');
     }
 
     // Retrieve the competition and ensure it belongs to the logged-in user
@@ -100,7 +103,7 @@ class CompetitionController extends Controller
 
     // If the competition doesn't exist or doesn't belong to the logged-in user, abort the request
     if (!$competition) {
-        return redirect()->route('competition.list')->with('error', 'Unauthorized access or competition not found.');
+        return redirect()->route('poetry.competition.list')->with('error', 'Unauthorized access or competition not found.');
     }
 
     // Validate the form input
@@ -119,7 +122,7 @@ class CompetitionController extends Controller
     Session::forget('competition_id');
 
     // Redirect with success message
-    return redirect()->route('competition.list')->with('success', 'Competition updated successfully!');
+    return redirect()->route('poetry.competition.list')->with('success', 'Competition updated successfully!');
 }
 }
 

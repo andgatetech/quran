@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poetry_read_categories', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->default(0);
+        Schema::create('poetry_age_categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poetry_read_categories');
+        Schema::dropIfExists('poetry_age_categories');
     }
 };

@@ -3,7 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-//$user_id=Auth::id();
+$user_id=Auth::id();
 //dd($user_id);
 $user = User::find(Auth::id());
 //dd($user);
