@@ -39,7 +39,6 @@ class ClientLoginController extends Controller
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                     Log::info('Authentication successful for email: ' . $request->email);
                     $request->session()->regenerate();
-
                     return redirect()->route('client.top-menu');
                 }
                 Log::warning('Authentication failed for email: ' . $request->email);

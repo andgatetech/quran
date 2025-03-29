@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\poetry\AnnounceCompetitionController;
+use App\Http\Controllers\poetry\CompetitionController;
 
 Route::get('/poems', function () {
     return 'List of poems';
@@ -31,3 +32,14 @@ Route::prefix('client/poetry')->group(function () {
     Route::resource('announce-list', AnnounceCompetitionController::class)->except('destroy');
     Route::get('delete-announce-competition/{id}',[AnnounceCompetitionController::class, 'destroy'])->name('poetry.delete-announce-competition');
 });
+
+// Route to show the create competition form
+Route::get('/competition/create', [CompetitionController::class, 'create'])->name('poetry.competition.create');
+
+// Route to store competition data
+Route::post('/competition/store', [CompetitionController::class, 'store'])->name('poetry.competition.store');
+
+
+// Route to display competition list
+Route::get('/competition/list', [CompetitionController::class, 'index'])->name('poetry.competition.list');
+

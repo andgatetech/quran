@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Poetry;
 use App\Http\Controllers\Controller;
-use App\Models\PoetryAgeCategory;
+use App\Models\Poetry\PoetryAgeCategory;
 use App\Models\Poetry\PoetryCompetition;
-use App\Models\PoetryCompetitionApplication;
-use App\Models\PoetryReadCategory;
-use App\Models\PoetrySideCategory;
+use App\Models\Poetry\PoetryCompetitionApplication;
+use App\Models\Poetry\PoetryReadCategory;
+use App\Models\Poetry\PoetrySideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,6 +17,7 @@ class AnnounceCompetitionController extends Controller
      */
     public function index()
     {
+        
         $competitions = PoetryCompetition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
