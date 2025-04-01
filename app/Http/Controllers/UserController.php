@@ -167,4 +167,11 @@ public function login(Request $request)
 
         return redirect()->route('admin.index')->with('success', 'Logged out successfully!');
     }
+
+
+    public function clientLogout()
+    {
+        Auth::logout();
+        return redirect()->route('welcome')->with('success', 'Logged out successfully!');
+    }
 }

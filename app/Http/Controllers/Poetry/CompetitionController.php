@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Controllers\Poetry;
-//namespace App\Http\Controllers;
+use App\Http\Controllers\controller;
 
 use App\Models\Poetry\PoetryCompetition;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+//use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 

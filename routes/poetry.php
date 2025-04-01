@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\poetry\AnnounceCompetitionController;
-use App\Http\Controllers\poetry\CompetitionController;
+use App\Http\Controllers\Poetry\AnnounceCompetitionController;
+use App\Http\Controllers\Poetry\CompetitionController;
+use App\Http\Controllers\Poetry\RegistrationRequestController;
 
 Route::get('/poems', function () {
     return 'List of poems';
@@ -33,17 +34,36 @@ Route::prefix('client/poetry')->group(function () {
     Route::get('delete-announce-competition/{id}',[AnnounceCompetitionController::class, 'destroy'])->name('poetry.delete-announce-competition');
 });
 
-// Route to show the create competition form
-Route::get('/competition/create', [CompetitionController::class, 'create'])->name('poetry.competition.create');
-
-// Route to store competition data
-Route::post('/competition/store', [CompetitionController::class, 'store'])->name('poetry.competition.store');
 
 
-// Route to display competition list
-Route::get('/competition/list', [CompetitionController::class, 'index'])->name('poetry.competition.list');
 
-Route::post('/competition/set-session', [CompetitionController::class, 'setSession'])->name('poetry.competition.setSession');
-Route::get('/competition/edit', [CompetitionController::class, 'edit'])->name('poetry.competition.edit');
-Route::post('/competition/update', [CompetitionController::class, 'update'])->name('poetry.competition.update');
-Route::post('/competition/delete/{id}', [CompetitionController::class, 'destroy'])->name('poetry.competition.delete');
+Route::prefix('client/poetry')->group(function () {
+    // Route to show the create competition form
+    Route::get('/competition/create', [CompetitionController::class, 'create'])->name('poetry.competition.create');
+
+    // Route to store competition data
+    Route::post('/competition/store', [CompetitionController::class, 'store'])->name('poetry.competition.store');
+
+
+    // Route to display competition list
+    Route::get('/competition/list', [CompetitionController::class, 'index'])->name('poetry.competition.list');
+
+    Route::post('/competition/set-session', [CompetitionController::class, 'setSession'])->name('poetry.competition.setSession');
+    Route::get('/competition/edit', [CompetitionController::class, 'edit'])->name('poetry.competition.edit');
+    Route::post('/competition/update', [CompetitionController::class, 'update'])->name('poetry.competition.update');
+    Route::post('/competition/delete/{id}', [CompetitionController::class, 'destroy'])->name('poetry.competition.delete');
+
+
+    Route::resource('registrations', RegistrationRequestController::class);
+    Route::post('/update-application-status',[RegistrationRequestController::class , 'updateStatus'])->name('poetry.update-application-status');
+
+
+
+
+
+});
+//Applicant who applied to participate
+
+    
+
+
