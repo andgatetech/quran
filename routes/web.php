@@ -273,7 +273,12 @@ Route::get('/filter-bells', [BellController::class, 'filterPage'])->name('filter
 
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return view('client.top-menu');
+        //return view('welcome');
+    }else{
+        return view('welcome');
+    }
 })->name('welcome');;
 // Route::get('/showquestion', function () {
 //     return view('showquestion.showquestionuser');
