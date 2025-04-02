@@ -79,8 +79,8 @@ $user = User::find(Auth::id());
         <div class="tabs">
 
             <button class="tab-btn active "
-                onclick="window.location.href='{{ route('competition.announce') }}'">Announce</button>
-            <button class="tab-btn " onclick="window.location.href='{{ route('announce-list.index') }}'">Announce
+                onclick="window.location.href='{{ route('quran.competition.announce') }}'">Announce</button>
+            <button class="tab-btn " onclick="window.location.href='{{ route('quran.competition.announce.list') }}'">Announce
                 List</button>
         </div>
     </div>
@@ -99,9 +99,9 @@ $user = User::find(Auth::id());
                     </div>
                 @endif
                   
-                <form class="competition-form" method="POST" action="{{ isset($competition) ? route('announce-list.update', $competition->id) : route('announce-list.store') }}" enctype="multipart/form-data">
+                <form class="competition-form" method="POST" action="{{ route('quran.competition.announce.update', $competition->id) }}" enctype="multipart/form-data">
                     @csrf
-                    @method(isset($competition) ? 'Put' : 'Post')
+                    @method('PUT') <!-- Spoofing PUT method -->
                     
                     <select name="competition_id" class="form-select" id="competition_id" required>
                         <option value="">Select Competition</option>

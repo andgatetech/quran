@@ -40,7 +40,7 @@ class ClientLoginController extends Controller
                     Log::info('Authentication successful for email: ' . $request->email);
                     $request->session()->regenerate();
 
-                    return redirect()->route('client.top-menu');
+                    return redirect()->route('client.menu');
                 }
                 Log::warning('Authentication failed for email: ' . $request->email);
                 return redirect()->back()->withErrors(['password' => 'Invalid password'])->withInput();
@@ -57,6 +57,15 @@ class ClientLoginController extends Controller
 
         Log::warning('User not found for email: ' . $request->email);
         return redirect()->back()->withErrors(['email' => 'Invalid credentials.'])->withInput();
+    }
+
+    public function clientTopMenu(){
+        // if (!Auth::check()) {
+        //     // Redirect to login page if not authenticated
+        //     return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+        // }
+        //Display the menu page if authenticated
+        return view('client.menu.client-menu');
     }
 
 

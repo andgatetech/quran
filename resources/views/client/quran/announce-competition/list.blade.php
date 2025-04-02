@@ -100,6 +100,14 @@
         padding: 10px 50px !important;
         border-radius: 15px !important;
     }
+    .download-btn, .view-btn {
+        padding: 5px 10px !important;
+        border-radius: 5px !important;
+        float: left !important;
+    }
+    .clearfix {
+    clear: both; /* Stops floating elements on both sides */
+    }
     @media (max-width: 435px) {
         .competition-main-name p,
     .competition-sub-name p {
@@ -122,8 +130,8 @@
   <div class="container1">
     <div class="tabs">
 
-      <button class="tab-btn" onclick="window.location.href='{{ route('competition.announce') }}'">Announce</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('announce-list.index') }}'">Announce List</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">Announce</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('quran.competition.announce.list') }}'">Announce List</button>
     </div>
   </div>
 
@@ -142,19 +150,22 @@
                     <div class="competition-sub-name">
                         <p>Curriculum : 
                           <span>
-                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn">View</a>
-                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn">Download</a>
+                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn view-btn">View</a>
+                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn download-btn">Download</a>
                         </span></p>
                     </div>
+                    <div class="clearfix"></div>
                     @endif
 
                     @if($competition->rules)
                     <div class="competition-sub-name">
                         <p>Rules : <span>
-                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn">View</a>
-                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn">Download</a>
+                        <button onclick="window.open('{{ route('pdf.view', $competition->rules) }}', '_blank')" class="btn view-btn">View</button>
+                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn download-btn">Download</a>
                         </span></p>
                     </div>
+                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>
                     @endif
 
                     <!-- Sub Name, initially hidden -->
@@ -182,8 +193,13 @@
                     </div>
                     <!-- Buttons -->
                     <div class="d-flex justify-content-center align-items-center mt-3">
-                    <a href="{{ route('announce-list.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
-                        <a href="{{ route('delete-announce-competition', $competition->id) }}" class="btn delete-btn">Delete</a>
+                    <a href="{{ route('quran.competition.announce.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
+                    <form action="{{ route('quran.competition.announce.delete', $competition->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        @csrf
+                        @method('DELETE')  <!-- Spoofing DELETE request -->
+                        <button type="submit" class="btn delete-btn">Delete</button>
+                    </form>
+    
                     </div>
                 </div>
             @endforeach

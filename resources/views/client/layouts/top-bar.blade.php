@@ -1,5 +1,5 @@
 <header class="header">
-       <a class="back-btn" href="{{ route('client.top-menu') }}"><i class="fas fa-home"></i></a>
+       <a class="back-btn" href="{{ route('client.menu') }}"><i class="fas fa-home"></i></a>
         <div class="navbar">
           <div class="profile" onclick="toggleDropdown()">
           <i class="fa fa-user-circle"></i>

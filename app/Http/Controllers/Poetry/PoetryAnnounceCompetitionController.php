@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Poetry;
 
 use App\Models\AgeCategory;
 use App\Models\Competition;
@@ -10,7 +10,7 @@ use App\Models\SideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AnnounceCompetitionController extends Controller
+class PoetryAnnounceCompetitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class AnnounceCompetitionController extends Controller
         $competitions = Competition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
-        return view('client.announce-competition.list',compact('competitions')); // Path to your Blade file
+        return view('client.poetry.announce-competition.list',compact('competitions')); // Path to your Blade file
 
     }
 
@@ -30,7 +30,7 @@ class AnnounceCompetitionController extends Controller
     public function create()
     {
             $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-            return view('client.announce-competition.create',compact('competitions')); // Path to your Blade file
+            return view('client.poetry.announce-competition.create',compact('competitions')); // Path to your Blade file
     }
 
     /**
@@ -97,7 +97,7 @@ class AnnounceCompetitionController extends Controller
         $read_categories = ReadCategory::get();
         $side_categories = SideCategory::get();
 
-        return view("client.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
+        return view("client.poetry.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
 
     }
 
@@ -108,7 +108,7 @@ class AnnounceCompetitionController extends Controller
     {
         $competition = Competition::findOrFail($id);
         $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-        return view('client.announce-competition.create',compact('competitions','competition')); // Path to your Blade file
+        return view('client.poetry.announce-competition.create',compact('competitions','competition')); // Path to your Blade file
     }
 
     /**

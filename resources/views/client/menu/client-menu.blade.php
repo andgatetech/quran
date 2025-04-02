@@ -66,6 +66,7 @@ position:relative;
 
 
 </style>
+
 <style>
         body {
             font-family: Arial, sans-serif;
@@ -127,53 +128,23 @@ position:relative;
         }
         */
     </style>
-
-
-
-
 <body>
 
 <!-- top bar -->
-@include('client.layouts.top-bar')
+    @include('client.layouts.top-bar')
 
   <div class="container">
     <!-- Menu Buttons -->
     <div class="button-group">
-    <button class="btn" onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">To announce a
-        competition</button>
-      <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Applicants who applied to
-        participate</button>
-      <button class="btn btn-main"
-        onclick="window.location.href='{{ route('competition.create') }}'">Competition</button>
-
-      <button class="btn" onclick="window.location.href='{{ route('sidecategory.create') }}'">Recitation piece</button>
-
-      <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of
-        recitation</button>
-
-      <button class="btn" onclick="window.location.href='{{ route('agecategory.create') }}'">Age Category</button>
-
-      <button class="btn" onclick="window.location.href='{{ route('pointcategory.create') }}'">Scoring method</button>
-      <button class="btn" onclick="window.location.href='{{ route('judges.create') }}'">Judge</button>
-      <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Questions</button>
-      <button class="btn" onclick="window.location.href='{{ route('competitors.create') }}'">Participants</button>
-      <button class="btn" onclick="window.location.href='{{ route('sponsors.create') }}'">Sponsors</button>
-      <button class="btn" onclick="window.location.href='{{ route('host.create') }}'">To start the competition </button>
-
-      <!-- new buttons -->
-      <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award
-        certificates</button>
-      <button class="btn" onclick="window.location.href='{{ url('') }}'">To create the curriculum</button>
-      <button class="btn" onclick="window.location.href='{{ route('report.index') }}'">Report</button>
-      <button class="btn" onclick="window.location.href='{{ route('curriculum.create') }}'">Curriculum</button>
-
-
-
+        <button class="btn" onclick="window.location.href='{{ route('client.menu.quran') }}'">Quran Competition</button>
+        <button class="btn" onclick="window.location.href='{{ route('client.menu.poetry') }}'">Poetry Competition</button>
+        <button class="btn btn-main" onclick="window.location.href='{{ route('client.menu.quiz') }}'">Quiz Competition</button>
+        <button class="btn btn-main" onclick="window.location.href='{{ route('managecompitition.mageyPlan') }}'">How to Manage Competition</button>
     </div>
   </div>
 
   @include('includes.footer')
- <script>
+<script>
         function toggleDropdown() {
             var menu = document.getElementById("dropdownMenu");
             menu.style.display = menu.style.display === "block" ? "none" : "block";

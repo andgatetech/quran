@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Poetry;
+namespace App\Http\Controllers\Quran;
 
+use App\Http\Controllers\Controller;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\CompetitionApplication;
@@ -10,7 +11,7 @@ use App\Models\SideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AnnounceCompetitionController extends Controller
+class QuranAnnounceCompetitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ class AnnounceCompetitionController extends Controller
         $competitions = Competition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
-        return view('client.poetry.announce-competition.list',compact('competitions')); // Path to your Blade file
+        return view('client.quran.announce-competition.list',compact('competitions')); // Path to your Blade file
 
     }
 
@@ -30,7 +31,7 @@ class AnnounceCompetitionController extends Controller
     public function create()
     {
             $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-            return view('client.poetry.announce-competition.create',compact('competitions')); // Path to your Blade file
+            return view('client.quran.announce-competition.create',compact('competitions')); // Path to your Blade file
     }
 
     /**
@@ -84,7 +85,7 @@ class AnnounceCompetitionController extends Controller
         $competition->encrypted_id = $request->encrypted_id;
         $competition->save();
     
-        return redirect()->route('announce-list.index')->with('success', 'Competition announced successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Competition announced successfully!');
     }
 
     /**
@@ -97,7 +98,7 @@ class AnnounceCompetitionController extends Controller
         $read_categories = ReadCategory::get();
         $side_categories = SideCategory::get();
 
-        return view("client.poetry.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
+        return view("client.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
 
     }
 
@@ -108,14 +109,15 @@ class AnnounceCompetitionController extends Controller
     {
         $competition = Competition::findOrFail($id);
         $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-        return view('client.poetry.announce-competition.create',compact('competitions','competition')); // Path to your Blade file
+        return view('client.quran.announce-competition.edit',compact('competitions','competition')); // Path to your Blade file
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
+        $competitionId = $request->competition_id;
         $request->validate([
             'competition_id' => 'required',
             'start_date' => 'required',
@@ -123,13 +125,13 @@ class AnnounceCompetitionController extends Controller
             'no_of_days' => 'required',
             'url' => 'required'
         ]);
-        $competition = Competition::findOrFail($id);
+        $competition = Competition::findOrFail($competitionId);
         $competition->start_date = $request->start_date;
         $competition->end_date = $request->end_date;
         $competition->no_of_days = $request->no_of_days;
         $competition->url = $request->url;
         $competition->save();
-        return redirect()->route('announce-list.index')->with('success', 'Data Updated successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Data Updated successfully!');
 
     }
 
@@ -140,7 +142,7 @@ class AnnounceCompetitionController extends Controller
     {
         $competition = Competition::findOrFail($id);
         $competition->delete();
-        return redirect()->route('announce-list.index')->with('success', 'Competition deleted successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Competition deleted successfully!');
 
     }
     public function apply(Request $request)
