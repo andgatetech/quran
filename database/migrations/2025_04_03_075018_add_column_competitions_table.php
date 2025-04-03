@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->string('option_name')->nullable()->after('updated_at'); // Add after 'book_number' column
+        Schema::table('competitions', function (Blueprint $table) {
+            $table->integer('competion_type_id')->after('id')->nullable()->default(null);
         });
     }
 
@@ -21,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            //$table->dropColumn('option_name'); // Rollback by removing the column
-        });
+        Schema::dropIfExists('competion_type_id');
     }
 };

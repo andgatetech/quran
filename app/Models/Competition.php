@@ -10,6 +10,7 @@ class Competition extends Model
     use HasFactory;
 
     protected $fillable = [
+        'competition_type_id',
         'user_id',
         'main_name',
         'sub_name',
@@ -22,6 +23,11 @@ class Competition extends Model
         'curriculum', // Add this
         'rules', // Add this
     ];
+
+    public function competionType()
+    {
+        return $this->belongsTo(CompetitionTypes::class, 'competition_type_id');
+    }
 
     // Relationship with User
     public function user()

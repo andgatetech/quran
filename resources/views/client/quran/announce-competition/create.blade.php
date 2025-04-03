@@ -70,10 +70,8 @@ $user = User::find(Auth::id());
 
 
 
-    <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        <h1>Announce Competition</h1>
-    </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
     <div class="container1">
         <div class="tabs">
@@ -242,7 +240,7 @@ $user = User::find(Auth::id());
         encryptedidinput.value = encryptedId;
         // Use the site's base URL dynamically
         const baseUrl = `${window.location.origin}`;
-        const generatedUrl = `${baseUrl}/compt/${encryptedId}`;
+        const generatedUrl = `${baseUrl}/public/competition/${encryptedId}`;
         urlInput.value = generatedUrl;
     });
 

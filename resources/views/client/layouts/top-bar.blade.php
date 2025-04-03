@@ -1,5 +1,6 @@
 <header class="header">
        <a class="back-btn" href="{{ route('client.menu') }}"><i class="fas fa-home"></i></a>
+       <h1>{{ isset($moduleName) ? $moduleName : '' }}</h1>
         <div class="navbar">
           <div class="profile" onclick="toggleDropdown()">
           <i class="fa fa-user-circle"></i>
@@ -12,3 +13,6 @@
       </div>
     
   </header>
+
+
+  

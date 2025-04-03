@@ -13,15 +13,18 @@ use Illuminate\Support\Facades\Storage;
 
 class QuranAnnounceCompetitionController extends Controller
 {
+    private $module = "Quran";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $moduleName = $this->module;
+    
         $competitions = Competition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
-        return view('client.quran.announce-competition.list',compact('competitions')); // Path to your Blade file
+        return view('client.quran.announce-competition.list',compact('competitions', 'moduleName')); // Path to your Blade file
 
     }
 
@@ -30,8 +33,9 @@ class QuranAnnounceCompetitionController extends Controller
      */
     public function create()
     {
+        $moduleName = $this->module;
             $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-            return view('client.quran.announce-competition.create',compact('competitions')); // Path to your Blade file
+            return view('client.quran.announce-competition.create',compact('competitions', 'moduleName')); // Path to your Blade file
     }
 
     /**
@@ -39,6 +43,7 @@ class QuranAnnounceCompetitionController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'competition_id' => 'required',
             'start_date' => 'required|date',
@@ -93,12 +98,16 @@ class QuranAnnounceCompetitionController extends Controller
      */
     public function show(string $id)
     {
+        $moduleName = $this->module;
+        
         $competition = Competition::where('encrypted_id',$id)->firstOrFail();
         $age_categories = AgeCategory::get();
         $read_categories = ReadCategory::get();
         $side_categories = SideCategory::get();
 
-        return view("client.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
+        $moduleName = $competition->main_name;
+
+        return view("client.quran.announce-competition.show",compact('moduleName','competition','side_categories','read_categories','age_categories'));
 
     }
 
@@ -107,9 +116,10 @@ class QuranAnnounceCompetitionController extends Controller
      */
     public function edit(string $id)
     {
+        $moduleName = $this->module;
         $competition = Competition::findOrFail($id);
         $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-        return view('client.quran.announce-competition.edit',compact('competitions','competition')); // Path to your Blade file
+        return view('client.quran.announce-competition.edit',compact('moduleName','competitions','competition')); // Path to your Blade file
     }
 
     /**

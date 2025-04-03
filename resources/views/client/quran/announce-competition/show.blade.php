@@ -165,7 +165,7 @@ $user = User::find(Auth::id());
                             </ul>
                         </div>
                     @endif
-                    <form class="competition-form" method="POST" action="{{ route('competition.apply') }}" enctype="multipart/form-data">
+                    <form class="competition-form" method="POST" action="{{ route('quran.competition.apply') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="{{ $competition->id }}" name="competition_id">
                         <input type="text" value="{{ old('name') }}" class="form-control" id="name" name="name" placeholder="Full name (English)" required>

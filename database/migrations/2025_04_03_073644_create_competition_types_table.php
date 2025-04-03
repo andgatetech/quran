@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->string('option_name')->nullable()->after('updated_at'); // Add after 'book_number' column
+        Schema::create('competition_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            //$table->dropColumn('option_name'); // Rollback by removing the column
-        });
+        Schema::dropIfExists('competition_types');
     }
 };

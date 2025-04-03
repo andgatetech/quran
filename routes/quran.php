@@ -30,12 +30,15 @@ Route::prefix('client')->group(function () {
         Route::get('competition/announce/edit/{id}', [QuranAnnounceCompetitionController::class, 'edit'])->name('quran.competition.announce.edit');
         Route::put('competition/announce/update/{id}', [QuranAnnounceCompetitionController::class, 'update'])->name('quran.competition.announce.update');
         Route::delete('competition/announce/{id}',[QuranAnnounceCompetitionController::class, 'destroy'])->name('quran.competition.announce.delete');
-        // Route::resource('announce-list', QuranAnnounceCompetitionController::class)->except('destroy');
-    });
 
-    
+    }); 
 
 });
+
+// public pages/routes for competition
+// Route to display announce competition list
+Route::get('public/competition/{id}', [QuranAnnounceCompetitionController::class, 'show'])->name('quran.competition.show');
+Route::post('public/competition/apply', [QuranAnnounceCompetitionController::class, 'apply'])->name('quran.competition.apply');
 
 // PDF view and Download Route
 use App\Http\Controllers\PDFController;

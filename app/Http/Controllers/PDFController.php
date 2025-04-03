@@ -10,7 +10,7 @@ class PDFController extends Controller
     // View PDF in Browser
     public function view($filename)
     {
-        $path = storage_path("app/public/pdfs/{$filename}");
+        $path = public_path("{$filename}");
 
         if (!file_exists($path)) {
             abort(404, "PDF file not found.");
@@ -22,7 +22,7 @@ class PDFController extends Controller
     // Download PDF
     public function download($filename)
     {
-        $path = storage_path("app/public/pdfs/{$filename}");
+        $path = public_path("{$filename}");
 
         if (!file_exists($path)) {
             abort(404, "PDF file not found.");

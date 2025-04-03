@@ -446,9 +446,7 @@ Route::post('/client/competition/store', [CompetitionController::class, 'store']
 // Route to display competition list
 Route::get('/client/competition/list', [CompetitionController::class, 'index'])->name('competition.list');
 
-// Route to display announce competition list
-Route::get('/compt/{id}', [AnnounceCompetitionController::class, 'show'])->name('competition.show');
-Route::post('/apply', [AnnounceCompetitionController::class, 'apply'])->name('competition.apply');
+
 
 // Route::get('/client/competition/annouce', [AnnounceCompetitionController::class, 'create'])->name('competition.announce');
 // Route::get('/client/annouce/list', [AnnounceCompetitionController::class, 'index'])->name('announce.list');
