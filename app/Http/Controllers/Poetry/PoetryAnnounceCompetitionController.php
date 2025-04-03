@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Poetry;
+namespace App\Http\Controllers\Quran;
 
+use Illuminate\Routing\Controller;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\CompetitionApplication;
@@ -12,15 +13,18 @@ use Illuminate\Support\Facades\Storage;
 
 class PoetryAnnounceCompetitionController extends Controller
 {
+    private $module = "Quran";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $moduleName = $this->module;
+    
         $competitions = Competition::where('status','On-Going')
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
-        return view('client.poetry.announce-competition.list',compact('competitions')); // Path to your Blade file
+        return view('client.quran.announce-competition.list',compact('competitions', 'moduleName')); // Path to your Blade file
 
     }
 
@@ -29,8 +33,9 @@ class PoetryAnnounceCompetitionController extends Controller
      */
     public function create()
     {
+        $moduleName = $this->module;
             $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-            return view('client.poetry.announce-competition.create',compact('competitions')); // Path to your Blade file
+            return view('client.quran.announce-competition.create',compact('competitions', 'moduleName')); // Path to your Blade file
     }
 
     /**
@@ -38,6 +43,7 @@ class PoetryAnnounceCompetitionController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'competition_id' => 'required',
             'start_date' => 'required|date',
@@ -84,7 +90,7 @@ class PoetryAnnounceCompetitionController extends Controller
         $competition->encrypted_id = $request->encrypted_id;
         $competition->save();
     
-        return redirect()->route('announce-list.index')->with('success', 'Competition announced successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Competition announced successfully!');
     }
 
     /**
@@ -92,12 +98,16 @@ class PoetryAnnounceCompetitionController extends Controller
      */
     public function show(string $id)
     {
+        $moduleName = $this->module;
+        
         $competition = Competition::where('encrypted_id',$id)->firstOrFail();
         $age_categories = AgeCategory::get();
         $read_categories = ReadCategory::get();
         $side_categories = SideCategory::get();
 
-        return view("client.poetry.announce-competition.show",compact('competition','side_categories','read_categories','age_categories'));
+        $moduleName = $competition->main_name;
+
+        return view("client.quran.announce-competition.show",compact('moduleName','competition','side_categories','read_categories','age_categories'));
 
     }
 
@@ -106,16 +116,18 @@ class PoetryAnnounceCompetitionController extends Controller
      */
     public function edit(string $id)
     {
+        $moduleName = $this->module;
         $competition = Competition::findOrFail($id);
         $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
-        return view('client.poetry.announce-competition.create',compact('competitions','competition')); // Path to your Blade file
+        return view('client.quran.announce-competition.edit',compact('moduleName','competitions','competition')); // Path to your Blade file
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
+        $competitionId = $request->competition_id;
         $request->validate([
             'competition_id' => 'required',
             'start_date' => 'required',
@@ -123,13 +135,13 @@ class PoetryAnnounceCompetitionController extends Controller
             'no_of_days' => 'required',
             'url' => 'required'
         ]);
-        $competition = Competition::findOrFail($id);
+        $competition = Competition::findOrFail($competitionId);
         $competition->start_date = $request->start_date;
         $competition->end_date = $request->end_date;
         $competition->no_of_days = $request->no_of_days;
         $competition->url = $request->url;
         $competition->save();
-        return redirect()->route('announce-list.index')->with('success', 'Data Updated successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Data Updated successfully!');
 
     }
 
@@ -140,7 +152,7 @@ class PoetryAnnounceCompetitionController extends Controller
     {
         $competition = Competition::findOrFail($id);
         $competition->delete();
-        return redirect()->route('announce-list.index')->with('success', 'Competition deleted successfully!');
+        return redirect()->route('quran.competition.announce.list')->with('success', 'Competition deleted successfully!');
 
     }
     public function apply(Request $request)
@@ -189,6 +201,7 @@ class PoetryAnnounceCompetitionController extends Controller
             $application->id_card_photo = 'assets/img/' . $request->file('id_card_photo')->getClientOriginalName();
         }
         $application->save();
+        
         return redirect()->back()->with('success', 'Application submitted successfully!');
 
     }
