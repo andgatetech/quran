@@ -1304,7 +1304,21 @@ $user = User::find(Auth::id());
                 <p class="card-subtitle text-muted mb-0">Competition curriculum details and learning objectives</p>
               </div>
               <div class="card-body p-4">
-                <p>Curriculum information will be displayed here.</p>
+                
+                @if (empty($competition->curriculum))
+                        <p class="text-primary">There is no curriculum available.</p>
+                    @else
+                    <button class="tab-btn text-center  text-white head nashadow {{ empty($competition->curriculum) ? 'disabled' : '' }}"
+                        onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
+                        title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
+                    Download
+                    </button>
+                    <button class="tab-btn text-center  text-white head nashadow {{ empty($competition->curriculum) ? 'disabled' : '' }}"
+                            onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
+                            title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
+                        View
+                    </button>
+                @endif
               </div>
             </div>
           </div>
@@ -1317,7 +1331,20 @@ $user = User::find(Auth::id());
                 <p class="card-subtitle text-muted mb-0">Competition rules and guidelines</p>
               </div>
               <div class="card-body p-4">
-                <p>Rules and guidelines will be displayed here.</p>
+                    @if (empty($competition->rules))
+                        <p class="text-primary">There is no rules available.</p>
+                    @else
+                    <button class="tab-btn text-center  text-white head nashadow {{ empty($competition->rules) ? 'disabled' : '' }}"
+                            onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
+                            title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
+                        Download
+                    </button>
+                    <button class="tab-btn text-center  text-white head nashadow {{ empty($competition->rules) ? 'disabled' : '' }}"
+                            onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
+                            title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
+                        View
+                    </button>
+                @endif
               </div>
             </div>
           </div>
