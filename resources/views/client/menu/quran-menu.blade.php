@@ -144,7 +144,7 @@ position:relative;
       <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Applicants who applied to
         participate</button>
       <button class="btn btn-main"
-        onclick="window.location.href='{{ route('competition.create') }}'">Competition</button>
+        onclick="window.location.href='{{ route('quran.competition.create') }}'">Competition</button>
 
       <button class="btn" onclick="window.location.href='{{ route('sidecategory.create') }}'">Recitation piece</button>
 

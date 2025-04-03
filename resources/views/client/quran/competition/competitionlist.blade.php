@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link rel="stylesheet" href="{{ asset('public/assets/css/color.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/assets/css/color.css') }}">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Competition List</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="css/CompetitionList.css">
-  <style>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announce Competition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/createcompetition.css">
+    <style>
 .btn {
       font-size: .9rem !important;
       border-radius: .3rem !important;
@@ -95,31 +95,25 @@
     .competition-main-name.active + .competition-sub-name + .card-buttons {
       display: block;
     }
-
-
-
-
-
   </style>
 </head>
-<body>
 
-  <header class="header">
-    <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-    <h1>Competition List</h1>
-  </header>
 
-  <div class="container1">
-    <div class="tabs">
 
-      <button class="tab-btn" onclick="window.location.href='{{ route('competition.create') }}'">Create Competition</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('competition.list') }}'">Competition List</button>
+<!-- top bar -->
+@include('client.layouts.top-bar')
+
+    <div class="container1">
+        <div class="tabs">
+        <button class="tab-btn" onclick="window.location.href='{{ route('quran.competition.create') }}'">Create Competition</button>
+        <button class="tab-btn active" onclick="window.location.href='{{ route('quran.competition.list') }}'">Competition List</button>
+        </div>
     </div>
-  </div>
-
-  <div class="container">
-    <!-- Competition List -->
-    <div class="competition-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 offset-md-3">
+<!-- Competition List -->
+<div class="competition-list">
       {{-- <h2 class="list-heading">Competitions List</h2> --}}
 
       <!-- Main Container for all Competitions -->
@@ -139,15 +133,12 @@
             </div> -->
             <!-- Buttons -->
             <div class="card-buttons">
-              <form action="{{ route('competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('quran.competition.delete', $competition->id) }}" method="POST" style="display:inline-block;">
                 @csrf
+                @method('DELETE')
                 <button type="submit" class="btn delete-btn">Delete</button>
               </form>
-              <form action="{{ route('competition.setSession') }}" method="POST" style="display:inline-block;">
-                @csrf
-                <input type="hidden" name="competition_id" value="{{ $competition->id }}">
-                <button type="submit" class="btn edit-btn">Edit</button>
-              </form>
+                <a href="{{ route('quran.competition.edit',$competition->id) }}" class="btn edit-btn">Edit</a>
             </div>
           </div>
         @endforeach
@@ -157,9 +148,12 @@
         @endif
       </div>
     </div>
-  </div>
+            </div>
+        </div>
 
-  @include('includes.footer')
+    </div>
+
+    @include('includes.footer')
 
   <script>
     // JavaScript to toggle dropdown and change arrow direction

@@ -436,15 +436,7 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-// Route to show the create competition form
-Route::get('/client/competition/create', [CompetitionController::class, 'create'])->name('competition.create');
 
-// Route to store competition data
-Route::post('/client/competition/store', [CompetitionController::class, 'store'])->name('competition.store');
-
-
-// Route to display competition list
-Route::get('/client/competition/list', [CompetitionController::class, 'index'])->name('competition.list');
 
 
 
@@ -463,11 +455,7 @@ Route::post('update-application-status',[RegistrationRequestController::class , 
 
 
 
-// Route to edit a competition
-Route::post('/client/competition/set-session', [CompetitionController::class, 'setSession'])->name('competition.setSession');
-Route::get('/client/competition/edit', [CompetitionController::class, 'edit'])->name('competition.edit');
-Route::post('/client/competition/update', [CompetitionController::class, 'update'])->name('competition.update');
-Route::post('/client/competition/delete/{id}', [CompetitionController::class, 'destroy'])->name('competition.delete');
+
 
 
 // Show create side category form

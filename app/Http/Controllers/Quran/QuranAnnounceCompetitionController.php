@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Quran;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\CompetitionApplication;
