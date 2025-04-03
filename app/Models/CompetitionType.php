@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CompetitionTypes extends Model
+class CompetitionType extends Model
 {
     protected $fillable =[
             'name',
