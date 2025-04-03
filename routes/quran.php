@@ -40,7 +40,6 @@ Route::prefix('client')->group(function () {
         Route::get('competition/list', [QuranCompetitionController::class, 'index'])->name('quran.competition.list');
 
         // Route to edit a competition
-        Route::post('competition/set-session', [QuranCompetitionController::class, 'setSession'])->name('quran.competition.setSession');
         Route::get('competition/edit/{id}', [QuranCompetitionController::class, 'edit'])->name('quran.competition.edit');
         Route::put('competition/update/{id}', [QuranCompetitionController::class, 'update'])->name('quran.competition.update');
         Route::delete('competition/delete/{id}', [QuranCompetitionController::class, 'destroy'])->name('quran.competition.delete');
