@@ -1327,10 +1327,10 @@ $user = User::find(Auth::id());
             <div class="card" data-aos="fade-up" data-aos-duration="1000">
               <div class="card-header primary-header text-center">
                 <h3 class="card-title fw-bold fs-4 mb-1">To Register This Competition</h3>
-                <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :{{$competition->end_date}}</p>
+                <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :10/12/2025  10:10PM</p>
               </div>
               <div class="card-body p-4">
-                <form id="competitionForm" method="POST" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
+                <form id="competitionForm" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
                  @csrf
                   <!-- Personal Information Section -->
                   <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
@@ -1702,8 +1702,41 @@ $user = User::find(Auth::id());
       const form = document.getElementById('competitionForm');
       const successCheckmark = document.getElementById('successCheckmark');
       
-
-      
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Basic form validation
+        const fullName = document.getElementById('fullName').value;
+        const idPassport = document.getElementById('idPassport').value;
+        
+        if (!fullName || !idPassport) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+        
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        document.getElementById('loadingOverlay').style.opacity = '1';
+        
+        // Simulate form submission
+        setTimeout(function() {
+          // Hide loading overlay
+          document.getElementById('loadingOverlay').style.opacity = '0';
+          setTimeout(function() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            
+            // Show success checkmark
+            successCheckmark.style.display = 'block';
+            
+            // Disable submit button
+            document.querySelector('.btn-submit').disabled = true;
+            document.querySelector('.btn-submit').innerHTML = '<i class="bi bi-check-circle-fill"></i> Registration Submitted';
+            
+            // Update progress bar to 100%
+            document.getElementById('formProgress').style.width = '100%';
+          }, 500);
+        }, 2000);
+      });
       
       // Update progress bar based on form completion
       function updateProgress() {

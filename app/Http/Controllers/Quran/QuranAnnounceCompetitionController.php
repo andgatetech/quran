@@ -201,6 +201,7 @@ class QuranAnnounceCompetitionController extends Controller
             $application->id_card_photo = 'assets/img/' . $request->file('id_card_photo')->getClientOriginalName();
         }
         $application->save();
+        
         return redirect()->back()->with('success', 'Application submitted successfully!');
 
     }

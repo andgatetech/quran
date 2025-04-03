@@ -219,7 +219,7 @@
                     <div class="competition-card">
                         <!-- Main Name with Dropdown Toggle -->
                         <div class="competition-main-name" onclick="toggleDropdown(this)">
-                            <p>Competition Main Name: <span>{{ $application->competition->main_name }}
+                            <p>Competition Main Name: <span><?php if(isset($application->competition->main_name)) echo $application->competition->main_name ?>
 
                                     <i class="fas fa-chevron-down" style="position: absolute"></i>
                                 </span>
