@@ -145,15 +145,15 @@
     <div class="container1">
         <div class="tabs">
             <button class="tab-btn {{ $status == 'Pending' ? 'active' : ''  }}"
-                onclick="window.location.href='{{ route('registrations.index', 'status=Pending') }}'"> &nbsp;&nbsp;Pending &nbsp;&nbsp;</button>
+                onclick="window.location.href='{{ route('quran.competition.applicant.list', 'status=Pending') }}'"> &nbsp;&nbsp;Pending &nbsp;&nbsp;</button>
             <button class="tab-btn px-2 {{ $status == 'Approved' ? 'active' : ''  }}"
-                onclick="window.location.href='{{ route('registrations.index', 'status=Approved') }}'"> &nbsp;&nbsp; Approved  &nbsp;&nbsp;</button>
+                onclick="window.location.href='{{ route('quran.competition.applicant.list', 'status=Approved') }}'"> &nbsp;&nbsp; Approved  &nbsp;&nbsp;</button>
             <button class="tab-btn px-2 {{ $status == 'Un-Approved' ? 'active' : ''  }}"
-                onclick="window.location.href='{{ route('registrations.index', 'status=Un-Approved') }}'">Un
+                onclick="window.location.href='{{ route('quran.competition.applicant.list', 'status=Un-Approved') }}'">Un
                 Approved</button>
 
         </div>
-        <form action="{{ route('registrations.index') }}" method="get">
+        <form action="{{ route('quran.competition.applicant.list') }}" method="get">
             <div class="row">
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -280,23 +280,23 @@
                             
                             @if($status == 'Pending')
                             <input type="text" class="form-control mt-4 mb-2" name="remarks" id="remarks"
-                                placeholder="Remarks">
+                                placeholder="Remarks" onchange="updateApproveUnproveRemarksField(this)">
                             @else
                             <p>Status : <span class="{{ $application->status=='Approved' ? 'text-primary' : 'text-danger' }}">{{ $application->status }}</span></p>
                             <p>Remarks : <span class="text-primary">{{ $application->remarks }}</span></p>
                             @endif
                             <div>
                                 @if($status == 'Pending')
-                                    <form action="{{ route('update-application-status') }}" method="POST"
-                                        style="display:inline-block;" onsubmit="return validateRemarks()">
+                                    <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
+                                        style="display:inline-block;">
                                         @csrf
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Un-Approved">
                                         <input type="hidden" name="remarks" id="remarks_unapprove">
                                         <button type="submit" class="btn delete-btn">Un Approve</button>
                                     </form>
-                                    <form action="{{ route('update-application-status') }}" method="POST"
-                                        style="display:inline-block;" onsubmit="return validateRemarks()">
+                                    <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
+                                        style="display:inline-block;">
                                         @csrf
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Approved">
@@ -304,7 +304,7 @@
                                         <button type="submit" class="btn edit-btn">Approve</button>
                                     </form>
                                     @else
-                                    <form action="{{ route('update-application-status') }}" method="POST"
+                                    <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
                                         <input type="hidden" name="status" value="Pending">
@@ -366,9 +366,22 @@
 
     @include('includes.footer')
     <script>
+        function updateApproveUnproveRemarksField(){
+            var remarksInput = document.getElementById('remarks').value;
+            var remarksValue = remarksInput.trim();
+            console.log("debug remarks");
+            console.log(remarksInput);
+            document.getElementById('remarks_unapprove').value = remarksValue;
+            document.getElementById('remarks_approve').value = remarksValue;
+            return true;
+        }
         function validateRemarks() {
             const remarksInput = document.getElementById('remarks');
             const remarksValue = remarksInput.value.trim();
+
+            
+
+            console.log(remarksValue);
 
             if (remarksValue === '') {
                 alert('Please add remarks before submitting.');
@@ -376,11 +389,11 @@
                 return false; // Prevent form submission
             }
 
-            // Copy the remarks value to the hidden inputs
-            document.getElementById('remarks_unapprove').value = remarksValue;
-            document.getElementById('remarks_approve').value = remarksValue;
-
-            return true; // Allow form submission
+            // // Copy the remarks value to the hidden inputs
+            // document.getElementById('remarks_unapprove').value = remarksValue;
+            // document.getElementById('remarks_approve').value = remarksValue;
+            // console.log("debug");    
+            // return true; // Allow form submission
         }
     </script>
     <script>
@@ -393,12 +406,12 @@
             // Toggle visibility of sub-name and buttons
             if (subName.style.display === "none" || subName.style.display === "") {
                 subName.style.display = "block"; // Show the sub-name
-                buttons.style.display = "flex"; // Show the buttons
+                // buttons.style.display = "flex"; // Show the buttons
                 icon.classList.remove('fa-chevron-down');
                 icon.classList.add('fa-chevron-up');
             } else {
                 subName.style.display = "none"; // Hide the sub-name
-                buttons.style.display = "none"; // Hide the buttons
+                // buttons.style.display = "none"; // Hide the buttons
                 icon.classList.remove('fa-chevron-up');
                 icon.classList.add('fa-chevron-down');
             }

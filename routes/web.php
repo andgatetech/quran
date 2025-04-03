@@ -450,8 +450,8 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-Route::resource('registrations', RegistrationRequestController::class);
-Route::post('update-application-status',[RegistrationRequestController::class , 'updateStatus'])->name('update-application-status');
+
+
 
 
 

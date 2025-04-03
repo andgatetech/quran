@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
 use App\Models\AgeCategory;
 use App\Models\Competition;
@@ -8,11 +8,12 @@ use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
 use App\Models\Competitor;
+use Illuminate\Routing\Controller;
 
 
 use Illuminate\Http\Request;
 
-class RegistrationRequestController extends Controller
+class QuranRegistrationRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -43,7 +44,7 @@ class RegistrationRequestController extends Controller
         $read_categories = ReadCategory::get();
         $age_categories = AgeCategory::get();
 
-        return view('client.registrations.index',compact('applications','competitions','status',
+        return view('client.quran.registrations.index',compact('applications','competitions','status',
         'side_categories','read_categories','age_categories'));
 
     }
@@ -81,12 +82,12 @@ class RegistrationRequestController extends Controller
                 ]);
             } catch (\Exception $e) {
                 // Log the error or handle it as needed
-                return redirect()->route('registrations.index', ['status' => $request->status])
+                return redirect()->route('quran.competition.applicant.list', ['status' => $request->status])
                     ->with('error', 'Failed to create competitor: ' . $e->getMessage());
             }
         }
     
-        return redirect()->route('registrations.index', ['status' => $request->status])
+        return redirect()->route('quran.competition.applicant.list', ['status' => $request->status])
             ->with('success', 'Application status updated successfully.');
     }
 
