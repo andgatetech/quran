@@ -5,6 +5,8 @@ use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
+// PDF view and Download Route
+use App\Http\Controllers\PDFController;
 
 
 
@@ -53,8 +55,7 @@ Route::prefix('client')->group(function () {
 Route::get('public/competition/{id}', [QuranAnnounceCompetitionController::class, 'show'])->name('quran.competition.show');
 Route::post('public/competition/apply', [QuranAnnounceCompetitionController::class, 'apply'])->name('quran.competition.apply');
 
-// PDF view and Download Route
-use App\Http\Controllers\PDFController;
+
 
 Route::get('/pdf/view/{path}', [PDFController::class, 'view'])->name('pdf.view');
 Route::get('/pdf/download/{path}', [PDFController::class, 'download'])->name('pdf.download');
