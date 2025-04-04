@@ -2,6 +2,7 @@
 use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Poetry\PoetryAnnounceCompetitionController;
 use App\Http\Controllers\Poetry\PoetryCompetitionController;
+use App\Http\Controllers\Poetry\PoetryRegistrationRequestController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -39,6 +40,10 @@ Route::prefix('client')->group(function () {
         Route::get('competition/edit/{id}', [PoetryCompetitionController::class, 'edit'])->name('poetry.competition.edit');
         Route::put('competition/update/{id}', [PoetryCompetitionController::class, 'update'])->name('poetry.competition.update');
         Route::delete('competition/delete/{id}', [PoetryCompetitionController::class, 'destroy'])->name('poetry.competition.delete');
+
+        // APPLICANTS WHO APPLIED TO PARTICIPATE
+        Route::get('applicant/participate/registration', [PoetryRegistrationRequestController::class,'index'])->name('poetry.competition.applicant.list');
+        Route::post('applicant/participate/status/update',[PoetryRegistrationRequestController::class , 'updateStatus'])->name('poetry.competition.applicant.status.update');
 
     }); 
 

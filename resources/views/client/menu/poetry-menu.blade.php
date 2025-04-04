@@ -71,12 +71,13 @@
 </style>
 
 <body>
+  @include('client.layouts.top-bar')
   <div class="container">
     <!-- Menu Buttons -->
     <div class="button-group">
       <button class="btn" onclick="window.location.href='{{ route('poetry.competition.announce.create') }}'">To announce a
         competition</button>
-      <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Applicants who applied to
+      <button class="btn" onclick="window.location.href='{{ route('poetry.competition.applicant.list') }}'">Applicants who applied to
         participate</button>
       <button class="btn btn-main"
         onclick="window.location.href='{{ route('poetry.competition.create') }}'">Competition</button>
