@@ -7,6 +7,9 @@ use App\Http\Controllers\Poetry\PoetrySideCategoryController;
 use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Controllers\Poetry\PoetryAgeCategoryController;
 use App\Http\Controllers\Poetry\PoetryPointCategoryController;
+use App\Http\Controllers\Poetry\PoetryJudgeController;
+use App\Http\Controllers\Poetry\PoetryCompetitorController;
+use App\Http\Controllers\Poetry\PoetrySponsorController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -35,20 +38,14 @@ Route::prefix('client')->group(function () {
         Route::put('competition/announce/update/{id}', [PoetryAnnounceCompetitionController::class, 'update'])->name('poetry.competition.announce.update');
         Route::delete('competition/announce/{id}',[PoetryAnnounceCompetitionController::class, 'destroy'])->name('poetry.competition.announce.delete');
 
-
-
         // APPLICANTS WHO APPLIED TO PARTICIPATE
         Route::get('applicant/participate/registration', [PoetryRegistrationRequestController::class,'index'])->name('poetry.competition.applicant.list');
         Route::post('applicant/participate/status/update',[PoetryRegistrationRequestController::class , 'updateStatus'])->name('poetry.competition.applicant.status.update');
-
-
-
 
         // COMPETITION
         Route::get('competition/create', [PoetryCompetitionController::class, 'create'])->name('poetry.competition.create');
         Route::post('competition/store', [PoetryCompetitionController::class, 'store'])->name('poetry.competition.store');
         Route::get('competition/list', [PoetryCompetitionController::class, 'index'])->name('poetry.competition.list');
-
         // Route to edit a competition
         Route::get('competition/edit/{id}', [PoetryCompetitionController::class, 'edit'])->name('poetry.competition.edit');
         Route::put('competition/update/{id}', [PoetryCompetitionController::class, 'update'])->name('poetry.competition.update');
@@ -69,7 +66,6 @@ Route::prefix('client')->group(function () {
         // Delete side category
         Route::post('/sidecategory/delete', [PoetrySideCategoryController::class, 'destroy'])->name('poetry.sidecategory.delete');
 
-
         // METHOD OF RECITATION
         // Show create read category form
         Route::get('/readcategory/create', [PoetryReadCategoryController::class, 'create'])->name('poetry.readcategory.create');
@@ -86,8 +82,6 @@ Route::prefix('client')->group(function () {
         // Delete a read category
         Route::post('/readcategory/delete', [PoetryReadCategoryController::class, 'destroy'])->name('poetry.readcategory.delete');
 
-
-
         // AGE CATEGORY
         // Create age category
         Route::get('/agecategory/create', [PoetryAgeCategoryController::class, 'create'])->name('poetry.agecategory.create');
@@ -102,7 +96,6 @@ Route::prefix('client')->group(function () {
         // Delete Age Category
         Route::post('/agecategory/delete/{id}', [PoetryAgeCategoryController::class, 'destroy'])->name('poetry.agecategory.delete');
 
-
         // POINT CATEGORY
         Route::get('/pointcategory/create', [PoetryPointCategoryController::class, 'create'])->name('poetry.pointcategory.create');
         Route::post('/pointcategory/store', [PoetryPointCategoryController::class, 'store'])->name('poetry.pointcategory.store');
@@ -116,6 +109,32 @@ Route::prefix('client')->group(function () {
         // Delete point category
         Route::post('/pointcategory/delete', [PoetryPointCategoryController::class, 'destroy'])->name('poetry.pointcategory.delete');
          
+        // JUDGE
+        Route::get('/judge/create', [PoetryJudgeController::class, 'create'])->name('poetry.judges.create');
+        Route::post('/judge/store', [PoetryJudgeController::class, 'store'])->name('poetry.judges.store');
+        Route::get('/judge/list', [PoetryJudgeController::class, 'index'])->name('poetry.judges.index');
+        Route::get('judge//{id}/edit', [PoetryJudgeController::class, 'edit'])->name('poetry.judges.edit');
+        Route::put('/{id}', [PoetryJudgeController::class, 'update'])->name('poetry.judges.update');
+        Route::delete('/{id}', [PoetryJudgeController::class, 'destroy'])->name('poetry.judges.destroy');
+
+
+        // COMPETITATOR
+        Route::post('/competitors/bulk-store', [PoetryCompetitorController::class, 'bulkStore'])->name('poetry.competitors.bulkStore');
+        Route::get('/competitator/create', [PoetryCompetitorController::class, 'create'])->name('poetry.competitors.create');
+        Route::post('/competitator/post', [PoetryCompetitorController::class, 'store'])->name('poetry.competitors.store');
+        Route::get('/competitator/list', [PoetryCompetitorController::class, 'index'])->name('poetry.competitors.index');
+        Route::get('/competitator/{id}/edit', [PoetryCompetitorController::class, 'edit'])->name('poetry.competitors.edit');
+        Route::put('/competitator/update/{id}', [PoetryCompetitorController::class, 'update'])->name('poetry.competitors.update');
+        Route::delete('/competitator/delete/{id}', [PoetryCompetitorController::class, 'destroy'])->name('poetry.competitors.destroy');
+        
+        // SPONSOR
+        Route::get('/sponsor/create', [PoetrySponsorController::class, 'create'])->name('poetry.sponsors.create');
+        Route::post('/sponsor/store', [PoetrySponsorController::class, 'store'])->name('poetry.sponsors.store');
+        Route::get('/sponsor/list', [PoetrySponsorController::class, 'index'])->name('poetry.sponsors.index');
+        Route::get('/sponsor/{id}/edit', [PoetrySponsorController::class, 'edit'])->name('poetry.sponsors.edit');
+        Route::put('/sponsor/update/{id}', [PoetrySponsorController::class, 'update'])->name('poetry.sponsors.update');
+        Route::delete('/sponsor/delete/{id}', [PoetrySponsorController::class, 'destroy'])->name('poetry.sponsors.destroy');
+        Route::get('/sponsor/show/{id}', [PoetrySponsorController::class, 'show'])->name('poetry.sponsors.show');
 
     }); 
 
