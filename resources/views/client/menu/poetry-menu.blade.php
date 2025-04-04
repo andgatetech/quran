@@ -86,7 +86,7 @@
 
       <button class="btn" onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Method of Recitation</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('agecategory.create') }}'">Age Category</button>
+      <button class="btn" onclick="window.location.href='{{ route('poetry.agecategory.create') }}'">Age Category</button>
 
       <button class="btn" onclick="window.location.href='{{ route('pointcategory.create') }}'">Scoring method</button>
       <button class="btn" onclick="window.location.href='{{ route('judges.create') }}'">Judge</button>
