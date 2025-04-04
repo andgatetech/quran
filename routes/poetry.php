@@ -6,6 +6,7 @@ use App\Http\Controllers\Poetry\PoetryRegistrationRequestController;
 use App\Http\Controllers\Poetry\PoetrySideCategoryController;
 use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Controllers\Poetry\PoetryAgeCategoryController;
+use App\Http\Controllers\Poetry\PoetryPointCategoryController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -118,6 +119,26 @@ Route::prefix('client')->group(function () {
 
         // Delete Age Category
         Route::post('/agecategory/delete/{id}', [PoetryAgeCategoryController::class, 'destroy'])->name('poetry.agecategory.delete');
+
+
+        //Point Category
+
+
+        Route::get('/pointcategory/create', [PoetryPointCategoryController::class, 'create'])->name('poetry.pointcategory.create');
+        Route::post('/pointcategory/store', [PoetryPointCategoryController::class, 'store'])->name('poetry.pointcategory.store');
+        Route::get('/pointcategory/list', [PoetryPointCategoryController::class, 'index'])->name('poetry.pointcategory.list');
+        // Set session for editing point category
+        Route::post('/pointcategory/set-session', [PoetryPointCategoryController::class, 'setSession'])->name('poetry.pointcategory.setSession');
+        
+        // Edit point category (no ID in URL, session used)
+        Route::get('/pointcategory/edit', [PoetryPointCategoryController::class, 'edit'])->name('poetry.pointcategory.edit');
+        
+        // Update point category
+        Route::post('/pointcategory/update', [PoetryPointCategoryController::class, 'update'])->name('poetry.pointcategory.update');
+        
+        // Delete point category
+        Route::post('/pointcategory/delete', [PoetryPointCategoryController::class, 'destroy'])->name('poetry.pointcategory.delete');
+         
 
 
 

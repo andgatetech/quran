@@ -8,7 +8,7 @@ class PointCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'total_points', 'deduction_amount'];
+    protected $fillable = ['user_id', 'name', 'total_points', 'deduction_amount','competition_type_id'];
 
     public function user()
     {
