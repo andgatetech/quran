@@ -146,7 +146,7 @@ position:relative;
       <button class="btn btn-main"
         onclick="window.location.href='{{ route('quran.competition.create') }}'">Competition</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('sidecategory.create') }}'">Recitation piece</button>
+      <button class="btn" onclick="window.location.href='{{ route('quran.recitation.piece.create') }}'">Recitation piece</button>
 
       <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of
         recitation</button>

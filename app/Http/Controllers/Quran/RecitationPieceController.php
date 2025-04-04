@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
 use App\Models\SideCategory;
 use Illuminate\Http\Request;
@@ -8,12 +8,12 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class SideCategoryController extends Controller
+class RecitationPieceController extends Controller
 {
     // Show the create side category form
     public function create()
     {
-        return view('client.sidecategory.addsidecategory');
+        return view('client.quran.recitation.piece.recitation-piece-add');
     }
 
     // Store a new side category
@@ -28,12 +28,12 @@ class SideCategoryController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('sidecategory.list')->with('success', 'Side Category created successfully!');
+        return redirect()->route('quran.recitation.piece.list')->with('success', 'Side Category created successfully!');
     }
     public function index()
     {
         $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        return view('client.sidecategory.sidecategorylist', compact('sideCategories'));
+        return view('client.quran.recitation.piece.recitation-piece-list', compact('sideCategories'));
     }
 
     // Set session for the side category to be edited
@@ -45,23 +45,22 @@ class SideCategoryController extends Controller
 
         Session::put('side_category_id', $request->side_category_id);
 
-        return redirect()->route('sidecategory.edit');
+        return redirect()->route('quran.recitation.piece.edit');
     }
 
     // Show edit form
-    public function edit()
+    public function edit($id)
     {
-        $sideCategoryId = Session::get('side_category_id'); // Retrieve the ID from the session
+        $sideCategory = SideCategory::findOrFail($id);
 
-        if (!$sideCategoryId) {
-            return redirect()->route('sidecategory.list')->with('error', 'No category selected for editing.');
+        if (!$sideCategory) {
+            return redirect()->route('quran.recitation.piece.list')->with('error', 'No category selected for editing.');
         }
 
-        // Fetch the side category
-        $sideCategory = SideCategory::findOrFail($sideCategoryId);
+        
 
         // Pass the data to the edit view
-        return view('client.sidecategory.editsidecategory', compact('sideCategory'));
+        return view('client.quran.recitation.piece.recitation-piece-edit', compact('sideCategory'));
     }
 
     // Update the side category
@@ -70,7 +69,7 @@ class SideCategoryController extends Controller
         $sideCategoryId = Session::get('side_category_id');
 
         if (!$sideCategoryId) {
-            return redirect()->route('sidecategory.list')->with('error', 'No category selected for updating.');
+            return redirect()->route('quran.recitation.piece.list')->with('error', 'No category selected for updating.');
         }
 
         $request->validate([
@@ -84,20 +83,16 @@ class SideCategoryController extends Controller
 
         Session::forget('side_category_id');
 
-        return redirect()->route('sidecategory.list')->with('success', 'Side Category updated successfully!');
+        return redirect()->route('quran.recitation.piece.list')->with('success', 'Side Category updated successfully!');
     }
 
     // Delete the side category
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $request->validate([
-            'side_category_id' => 'required|exists:side_categories,id',
-        ]);
-
-        $sideCategory = SideCategory::findOrFail($request->side_category_id);
+        $sideCategory = SideCategory::findOrFail($id);
         $sideCategory->delete();
 
-        return redirect()->route('sidecategory.list')->with('success', 'Side Category deleted successfully!');
+        return redirect()->route('quran.recitation.piece.list')->with('success', 'Side Category deleted successfully!');
     }
 
 

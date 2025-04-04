@@ -458,24 +458,7 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-// Show create side category form
-Route::get('/client/sidecategory/create', [SideCategoryController::class, 'create'])->name('sidecategory.create');
 
-// Store side category data
-Route::post('/client/sidecategory/store', [SideCategoryController::class, 'store'])->name('sidecategory.store');
-Route::get('/client/sidecategory/list', [SideCategoryController::class, 'index'])->name('sidecategory.list');
-
-// Set session for editing
-Route::post('/client/sidecategory/set-session', [SideCategoryController::class, 'setSession'])->name('sidecategory.setSession');
-
-// Show edit form
-Route::get('/client/sidecategory/edit', [SideCategoryController::class, 'edit'])->name('sidecategory.edit');
-
-// Update side category
-Route::post('/client/sidecategory/update', [SideCategoryController::class, 'update'])->name('sidecategory.update');
-
-// Delete side category
-Route::post('/client/sidecategory/delete', [SideCategoryController::class, 'destroy'])->name('sidecategory.delete');
 
 
 // Show create read category form

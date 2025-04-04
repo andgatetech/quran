@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
+use App\Http\Controllers\Quran\RecitationPieceController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -42,7 +43,6 @@ Route::prefix('client')->group(function () {
         Route::post('competition/store', [QuranCompetitionController::class, 'store'])->name('quran.competition.store');
         Route::get('competition/list', [QuranCompetitionController::class, 'index'])->name('quran.competition.list');
 
-        // Route to edit a competition
         Route::get('competition/edit/{id}', [QuranCompetitionController::class, 'edit'])->name('quran.competition.edit');
         Route::put('competition/update/{id}', [QuranCompetitionController::class, 'update'])->name('quran.competition.update');
         Route::delete('competition/delete/{id}', [QuranCompetitionController::class, 'destroy'])->name('quran.competition.delete');
@@ -50,6 +50,15 @@ Route::prefix('client')->group(function () {
         // APPLICANTS WHO APPLIED TO PARTICIPATE
         Route::get('applicant/participate/registration', [QuranRegistrationRequestController::class,'index'])->name('quran.competition.applicant.list');
         Route::post('applicant/participate/status/update',[QuranRegistrationRequestController::class , 'updateStatus'])->name('quran.competition.applicant.status.update');
+
+        // RECITATION PIECE
+        Route::get('recitation/piece/create', [RecitationPieceController::class, 'create'])->name('quran.recitation.piece.create');
+        Route::post('recitation/piece/store', [RecitationPieceController::class, 'store'])->name('quran.recitation.piece.store');
+        Route::get('recitation/piece//list', [RecitationPieceController::class, 'index'])->name('quran.recitation.piece.list');
+
+        Route::get('recitation/piece/edit/{id}', [RecitationPieceController::class, 'edit'])->name('quran.recitation.piece.edit');
+        Route::put('recitation/piece/update/{id}', [RecitationPieceController::class, 'update'])->name('quran.recitation.piece.update');
+        Route::delete('recitation/piece/delete/{id}', [RecitationPieceController::class, 'destroy'])->name('quran.recitation.piece.delete');
 
     }); 
 
