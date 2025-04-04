@@ -77,8 +77,8 @@ $user = User::find(Auth::id());
         <div class="tabs">
 
             <button class="tab-btn active "
-                onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">Announce</button>
-            <button class="tab-btn " onclick="window.location.href='{{ route('quran.competition.announce.list') }}'">Announce
+                onclick="window.location.href='{{ route('poetry.competition.announce.create') }}'">Announce</button>
+            <button class="tab-btn " onclick="window.location.href='{{ route('poetry.competition.announce.list') }}'">Announce
                 List</button>
         </div>
     </div>
@@ -97,7 +97,7 @@ $user = User::find(Auth::id());
                     </div>
                 @endif
                   
-                <form class="competition-form" method="POST" action="{{ route('quran.competition.announce.store') }}" enctype="multipart/form-data">
+                <form class="competition-form" method="POST" action="{{ route('poetry.competition.announce.store') }}" enctype="multipart/form-data">
                     @csrf
                     @method(isset($competition) ? 'Put' : 'Post')
                     
@@ -240,7 +240,8 @@ $user = User::find(Auth::id());
         encryptedidinput.value = encryptedId;
         // Use the site's base URL dynamically
         const baseUrl = `${window.location.origin}`;
-        const generatedUrl = `${baseUrl}/public/competition/${encryptedId}`;
+        //const generatedUrl = `${baseUrl}/public/competition/${encryptedId}`;
+        const generatedUrl = `${baseUrl}/public/poetry/competition/${encryptedId}`;
         urlInput.value = generatedUrl;
     });
 

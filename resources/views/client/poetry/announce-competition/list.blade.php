@@ -128,8 +128,8 @@
   <div class="container1">
     <div class="tabs">
 
-      <button class="tab-btn" onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">Announce</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('quran.competition.announce.list') }}'">Announce List</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.competition.announce.create') }}'">Announce</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.competition.announce.list') }}'">Announce List</button>
     </div>
   </div>
 
@@ -191,8 +191,8 @@
                     </div>
                     <!-- Buttons -->
                     <div class="d-flex justify-content-center align-items-center mt-3">
-                    <a href="{{ route('quran.competition.announce.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
-                    <form action="{{ route('quran.competition.announce.delete', $competition->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    <a href="{{ route('poetry.competition.announce.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
+                    <form action="{{ route('poetry.competition.announce.delete', $competition->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
                         @csrf
                         @method('DELETE')  <!-- Spoofing DELETE request -->
                         <button type="submit" class="btn delete-btn">Delete</button>
