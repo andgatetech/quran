@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
+use App\Http\Controllers\Quran\QuranRegistrationRequestController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -45,6 +46,10 @@ Route::prefix('client')->group(function () {
         Route::get('competition/edit/{id}', [QuranCompetitionController::class, 'edit'])->name('quran.competition.edit');
         Route::put('competition/update/{id}', [QuranCompetitionController::class, 'update'])->name('quran.competition.update');
         Route::delete('competition/delete/{id}', [QuranCompetitionController::class, 'destroy'])->name('quran.competition.delete');
+
+        // APPLICANTS WHO APPLIED TO PARTICIPATE
+        Route::get('applicant/participate/registration', [QuranRegistrationRequestController::class,'index'])->name('quran.competition.applicant.list');
+        Route::post('applicant/participate/status/update',[QuranRegistrationRequestController::class , 'updateStatus'])->name('quran.competition.applicant.status.update');
 
     }); 
 

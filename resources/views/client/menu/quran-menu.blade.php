@@ -141,7 +141,7 @@ position:relative;
     <div class="button-group">
     <button class="btn" onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">To announce a
         competition</button>
-      <button class="btn" onclick="window.location.href='{{ route('registrations.index') }}'">Applicants who applied to
+      <button class="btn" onclick="window.location.href='{{ route('quran.competition.applicant.list') }}'">Applicants who applied to
         participate</button>
       <button class="btn btn-main"
         onclick="window.location.href='{{ route('quran.competition.create') }}'">Competition</button>
