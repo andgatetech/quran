@@ -10,8 +10,9 @@ class ReadCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'name',
+        'user_id',
+        'competition_type_id',
     ];
 
     // Relationship with User
