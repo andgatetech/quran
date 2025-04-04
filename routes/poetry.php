@@ -8,6 +8,8 @@ use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Controllers\Poetry\PoetryAgeCategoryController;
 use App\Http\Controllers\Poetry\PoetryPointCategoryController;
 use App\Http\Controllers\Poetry\PoetryJudgeController;
+use App\Http\Controllers\Poetry\PoetryCompetitorController;
+use App\Http\Controllers\Poetry\PoetrySponsorController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -148,6 +150,27 @@ Route::prefix('client')->group(function () {
         Route::get('judge//{id}/edit', [PoetryJudgeController::class, 'edit'])->name('poetry.judges.edit');
         Route::put('/{id}', [PoetryJudgeController::class, 'update'])->name('poetry.judges.update');
         Route::delete('/{id}', [PoetryJudgeController::class, 'destroy'])->name('poetry.judges.destroy');
+
+
+        //Competitator
+
+        Route::post('/competitors/bulk-store', [PoetryCompetitorController::class, 'bulkStore'])->name('poetry.competitors.bulkStore');
+        Route::get('/competitator/create', [PoetryCompetitorController::class, 'create'])->name('poetry.competitors.create');
+        Route::post('/competitator/post', [PoetryCompetitorController::class, 'store'])->name('poetry.competitors.store');
+        Route::get('/competitator/list', [PoetryCompetitorController::class, 'index'])->name('poetry.competitors.index');
+        Route::get('/competitator/{id}/edit', [PoetryCompetitorController::class, 'edit'])->name('poetry.competitors.edit');
+        Route::put('/competitator/update/{id}', [PoetryCompetitorController::class, 'update'])->name('poetry.competitors.update');
+        Route::delete('/competitator/delete/{id}', [PoetryCompetitorController::class, 'destroy'])->name('poetry.competitors.destroy');
+        
+        //Sponsor
+
+        Route::get('/sponsor/create', [PoetrySponsorController::class, 'create'])->name('poetry.sponsors.create');
+        Route::post('/sponsor/store', [PoetrySponsorController::class, 'store'])->name('poetry.sponsors.store');
+        Route::get('/sponsor/list', [PoetrySponsorController::class, 'index'])->name('poetry.sponsors.index');
+        Route::get('/sponsor/{id}/edit', [PoetrySponsorController::class, 'edit'])->name('poetry.sponsors.edit');
+        Route::put('/sponsor/update/{id}', [PoetrySponsorController::class, 'update'])->name('poetry.sponsors.update');
+        Route::delete('/sponsor/delete/{id}', [PoetrySponsorController::class, 'destroy'])->name('poetry.sponsors.destroy');
+        Route::get('/sponsor/show/{id}', [PoetrySponsorController::class, 'show'])->name('poetry.sponsors.show');
 
 
     }); 
