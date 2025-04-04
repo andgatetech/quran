@@ -82,9 +82,9 @@
       <button class="btn btn-main"
         onclick="window.location.href='{{ route('poetry.competition.create') }}'">Competition</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('sidecategory.create') }}'">Perform Option</button>
+      <button class="btn" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Recitation Peace</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of Perform</button>
+      <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of Recitation</button>
 
       <button class="btn" onclick="window.location.href='{{ route('agecategory.create') }}'">Age Category</button>
 
