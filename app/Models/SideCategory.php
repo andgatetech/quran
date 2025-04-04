@@ -12,6 +12,7 @@ class SideCategory extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'competition_type_id',
     ];
 
     // Relationship with User

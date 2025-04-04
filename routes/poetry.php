@@ -3,6 +3,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Poetry\PoetryAnnounceCompetitionController;
 use App\Http\Controllers\Poetry\PoetryCompetitionController;
 use App\Http\Controllers\Poetry\PoetryRegistrationRequestController;
+use App\Http\Controllers\Poetry\PoetrySideCategoryController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -31,6 +32,15 @@ Route::prefix('client')->group(function () {
         Route::put('competition/announce/update/{id}', [PoetryAnnounceCompetitionController::class, 'update'])->name('poetry.competition.announce.update');
         Route::delete('competition/announce/{id}',[PoetryAnnounceCompetitionController::class, 'destroy'])->name('poetry.competition.announce.delete');
 
+
+
+        // APPLICANTS WHO APPLIED TO PARTICIPATE
+        Route::get('applicant/participate/registration', [PoetryRegistrationRequestController::class,'index'])->name('poetry.competition.applicant.list');
+        Route::post('applicant/participate/status/update',[PoetryRegistrationRequestController::class , 'updateStatus'])->name('poetry.competition.applicant.status.update');
+
+
+
+
         // COMPETITION
         Route::get('competition/create', [PoetryCompetitionController::class, 'create'])->name('poetry.competition.create');
         Route::post('competition/store', [PoetryCompetitionController::class, 'store'])->name('poetry.competition.store');
@@ -41,9 +51,30 @@ Route::prefix('client')->group(function () {
         Route::put('competition/update/{id}', [PoetryCompetitionController::class, 'update'])->name('poetry.competition.update');
         Route::delete('competition/delete/{id}', [PoetryCompetitionController::class, 'destroy'])->name('poetry.competition.delete');
 
-        // APPLICANTS WHO APPLIED TO PARTICIPATE
-        Route::get('applicant/participate/registration', [PoetryRegistrationRequestController::class,'index'])->name('poetry.competition.applicant.list');
-        Route::post('applicant/participate/status/update',[PoetryRegistrationRequestController::class , 'updateStatus'])->name('poetry.competition.applicant.status.update');
+        
+
+        // Show create side category form
+        Route::get('/sidecategory/create', [PoetrySideCategoryController::class, 'create'])->name('poetry.sidecategory.create');
+
+        // Store side category data
+        Route::post('/sidecategory/store', [PoetrySideCategoryController::class, 'store'])->name('poetry.sidecategory.store');
+        Route::get('/sidecategory/list', [PoetrySideCategoryController::class, 'index'])->name('poetry.sidecategory.list');
+
+        // Set session for editing
+        Route::post('/sidecategory/set-session', [PoetrySideCategoryController::class, 'setSession'])->name('poetry.sidecategory.setSession');
+
+        // Show edit form
+        Route::get('/sidecategory/edit', [PoetrySideCategoryController::class, 'edit'])->name('poetry.sidecategory.edit');
+
+        // Update side category
+        Route::post('/sidecategory/update', [PoetrySideCategoryController::class, 'update'])->name('poetry.sidecategory.update');
+
+        // Delete side category
+        Route::post('/sidecategory/delete', [PoetrySideCategoryController::class, 'destroy'])->name('poetry.sidecategory.delete');
+
+
+
+
 
     }); 
 
