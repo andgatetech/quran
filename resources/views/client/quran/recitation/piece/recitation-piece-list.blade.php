@@ -92,12 +92,13 @@
 
     /* Category Cards */
     .category-card {
-      background-color: #fff;
+      background: white;
+      margin: 10px auto;
       border: 1px solid #ddd;
       border-radius: 10px;
-      margin-bottom: 10px;
       padding: 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 40rem;
     }
 
     .card-header {
@@ -130,58 +131,43 @@
   justify-content: center;
   margin-top: 10px;
   text-align: center;
-  display: flex;
-  justify-content: space-around;
   align-items: center;
 }
+.btn {
+      font-size: .9rem !important;
+      border-radius: .3rem !important;
+      padding: .4rem 0 !important;
+      border: 1px solid var(--secondary-color) !important;
+      background-color: var(--secondary-color) !important;
+      color: var(--primary-color) !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      margin: 5px !important;
+    }
+       .btn:hover {
 
-  /* Category Card Buttons */
-.delete-btn, .edit-btn {
-  border-radius: 10px; /* Rounded corners */
-  padding: 10px 20px; /* Adjust padding for better button size */
-  font-size: 14px; /* Set font size */
-  font-weight: bold; /* Make text bold */
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  width: 100px; /* Fixed width for uniformity */
-}
+        border: 1px solid var(--secondary-color) !important;
+      background-color: var(--primary-color) !important;
+      color: var(--secondary-color) !important;
 
-.delete-btn {
-  background-color: #e74c3c; /* Red background for delete */
-  color: white;
-}
+    }
 
-.edit-btn {
-  background-color: #2ecc71; /* Green background for edit */
-  color: white;
-}
-
-.delete-btn:hover {
-  background-color: #c0392b; /* Darker red on hover */
-}
-
-.edit-btn:hover {
-  background-color: #27ae60; /* Darker green on hover */
-}
 
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-    <h1>Side Category List</h1>
-  </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
     <div class="tabs">
-      <button class="tab-btn" onclick="window.location.href='{{ route('sidecategory.create') }}'">Create Side Category</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('sidecategory.list') }}'">Side Category List</button>
+    <button class="tab-btn" onclick="window.location.href='{{ route('quran.recitation.piece.create') }}'">Create Recitation Piece</button>
+    <button class="tab-btn active" onclick="window.location.href='{{ route('quran.recitation.piece.list') }}'">Recitation Piece List</button>
     </div>
 
-  {{-- <div class="main-content"> --}}
     <div class="container">
+      <div class="row">
+      <div class="col-md-6 col-sm-12 offset-md-3">
       <div class="list-container">
         @if(session('success'))
           <div class="alert alert-success">{{ session('success') }}</div>
@@ -195,17 +181,12 @@
               <p>Side Category: <span>{{ $sideCategory->name }}</span> <i class="fas fa-chevron-down"></i></p>
             </div>
             <div class="card-actions">
-
-              <form action="{{ route('sidecategory.delete') }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('quran.recitation.piece.delete', $sideCategory->id) }}" method="POST" style="display:inline-block;">
                 @csrf
-                <input type="hidden" name="side_category_id" value="{{ $sideCategory->id }}">
+                @method('DELETE')
                 <button type="submit" class="btn delete-btn">Delete</button>
               </form>
-              <form action="{{ route('sidecategory.setSession') }}" method="POST" style="display:inline-block;">
-                @csrf
-                <input type="hidden" name="side_category_id" value="{{ $sideCategory->id }}">
-                <button type="submit" class="btn edit-btn">Edit</button>
-              </form>
+                <a href="{{ route('quran.recitation.piece.edit',$sideCategory->id) }}" class="btn edit-btn">Edit</a>
             </div>
           </div>
         @endforeach
@@ -214,38 +195,12 @@
           <p>No side categories found. Click "Create Side Category" to add one.</p>
         @endif
       </div>
+      </div>
+
+      </div>
+    
     </div>
-  {{-- </div> --}}
-  <style>
-    /* Body Styling */
-body {
 
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure body takes full height of the screen */
-  padding: 0; /* Remove default padding */
-}
-
-/* Container Styling */
-.container {
-  flex-grow: 1; /* Allow the content to expand and fill available space */
-  padding-bottom: 200px; /* Add space at the bottom for footer */
-}
-
-/* Footer Styling */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  /* background-color: #f1f1f1; Footer background color */
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 10px; /* Margin above the footer */
-}
-
-  </style>
   @include('includes.footer')
 
   <script>

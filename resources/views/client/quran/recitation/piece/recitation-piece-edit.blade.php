@@ -122,15 +122,15 @@ border: 1px solid  var(--secondary-color);;
 
   <div class="container1">
 <div class="tabs">
-<button class="tab-btn " onclick="window.location.href='{{ route('sidecategory.create') }}'">Create Side Category</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('sidecategory.list') }}'">Side Category List</button>
+<button class="tab-btn" onclick="window.location.href='{{ route('quran.recitation.piece.create') }}'">Create Recitation Piece</button>
+<button class="tab-btn active" onclick="window.location.href='{{ route('quran.recitation.piece.list') }}'">Recitation Piece List</button>
 </div>
   </div>
 
 
   <!-- Main Content -->
   <div class="container">
-    <form method="POST" action="{{ route('sidecategory.update') }}">
+    <form method="POST" action="{{ route('quran.recitation.piece.update', $sideCategory->id) }}">
       @csrf
       <label for="name">Category Name</label>
       <input type="text" name="name" id="name" value="{{ $sideCategory->name }}" required>
