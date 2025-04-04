@@ -84,7 +84,7 @@
 
       <button class="btn" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Recitation Peace</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of Recitation</button>
+      <button class="btn" onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Method of Recitation</button>
 
       <button class="btn" onclick="window.location.href='{{ route('agecategory.create') }}'">Age Category</button>
 

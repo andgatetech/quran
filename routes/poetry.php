@@ -4,6 +4,7 @@ use App\Http\Controllers\Poetry\PoetryAnnounceCompetitionController;
 use App\Http\Controllers\Poetry\PoetryCompetitionController;
 use App\Http\Controllers\Poetry\PoetryRegistrationRequestController;
 use App\Http\Controllers\Poetry\PoetrySideCategoryController;
+use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -51,7 +52,7 @@ Route::prefix('client')->group(function () {
         Route::put('competition/update/{id}', [PoetryCompetitionController::class, 'update'])->name('poetry.competition.update');
         Route::delete('competition/delete/{id}', [PoetryCompetitionController::class, 'destroy'])->name('poetry.competition.delete');
 
-        
+        //Recitation Peace
 
         // Show create side category form
         Route::get('/sidecategory/create', [PoetrySideCategoryController::class, 'create'])->name('poetry.sidecategory.create');
@@ -72,6 +73,29 @@ Route::prefix('client')->group(function () {
         // Delete side category
         Route::post('/sidecategory/delete', [PoetrySideCategoryController::class, 'destroy'])->name('poetry.sidecategory.delete');
 
+        //Method of Recitation
+
+        // Show create read category form
+        Route::get('/readcategory/create', [PoetryReadCategoryController::class, 'create'])->name('poetry.readcategory.create');
+
+        // Store read category data
+        Route::post('/readcategory/store', [PoetryReadCategoryController::class, 'store'])->name('poetry.readcategory.store');
+
+        // Show list of read categories
+        Route::get('/readcategory/list', [PoetryReadCategoryController::class, 'index'])->name('poetry.readcategory.list');
+
+
+        // Set session for edit
+        Route::post('/readcategory/set-session', [PoetryReadCategoryController::class, 'setSession'])->name('poetry.readcategory.setSession');
+
+        // Edit a read category
+        Route::get('/readcategory/edit', [PoetryReadCategoryController::class, 'edit'])->name('poetry.readcategory.edit');
+
+        // Update a read category
+        Route::post('/readcategory/update', [PoetryReadCategoryController::class, 'update'])->name('poetry.readcategory.update');
+
+        // Delete a read category
+        Route::post('/readcategory/delete', [PoetryReadCategoryController::class, 'destroy'])->name('poetry.readcategory.delete');
 
 
 
