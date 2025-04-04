@@ -7,6 +7,7 @@ use App\Http\Controllers\Poetry\PoetrySideCategoryController;
 use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Controllers\Poetry\PoetryAgeCategoryController;
 use App\Http\Controllers\Poetry\PoetryPointCategoryController;
+use App\Http\Controllers\Poetry\PoetryJudgeController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -139,7 +140,14 @@ Route::prefix('client')->group(function () {
         // Delete point category
         Route::post('/pointcategory/delete', [PoetryPointCategoryController::class, 'destroy'])->name('poetry.pointcategory.delete');
          
+        //Judge
 
+        Route::get('/judge/create', [PoetryJudgeController::class, 'create'])->name('poetry.judges.create');
+        Route::post('/judge/store', [PoetryJudgeController::class, 'store'])->name('poetry.judges.store');
+        Route::get('/judge/list', [PoetryJudgeController::class, 'index'])->name('poetry.judges.index');
+        Route::get('judge//{id}/edit', [PoetryJudgeController::class, 'edit'])->name('poetry.judges.edit');
+        Route::put('/{id}', [PoetryJudgeController::class, 'update'])->name('poetry.judges.update');
+        Route::delete('/{id}', [PoetryJudgeController::class, 'destroy'])->name('poetry.judges.destroy');
 
 
     }); 
