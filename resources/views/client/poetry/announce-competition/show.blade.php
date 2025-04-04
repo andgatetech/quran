@@ -1376,7 +1376,7 @@ $user = User::find(Auth::id());
                 <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :{{$competition->end_date}}</p>
               </div>
               <div class="card-body p-4">
-                <form id="competitionForm" method="POST" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
+                <form id="competitionForm" method="POST" action="{{ route('poetry.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
                  @csrf
                   <!-- Personal Information Section -->
                   <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">

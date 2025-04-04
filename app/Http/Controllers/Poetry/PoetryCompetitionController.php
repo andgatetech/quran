@@ -1,0 +1,144 @@
+<?php
+
+namespace App\Http\Controllers\Poetry;
+
+
+use App\Models\Competition;
+use App\Models\CompetitionType;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+
+class PoetryCompetitionController extends Controller
+{
+    private $module = "Poetry";
+    // Show the create competition form
+    public function create()
+    {
+        $moduleName = $this->module;
+        return view('client.poetry.competition.createcompetition', compact('moduleName')); // Path to your Blade file
+    }
+
+
+    // Edit competition using session ID
+    public function edit($competitionId)
+    {
+        $moduleName = $this->module;
+        $competitionId = $competitionId;
+
+        if (!$competitionId) {
+            return redirect()->route('poetry.competition.list')->with('error', 'No competition selected for editing.');
+        }
+
+        $competition = Competition::findOrFail($competitionId);
+
+        return view('client.poetry.competition.editcompetition', compact('moduleName','competition'));
+    }
+
+    // Update competition
+
+
+
+
+
+    public function index()
+    {
+        $moduleName = $this->module;
+        $competitionType = CompetitionType::where('name', 'Poetry')->first();
+        $competitions = Competition::
+        where('user_id', Auth::id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get(); // Fetch competitions for logged-in user
+        return view('client.poetry.competition.competitionlist', compact('moduleName','competitions'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'main_name' => 'required|string|max:255',
+            'sub_name' => 'required|string|max:255',
+        ]);
+        $competitionType = CompetitionType::where('name', 'Poetry')->first();
+
+        Competition::create([
+            'competition_type_id' => $competitionType->id,
+            'user_id' => Auth::id(), // ID of the logged-in user
+            'main_name' => $request->main_name,
+            'sub_name' => $request->sub_name,
+        ]);
+
+        return redirect()->route('poetry.competition.list')->with('success', 'Competition created successfully!');
+    }
+
+
+    public function update($competitionId, Request $request)
+    {
+        // Retrieve the competition_id from the session
+        $competitionId = $competitionId;
+
+        // Check if competition_id exists in the session
+        if (!$competitionId) {
+            return redirect()->route('poetry.competition.list')->with('error', 'No competition selected for updating.');
+        }
+
+        // Retrieve the competition and ensure it belongs to the logged-in user
+        $competition = Competition::where('id', $competitionId)
+            ->where('user_id', Auth::id()) // Ensure the competition belongs to the logged-in user
+            ->first();
+
+        // If the competition doesn't exist or doesn't belong to the logged-in user, abort the request
+        if (!$competition) {
+            return redirect()->route('poetry.competition.list')->with('error', 'Unauthorized access or competition not found.');
+        }
+
+        // Validate the form input
+        $request->validate([
+            'main_name' => 'required|string|max:255',
+            'sub_name' => 'required|string|max:255',
+        ]);
+
+        // Update the competition
+        $competition->update([
+            'main_name' => $request->main_name,
+            'sub_name' => $request->sub_name,
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('poetry.competition.list')->with('success', 'Competition updated successfully!');
+    }
+
+    // Delete a competition
+    public function destroy($id)
+    {
+        $competition = Competition::findOrFail($id);
+        $competition->delete();
+
+        return redirect()->route('poetry.competition.list')->with('success', 'Competition deleted successfully!');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

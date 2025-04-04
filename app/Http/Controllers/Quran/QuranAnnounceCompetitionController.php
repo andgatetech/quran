@@ -33,7 +33,7 @@ class QuranAnnounceCompetitionController extends Controller
      */
     public function create()
     {
-        $moduleName = $this->module;
+            $moduleName = $this->module;
             $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
             return view('client.quran.announce-competition.create',compact('competitions', 'moduleName')); // Path to your Blade file
     }

@@ -77,8 +77,8 @@ $user = User::find(Auth::id());
         <div class="tabs">
 
         <button class="tab-btn active "
-                onclick="window.location.href='{{ route('quran.competition.announce.create') }}'">Announce</button>
-            <button class="tab-btn " onclick="window.location.href='{{ route('quran.competition.announce.list') }}'">Announce
+                onclick="window.location.href='{{ route('poetry.competition.announce.create') }}'">Announce</button>
+        <button class="tab-btn " onclick="window.location.href='{{ route('poetry.competition.announce.list') }}'">Announce
                 List</button>
         </div>
     </div>
@@ -97,7 +97,7 @@ $user = User::find(Auth::id());
                     </div>
                 @endif
                   
-                <form class="competition-form" method="POST" action="{{ route('quran.competition.announce.update', $competition->id) }}" enctype="multipart/form-data">
+                <form class="competition-form" method="POST" action="{{ route('poetry.competition.announce.update', $competition->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT') <!-- Spoofing PUT method -->
                     
@@ -129,8 +129,9 @@ $user = User::find(Auth::id());
                             <input type="date" value="{{ isset($competition) ? $competition->start_date : '' }}" class="form-control" id="start_date" name="start_date" placeholder="Enable from date" required>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <label style="text-align: left;">Disable to date</label>
-                            <input type="date" value="{{ isset($competition) ? $competition->end_date : '' }}" class="form-control" id="end_date" name="end_date" placeholder="Disable to date" required>
+                            <?php $end_date=date('Y-m-d',strtotime($competition->end_date)); ?>
+                            <label style="text-align: left;">Disable to date</label> 
+                            <input type="date" value="{{ isset($competition) ? $end_date : '' }}" class="form-control" id="end_date" name="end_date" placeholder="Disable to date" required>
                         </div>
                     </div>
                 
