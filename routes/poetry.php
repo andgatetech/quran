@@ -12,6 +12,7 @@ use App\Http\Controllers\Poetry\PoetryCompetitorController;
 use App\Http\Controllers\Poetry\PoetrySponsorController;
 use App\Http\Controllers\Poetry\PoetryHostController;
 use App\Http\Controllers\Poetry\PoetryRankingController;
+use App\Http\Controllers\Poetry\PoetryManageCertificateController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -155,6 +156,19 @@ Route::prefix('client')->group(function () {
         });
         Route::get('winning-announcement/fetch-winners',[PoetryRankingController::class, 'fetchWinners'])->name('poetry.winning.fetch-winners');
         Route::post('/rank/create/{competitor_id}',[PoetryRankingController::class, 'create'])->name('poetry.rank.create');
+
+        // TO AWARD CERTIFICATE
+        Route::get('/certificat/create', [PoetryManageCertificateController::class, 'create'])->name('poetry.managenertificate.create');
+        Route::post('/certificat/store', [PoetryManageCertificateController::class, 'store'])->name('poetry.managenertificate.store');
+        Route::get('/certificat/list', [PoetryManageCertificateController::class, 'index'])->name('poetry.managenertificate.index');
+        Route::get('/certificat/{id}/edit', [PoetryManageCertificateController::class, 'edit'])->name('poetry.managenertificate.edit');
+        Route::put('/certificat/update/{id}', [PoetryManageCertificateController::class, 'update'])->name('poetry.managenertificate.update');
+        Route::delete('/certificat/delete/{id}', [PoetryManageCertificateController::class, 'destroy'])->name('poetry.managenertificate.destroy');
+        Route::get('/certificat/generate-view', [PoetryManageCertificateController::class, 'generateView'])->name('poetry.managenertificate.generate.view');
+        Route::post('/certificat/generate-pdf', [PoetryManageCertificateController::class, 'generatePDF'])->name('poetry.certificate.generate');
+        // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
+        //  ->name('certificate.generate');
+        Route::get('/certificat/generated/list', [PoetryManageCertificateController::class, 'generatedList'])->name('poetry.managenertificate.generated.list');
     }); 
 
 });

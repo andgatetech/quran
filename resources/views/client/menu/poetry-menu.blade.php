@@ -95,7 +95,7 @@
       <button class="btn" onclick="window.location.href='{{ route('poetry.sponsors.create') }}'">Sponsors</button>
       <button class="btn" onclick="window.location.href='{{ route('poetry.host.create') }}'">To start the competition </button>
       <!-- new buttons -->
-      <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award
+      <button class="btn" onclick="window.location.href='{{ route('poetry.managenertificate.create') }}'">To award
         certificates</button>
 
 
