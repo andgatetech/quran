@@ -239,8 +239,8 @@
                             <p>Parent Name : <span>{{ $application->parent_name ?? 'NA' }}</span></p>
                             <p>Contact # : <span>{{ $application->number }}</span></p>
                             <p>Age Category : <span>{{ $application->ageCategory->name }}</span></p>
-                            <p>Side Category : <span>{{ $application->sideCategory->name }}</span></p>
-                            <p>Read Category : <span>{{ $application->readCategory->name }}</span></p>
+                            <p>Recitation Piece : <span>{{ isset($application->sideCategory)? $application->sideCategory->name: '' }}</span></p>
+                            <p>Recitation Method : <span>{{ isset($application->readCategory)? $application->readCategory->name : '' }}</span></p>
                             <p class="pt-2">Participant Photo:
                                 <span>
                                     <button type="button" class="tab-btn active px-4 py-1" data-bs-toggle="modal"
