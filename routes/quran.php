@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAgeCategoryController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
+use App\Http\Controllers\Quran\QuranJudgeController;
 use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
 use App\Http\Controllers\Quran\RecitationPieceController;
@@ -89,6 +90,15 @@ Route::prefix('client')->group(function () {
         Route::get('pointcategory/edit/{id}', [QuranPointCategoryController::class, 'edit'])->name('quran.pointcategory.edit');
         Route::put('pointcategory/update/{id}', [QuranPointCategoryController::class, 'update'])->name('quran.pointcategory.update');
         Route::delete('pointcategory/delete/{id}', [QuranPointCategoryController::class, 'destroy'])->name('quran.pointcategory.delete');
+        
+        // JUDGE
+        Route::get('judge/create', [QuranJudgeController::class, 'create'])->name('quran.judges.create');
+        Route::post('judge/store', [QuranJudgeController::class, 'store'])->name('quran.judges.store');
+        Route::get('judge/list', [QuranJudgeController::class, 'index'])->name('quran.judges.list');
+
+        Route::get('judge//edit/{id}', [QuranJudgeController::class, 'edit'])->name('quran.judges.edit');
+        Route::put('judge/{id}', [QuranJudgeController::class, 'update'])->name('quran.judges.update');
+        Route::delete('judge/{id}', [QuranJudgeController::class, 'destroy'])->name('quran.judges.delete');       
 
     }); 
 

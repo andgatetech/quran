@@ -46,15 +46,13 @@
         /* Muted text for help text */
     }
 </style>
-    <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        <h1>Competition List</h1>
-    </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
         <div class="tabs">
 
-            <button class="tab-btn active" onclick="window.location.href='{{ route('judges.create') }}'">Create Judge</button>
-            <button class="tab-btn " onclick="window.location.href='{{ route('judges.index') }}'">Judge List</button>
+            <button class="tab-btn active" onclick="window.location.href='{{ route('quran.judges.create') }}'">Create Judge</button>
+            <button class="tab-btn " onclick="window.location.href='{{ route('quran.judges.list') }}'">Judge List</button>
         </div>
 
 
@@ -83,7 +81,7 @@
         @endif
 
         <!-- The Form -->
-        <form action="{{ route('judges.store') }}" method="POST" class="form-container mt-4">
+        <form action="{{ route('quran.judges.store') }}" method="POST" class="form-container mt-4">
             @csrf
             <div class="form-group mb-3">
                 <input type="text" class="form-control" name="full_name" placeholder="Name of the Judge"
@@ -111,7 +109,7 @@
             </div>
             <div class="form-group mb-3">
                 {{-- <label for="competition_id" class="form-label">Competition</label> --}}
-                <select class="form-control" id="competition_id" name="competition_id" required>
+                <select class="form-control" id="competition_id" name="competition_id" required >
                     <option value="">Select Competition</option>
                     @foreach ($competitions as $competition)
                         <option value="{{ $competition->id }}"
