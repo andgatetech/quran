@@ -148,8 +148,8 @@ position:relative;
 
       <button class="btn" onclick="window.location.href='{{ route('quran.recitation.piece.create') }}'">Recitation piece</button>
 
-      <button class="btn" onclick="window.location.href='{{ route('readcategory.create') }}'">Method of
-        recitation</button>
+      <button class="btn" onclick="window.location.href='{{ route('quran.recitation.method.create') }}'">Method of
+        Recitation</button>
 
       <button class="btn" onclick="window.location.href='{{ route('agecategory.create') }}'">Age Category</button>
 

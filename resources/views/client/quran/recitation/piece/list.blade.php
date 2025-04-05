@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Side Category List</title>
+  <title>Recitation Piece List</title>
   <link rel="stylesheet" href="css/SideCategoryList.css">
   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> --}}
   <style>
@@ -175,23 +175,23 @@
 
         {{-- <h2 class="list-title">Side Category List</h2> --}}
 
-        @foreach($sideCategories as $sideCategory)
+        @foreach($recitationPieces as $recitationPiece)
           <div class="category-card">
             <div class="card-header" onclick="toggleDropdown(this)">
-              <p>Side Category: <span>{{ $sideCategory->name }}</span> <i class="fas fa-chevron-down"></i></p>
+              <p>Recitation Piece: <span>{{ $recitationPiece->name }}</span> <i class="fas fa-chevron-down"></i></p>
             </div>
             <div class="card-actions">
-              <form action="{{ route('quran.recitation.piece.delete', $sideCategory->id) }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('quran.recitation.piece.delete', $recitationPiece->id) }}" method="POST" style="display:inline-block;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn delete-btn">Delete</button>
               </form>
-                <a href="{{ route('quran.recitation.piece.edit',$sideCategory->id) }}" class="btn edit-btn">Edit</a>
+                <a href="{{ route('quran.recitation.piece.edit',$recitationPiece->id) }}" class="btn edit-btn">Edit</a>
             </div>
           </div>
         @endforeach
 
-        @if($sideCategories->isEmpty())
+        @if($recitationPieces->isEmpty())
           <p>No side categories found. Click "Create Side Category" to add one.</p>
         @endif
       </div>

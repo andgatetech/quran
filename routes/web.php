@@ -461,27 +461,7 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-// Show create read category form
-Route::get('/client/readcategory/create', [ReadCategoryController::class, 'create'])->name('readcategory.create');
 
-// Store read category data
-Route::post('/client/readcategory/store', [ReadCategoryController::class, 'store'])->name('readcategory.store');
-
-// Show list of read categories
-Route::get('/client/readcategory/list', [ReadCategoryController::class, 'index'])->name('readcategory.list');
-
-
-// Set session for edit
-Route::post('/client/readcategory/set-session', [ReadCategoryController::class, 'setSession'])->name('readcategory.setSession');
-
-// Edit a read category
-Route::get('/client/readcategory/edit', [ReadCategoryController::class, 'edit'])->name('readcategory.edit');
-
-// Update a read category
-Route::post('/client/readcategory/update', [ReadCategoryController::class, 'update'])->name('readcategory.update');
-
-// Delete a read category
-Route::post('/client/readcategory/delete', [ReadCategoryController::class, 'destroy'])->name('readcategory.delete');
 
 
 // Create age category
