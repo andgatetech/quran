@@ -6,22 +6,14 @@
     <h1> Competitor List</h1>
   </header>
 
-<div class="tabs">
-    <style>
-              .tab-btn {
-   float: left;
-
-    border-radius: 30px;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s;
-    width: 45% !important;
-    padding: .3rem 0;
-    margin: .5rem .2rem;
-}
-    </style>
-<button class="tab-btn "  onclick="window.location.href='{{ route('competitors.create') }}'">Create Competitor</button>
-<button class="tab-btn active" onclick="window.location.href='{{ route('competitors.index') }}'">Competitor List</button>
-</div>
+<div class="container1">
+        <div class="tabs">
+            <button class="tab-btn" onclick="window.location.href='{{ route('quran.competitor.create') }}'">Create
+                Competitor</button>
+            <button class="tab-btn active" onclick="window.location.href='{{ route('quran.competitor.list') }}'">Competitor
+                List</button>
+        </div>
+    </div>
 
 
   <style>
@@ -99,13 +91,13 @@
                     <p><strong>Parent:</strong> {{ $competitor->parent_name }}</p>
                     <p><strong>Phone Number:</strong> {{ $competitor->phone_number }}</p>
                     <p><strong>Competition Name:</strong> {{ $competitor->competition->main_name ?? 'N/A' }}</p>
-                    <p><strong>Side Category:</strong> {{ $competitor->sideCategory->name ?? 'N/A' }}</p>
-                    <p><strong>Read Category:</strong> {{ $competitor->readCategory->name ?? 'N/A' }}</p>
+                    <p><strong>Recitation Piece:</strong> {{ $competitor->sideCategory->name ?? 'N/A' }}</p>
+                    <p><strong>Recitation Method:</strong> {{ $competitor->readCategory->name ?? 'N/A' }}</p>
                     <p><strong>Age Category:</strong> {{ $competitor->ageCategory->name ?? 'N/A' }}</p>
                     <p><strong>Number of Questions:</strong> {{ $competitor->number_of_questions }}</p>
                     <div class="button-group-inline mt-3">
-                        <a href="{{ route('competitors.edit', $competitor->id) }}" class="btn btn-edit btn-warning">Edit</a>
-                        <form action="{{ route('competitors.destroy', $competitor->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('quran.competitor.edit', $competitor->id) }}" class="btn btn-edit btn-warning">Edit</a>
+                        <form action="{{ route('quran.competitor.delete', $competitor->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Are you sure you want to delete this competitor?')">Delete</button>

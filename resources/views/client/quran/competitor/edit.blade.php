@@ -1,35 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
-
 <header class="header">
     <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-    <h1>Create Competitor</h1>
+    <h1>Edit Competitor</h1>
   </header>
 
   <div class="container1">
-<div class="tabs">
-
-<button class="tab-btn active"  onclick="window.location.href='{{ route('competitors.create') }}'">Create Competitor</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('competitors.index') }}'">Competitor List</button>
-</div>
-  </div>
-
-
-
-
-
-
-
-
-
+        <div class="tabs">
+            <button class="tab-btn" onclick="window.location.href='{{ route('quran.competitor.create') }}'">Create
+                Competitor</button>
+            <button class="tab-btn active" onclick="window.location.href='{{ route('quran.competitor.list') }}'">Competitor
+                List</button>
+        </div>
+    </div>
 
 
     <div class="container my-5">
-
 
         <!-- Success Message -->
         @if(session('success'))
@@ -57,101 +44,87 @@
         @endif
 
         <!-- The Form -->
-        <form action="{{ route('competitors.store') }}" method="POST" class="form-container" style="margin: 0 !important;">
+        <form action="{{ route('quran.competitor.update', $competitor->id) }}" method="POST" class="form-container mt-4">
             @csrf
+            @method('PUT')
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="full_name" placeholder="Full Name (English)" value="{{ old('full_name') }}" required>
-                
-            </div>
-
-            <div class="form-group mb-3">
-                <input type="text" class="form-control" name="full_name_dhivehi" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_dhivehi') }}" required> 
-            </div>
-
-            <div class="form-group mb-3">
-                <input type="text" class="form-control" name="id_card_number" placeholder="ID Card Number" value="{{ old('id_card_number') }}" required>
+                <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{ old('full_name', $competitor->full_name) }}" required>
             </div>
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="address" placeholder="Address" value="{{ old('address') }}" required>
+                <input type="text" class="form-control" name="full_name_dhivehi" placeholder="Full Name (Dhivehi)" value="{{ old('full_name_dhivehi', $competitor->full_name_dhivehi) }}">
             </div>
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="island_city" placeholder="Island / City" value="{{ old('island_city') }}" required>
+                <input type="text" class="form-control" name="id_card_number" placeholder="ID Card Number" value="{{ old('id_card_number', $competitor->id_card_number) }}" required>
             </div>
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="school_name" placeholder="If Student, Please Name the School" value="{{ old('school_name') }}">
+                <input type="text" class="form-control" name="address" placeholder="Address" value="{{ old('address', $competitor->address) }}" required>
             </div>
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="parent_name" placeholder="Parent Name" value="{{ old('parent_name') }}" required>
+                <input type="text" class="form-control" name="island_city" placeholder="Island / City" value="{{ old('island_city', $competitor->island_city) }}" required>
             </div>
             <div class="form-group mb-3">
-                <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="{{ old('phone_number') }}" required>
+                <input type="text" class="form-control" name="school_name" placeholder="If Student, Please Name the School" value="{{ old('school_name', $competitor->school_name) }}">
             </div>
             <div class="form-group mb-3">
+                <input type="text" class="form-control" name="parent_name" placeholder="Parent Name" value="{{ old('parent_name', $competitor->parent_name) }}" required>
+            </div>
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="{{ old('phone_number', $competitor->phone_number) }}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="competition_id" class="form-label">Competition</label>
                 <select class="form-control" id="competition_id" name="competition_id" required>
                     <option value="">Select Competition</option>
                     @foreach($competitions as $competition)
-                        <option value="{{ $competition->id }}" {{ old('competition_id') == $competition->id ? 'selected' : '' }}>
+                        <option value="{{ $competition->id }}" {{ old('competition_id', $competitor->competition_id) == $competition->id ? 'selected' : '' }}>
                             {{ $competition->main_name }}
                         </option>
                     @endforeach
                 </select>
-
             </div>
             <div class="form-group mb-3">
+                <label for="side_category_id" class="form-label">Recitation Piece</label>
                 <select class="form-control" id="side_category_id" name="side_category_id" required>
-                    <option value="">Select Side Category</option>
+                    <option value="">Select Recitation Piece</option>
                     @foreach($sideCategories as $sideCategory)
-                        <option value="{{ $sideCategory->id }}" {{ old('side_category_id') == $sideCategory->id ? 'selected' : '' }}>
+                        <option value="{{ $sideCategory->id }}" {{ old('side_category_id', $competitor->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
                             {{ $sideCategory->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mb-3">
+                <label for="read_category_id" class="form-label">Recitation Method</label>
                 <select class="form-control" id="read_category_id" name="read_category_id" required>
-                    <option value="">Select Read Category</option>
+                    <option value="">Select Recitation Method</option>
                     @foreach($readCategories as $readCategory)
-                        <option value="{{ $readCategory->id }}" {{ old('read_category_id') == $readCategory->id ? 'selected' : '' }}>
+                        <option value="{{ $readCategory->id }}" {{ old('read_category_id', $competitor->read_category_id) == $readCategory->id ? 'selected' : '' }}>
                             {{ $readCategory->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-4">
+                <label for="age_category_id" class="form-label">Age Category</label>
                 <select class="form-control" id="age_category_id" name="age_category_id" required>
                     <option value="">Select Age Category</option>
                     @foreach($ageCategories as $ageCategory)
-                        <option value="{{ $ageCategory->id }}" {{ old('age_category_id') == $ageCategory->id ? 'selected' : '' }}>
+                        <option value="{{ $ageCategory->id }}" {{ old('age_category_id', $competitor->age_category_id) == $ageCategory->id ? 'selected' : '' }}>
                             {{ $ageCategory->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mb-4">
+                <label for="number_of_questions" class="form-label">Number of Questions</label>
                 <select class="form-control" id="number_of_questions" name="number_of_questions" required>
                     <option value="">Select Number of Questions</option>
                     @for($i = 1; $i <= 100; $i++)
-                        <option value="{{ $i }}" {{ old('number_of_questions') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                        <option value="{{ $i }}" {{ old('number_of_questions', $competitor->number_of_questions) == $i ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
-
-
-        <hr>
-
-        <!-- Bulk Upload Form -->
-        <h3 class="mt-5">Bulk Upload Competitors</h3>
-        <form action="{{ route('competitors.bulkStore') }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
-            @csrf
-            <div class="form-group mb-3">
-                <input type="file" class="form-control" id="competitors_csv" name="competitors_csv" accept=".csv" required>
-            </div>
-            <button type="submit" class="btn btn-success" style="background-color: #016da8  ">Upload</button>
-        </form>
-
-
-    </div>
     </div>
 @endsection

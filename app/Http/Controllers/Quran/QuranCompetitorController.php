@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
+use App\Models\CompetitionType;
 use App\Models\Competitor;
 use App\Models\AgeCategory;
 use App\Models\Competition;
@@ -14,87 +15,15 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CompetitorsImport; // Add this line
 
-class CompetitorController extends Controller
+class QuranCompetitorController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
 
-
-
-
-    public function bulkStore(Request $request)
-    {
-        // Validate the uploaded file
-        $request->validate([
-            'competitors_csv' => 'required|mimes:csv,txt',
-        ]);
-
-        try {
-            // Import the CSV using Laravel Excel
-            Excel::import(new CompetitorsImport, $request->file('competitors_csv'));
-
-            return redirect()->route('competitors.index')->with('success', 'Competitors imported successfully!');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-
-            // Collect error messages
-            $errorMessages = [];
-            foreach ($failures as $failure) {
-                $errorMessages[] = 'Row ' . $failure->row() . ': ' . implode(', ', $failure->errors());
-            }
-
-            return redirect()->back()->with('error', 'Failed to import competitors.')->with('import_errors', $errorMessages);
-        } catch (\Exception $e) {
-            // Log the error
-            \Log::error('Error importing competitors: ' . $e->getMessage());
-
-            return redirect()->back()->with('error', 'An unexpected error occurred during import.');
-        }
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -111,7 +40,7 @@ class CompetitorController extends Controller
         // ->where('user_id', Auth::id()) // Filter by user_id
         // ->get();
 
-        return view('client.competitor.list', compact('competitors'));
+        return view('client.quran.competitor.list', compact('competitors'));
     }
 
 
@@ -126,7 +55,7 @@ class CompetitorController extends Controller
         $readCategories = ReadCategory::where('user_id', Auth::id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
-        return view('client.competitor.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories'));
+        return view('client.quran.competitor.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories'));
     }
 
     /**
@@ -161,7 +90,7 @@ public function store(Request $request)
         Competitor::create($validatedData);
 
         // Redirect back with success message
-        return redirect()->route('competitors.index')->with('success', 'Competitor created successfully!');
+        return redirect()->route('quran.competitor.list')->with('success', 'Competitor created successfully!');
     } catch (\Exception $e) {
         // Log the error
         \Log::error('Error creating competitor: ' . $e->getMessage());
@@ -183,7 +112,7 @@ public function store(Request $request)
         $readCategories = ReadCategory::where('user_id', Auth::id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
-        return view('client.competitor.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
+        return view('client.quran.competitor.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
     }
 
     /**
@@ -215,7 +144,7 @@ public function store(Request $request)
             $competitor->update($validatedData);
 
             // Redirect back with success message
-            return redirect()->route('competitors.index')->with('success', 'Competitor updated successfully!');
+            return redirect()->route('quran.competitor.list')->with('success', 'Competitor updated successfully!');
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error updating competitor: ' . $e->getMessage());
@@ -234,10 +163,40 @@ public function store(Request $request)
 
         try {
             $competitor->delete();
-            return redirect()->route('competitors.index')->with('success', 'Competitor deleted successfully!');
+            return redirect()->route('quran.competitor.list')->with('success', 'Competitor deleted successfully!');
         } catch (\Exception $e) {
             \Log::error('Error deleting competitor: ' . $e->getMessage());
-            return redirect()->route('competitors.index')->with('error', 'Failed to delete competitor. Please try again.');
+            return redirect()->route('quran.competitor.list')->with('error', 'Failed to delete competitor. Please try again.');
+        }
+    }
+
+    public function bulkStore(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'competitors_csv' => 'required|mimes:csv,txt',
+        ]);
+
+        try {
+            // Import the CSV using Laravel Excel
+            Excel::import(new CompetitorsImport, $request->file('competitors_csv'));
+
+            return redirect()->route('quran.competitor.index')->with('success', 'Competitors imported successfully!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            // Collect error messages
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $errorMessages[] = 'Row ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+
+            return redirect()->back()->with('error', 'Failed to import competitors.')->with('import_errors', $errorMessages);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Error importing competitors: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'An unexpected error occurred during import.');
         }
     }
 }

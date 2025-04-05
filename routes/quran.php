@@ -9,6 +9,7 @@ use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
 use App\Http\Controllers\Quran\RecitationPieceController;
 use App\Http\Controllers\Quran\RecitationMethodController;
+use App\Http\Controllers\Quran\QuranCompetitorController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -98,7 +99,18 @@ Route::prefix('client')->group(function () {
 
         Route::get('judge//edit/{id}', [QuranJudgeController::class, 'edit'])->name('quran.judges.edit');
         Route::put('judge/{id}', [QuranJudgeController::class, 'update'])->name('quran.judges.update');
-        Route::delete('judge/{id}', [QuranJudgeController::class, 'destroy'])->name('quran.judges.delete');       
+        Route::delete('judge/{id}', [QuranJudgeController::class, 'destroy'])->name('quran.judges.delete');  
+        
+        // QUESTION
+
+        // PARTICIPANT
+        Route::get('participant/create', [QuranCompetitorController::class, 'create'])->name('quran.competitor.create');
+        Route::post('participant/store', [QuranCompetitorController::class, 'store'])->name('quran.competitor.store');
+        Route::get('participant/list', [QuranCompetitorController::class, 'index'])->name('quran.competitor.list');
+        Route::get('participant/edit/{id}', [QuranCompetitorController::class, 'edit'])->name('quran.competitor.edit');
+        Route::put('participant/update/{id}', [QuranCompetitorController::class, 'update'])->name('quran.competitor.update');
+        Route::delete('participant/delete/{id}', [QuranCompetitorController::class, 'destroy'])->name('quran.competitor.delete');
+        Route::post('participant/bulk-store', [QuranCompetitorController::class, 'bulkStore'])->name('quran.competitor.bulkStore');
 
     }); 
 

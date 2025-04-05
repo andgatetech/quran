@@ -331,25 +331,7 @@ Route::get('/questions/{id}', [QuestionController::class, 'view'])->name('questi
 
 
 
-Route::resource('client/competitor', CompetitorController::class);
 
-Route::prefix('client/competitor')->group(function () {
-    Route::get('/create', [CompetitorController::class, 'create'])->name('competitors.create');
-    Route::post('/post', [CompetitorController::class, 'store'])->name('competitors.store');
-    Route::get('/', [CompetitorController::class, 'index'])->name('competitors.index');
-    Route::get('/{id}/edit', [CompetitorController::class, 'edit'])->name('competitors.edit');
-    Route::put('update/{id}', [CompetitorController::class, 'update'])->name('competitors.update');
-    Route::delete('delete/{id}', [CompetitorController::class, 'destroy'])->name('competitors.destroy');
-});
-
-
-
-
-
-Route::resource('competitors', CompetitorController::class);
-
-// New routes for bulk upload
-Route::post('/competitors/bulk-store', [CompetitorController::class, 'bulkStore'])->name('competitors.bulkStore');
 
 
 Route::resource('client/judge', JudgeController::class);
