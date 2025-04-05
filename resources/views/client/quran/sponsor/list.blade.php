@@ -69,11 +69,8 @@
     </header>
 
     <div class="tabs">
-
-        <button class="tab-btn " onclick="window.location.href='{{ route('sponsors.create') }}'">Create Sponsor</button>
-        <button class="tab-btn active" onclick="window.location.href='{{ route('sponsors.index') }}'">Sponsor
-            List
-        </button>
+    <button class="tab-btn"  onclick="window.location.href='{{ route('quran.sponsor.create') }}'">Create Sponsor</button>
+    <button class="tab-btn active" onclick="window.location.href='{{ route('quran.sponsor.list') }}'">Sponsor List</button>
     </div>
 
     <div class="container">
@@ -100,13 +97,13 @@
                             <p><strong>Slider Option:</strong> {{ $sponsor->status }}</p>
         
                             <div class="button-group-inline mt-3">
-                                <form action="{{ route('sponsors.destroy', $sponsor->id) }}" method="POST" style="display:inline-block;">
+                                <form action="{{ route('quran.sponsor.delete', $sponsor->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Are you sure you want to delete this sponsor?')">Delete</button>
                                 </form>
-                                <a href="{{ route('sponsors.edit', $sponsor->id) }}" class="btn btn-edit btn-primary">Edit</a>
-                                <a href="{{ route('sponsors.show', $sponsor->id) }}" class="btn btn-view btn-info">View Photo</a>
+                                <a href="{{ route('quran.sponsor.edit', $sponsor->id) }}" class="btn btn-edit btn-primary">Edit</a>
+                                <a href="{{ route('quran.sponsor.show', $sponsor->id) }}" class="btn btn-view btn-info">View Photo</a>
                             </div>
                         </div>
                     </div>

@@ -9,23 +9,10 @@
   </header>
 
   <div class="container1">
-<div class="tabs">
-    <style>
-              .tab-btn {
-   float: left;
-
-    border-radius: 30px;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s;
-    width: 45% !important;
-    padding: .3rem 0;
-    margin: .5rem .2rem;
-}
-    </style>
-<button class="tab-btn "  onclick="window.location.href='{{ route('sponsors.create') }}'">Create Sponsor</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('sponsors.index') }}'">Sponsor List</button>
-</div>
-  </div>
+  <div class="tabs">
+    <button class="tab-btn"  onclick="window.location.href='{{ route('quran.sponsor.create') }}'">Create Sponsor</button>
+    <button class="tab-btn active" onclick="window.location.href='{{ route('quran.sponsor.list') }}'">Sponsor List</button>
+    </div>
 
     <div class="container my-5">
 
@@ -44,7 +31,7 @@
         @endif
 
         <!-- The Form -->
-        <form action="{{ route('sponsors.update', $sponsor->id) }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
+        <form action="{{ route('quran.sponsor.update', $sponsor->id) }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
             @csrf
             @method('PUT')
 

@@ -11,9 +11,8 @@
   </header>
 
 <div class="tabs">
-
-<button class="tab-btn active"  onclick="window.location.href='{{ route('sponsors.create') }}'">Create Sponsor</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('sponsors.index') }}'">Sponsor List</button>
+<button class="tab-btn active"  onclick="window.location.href='{{ route('quran.sponsor.create') }}'">Create Sponsor</button>
+<button class="tab-btn " onclick="window.location.href='{{ route('quran.sponsor.list') }}'">Sponsor List</button>
 </div>
 
 
@@ -24,7 +23,7 @@
 
 
         <!-- The Form -->
-        <form action="{{ route('sponsors.store') }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
+        <form action="{{ route('quran.sponsor.store') }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
             @csrf
             <div class="form-group mb-3">
                 <label for="competition_id" class="form-label">Competition</label>

@@ -349,16 +349,7 @@ Route::prefix('client/judge')->group(function () {
 
 
 
-// Sponsor Routes
-Route::prefix('client/sponsor')->group(function () {
-    Route::get('/create', [SponsorController::class, 'create'])->name('sponsors.create');
-    Route::post('/', [SponsorController::class, 'store'])->name('sponsors.store');
-    Route::get('/', [SponsorController::class, 'index'])->name('sponsors.index');
-    Route::get('/{id}/edit', [SponsorController::class, 'edit'])->name('sponsors.edit');
-    Route::put('/{id}', [SponsorController::class, 'update'])->name('sponsors.update');
-    Route::delete('/{id}', [SponsorController::class, 'destroy'])->name('sponsors.destroy');
-    Route::get('/{id}', [SponsorController::class, 'show'])->name('sponsors.show');
-});
+
 
 
 

@@ -1,17 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
+use App\Models\CompetitionType;
 use App\Models\Sponsor;
 use App\Models\Competition;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Container\Attributes\Log;
 
-class SponsorController extends Controller
+class QuranSponsorController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
     /**
      * Display a listing of the sponsors.
      */
@@ -20,7 +28,7 @@ class SponsorController extends Controller
         // Fetch sponsors for the logged-in user
         $sponsors = Sponsor::where('user_id', Auth::id())->get(); // Filter by user_id
 
-        return view('client.sponsor.list', compact('sponsors'));
+        return view('client.quran.sponsor.list', compact('sponsors'));
     }
 
 
@@ -32,7 +40,7 @@ class SponsorController extends Controller
     {
         // Fetch all competitions and pass them to the view
         $competitions = Competition::where('user_id', Auth::id())->get();
-        return view('client.sponsor.create', compact('competitions'));
+        return view('client.quran.sponsor.create', compact('competitions'));
 
     }
 
@@ -73,9 +81,9 @@ class SponsorController extends Controller
         // Save the sponsor record
         try {
             Sponsor::create($sponsorData);
-            return redirect()->route('sponsors.create')->with('success', 'Sponsor created successfully.');
+            return redirect()->route('quran.sponsor.create')->with('success', 'Sponsor created successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('sponsors.create')->with('error', 'Failed to create sponsor: ' . $e->getMessage());
+            return redirect()->route('quran.sponsor.create')->with('error', 'Failed to create sponsor: ' . $e->getMessage());
         }
     }
 
@@ -125,7 +133,7 @@ class SponsorController extends Controller
             $sponsor->update($sponsorData);
     
             // Redirect to sponsor list with success message
-            return redirect()->route('sponsors.index')->with('success', 'Sponsor updated successfully!');
+            return redirect()->route('quran.sponsor.list')->with('success', 'Sponsor updated successfully!');
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error updating sponsor: ' . $e->getMessage());
@@ -145,7 +153,7 @@ class SponsorController extends Controller
         $sponsor = Sponsor::with('competition')->findOrFail($id);
         $competitions = Competition::where('user_id', Auth::id())->get();
 
-        return view('client.sponsor.edit', compact('sponsor','competitions'));
+        return view('client.quran.sponsor.edit', compact('sponsor','competitions'));
     }
 
     /**
@@ -170,10 +178,10 @@ class SponsorController extends Controller
             $sponsor->delete();
 
             // Redirect to sponsor list with success message
-            return redirect()->route('sponsors.index')->with('success', 'Sponsor deleted successfully!');
+            return redirect()->route('quran.sponsor.list')->with('success', 'Sponsor deleted successfully!');
         } catch (\Exception $e) {
             \Log::error('Error deleting sponsor: ' . $e->getMessage());
-            return redirect()->route('sponsors.index')->with('error', 'Failed to delete sponsor. Please try again.');
+            return redirect()->route('quran.sponsor.list')->with('error', 'Failed to delete sponsor. Please try again.');
         }
     }
 
@@ -185,6 +193,6 @@ class SponsorController extends Controller
         $sponsor = Sponsor::with('competition')->findOrFail($id);
         $competitions = Competition::where('user_id', Auth::id())->get();
 
-        return view('client.sponsor.view', compact('sponsor','competitions'));
+        return view('client.quran.sponsor.view', compact('sponsor','competitions'));
     }
 }

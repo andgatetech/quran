@@ -7,6 +7,7 @@ use App\Http\Controllers\Quran\QuranCompetitionController;
 use App\Http\Controllers\Quran\QuranJudgeController;
 use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
+use App\Http\Controllers\Quran\QuranSponsorController;
 use App\Http\Controllers\Quran\RecitationPieceController;
 use App\Http\Controllers\Quran\RecitationMethodController;
 use App\Http\Controllers\Quran\QuranCompetitorController;
@@ -111,6 +112,15 @@ Route::prefix('client')->group(function () {
         Route::put('participant/update/{id}', [QuranCompetitorController::class, 'update'])->name('quran.competitor.update');
         Route::delete('participant/delete/{id}', [QuranCompetitorController::class, 'destroy'])->name('quran.competitor.delete');
         Route::post('participant/bulk-store', [QuranCompetitorController::class, 'bulkStore'])->name('quran.competitor.bulkStore');
+
+        // SPONSOR
+        Route::get('sponsor/create', [QuranSponsorController::class, 'create'])->name('quran.sponsor.create');
+        Route::post('sponsor/store', [QuranSponsorController::class, 'store'])->name('quran.sponsor.store');
+        Route::get('sponsor/list', [QuranSponsorController::class, 'index'])->name('quran.sponsor.list');
+        Route::get('sponsor/edit/{id}', [QuranSponsorController::class, 'edit'])->name('quran.sponsor.edit');
+        Route::put('sponsor/update/{id}', [QuranSponsorController::class, 'update'])->name('quran.sponsor.update');
+        Route::delete('sponsor/delete/{id}', [QuranSponsorController::class, 'destroy'])->name('quran.sponsor.delete');
+        Route::get('sponsor/show/{id}', [QuranSponsorController::class, 'show'])->name('quran.sponsor.show');
 
     }); 
 

@@ -10,8 +10,8 @@
 
   <div class="container1">
 <div class="tabs">
-<button class="tab-btn "  onclick="window.location.href='{{ route('sponsors.create') }}'">Create Sponsor</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('sponsors.index') }}'">Sponsor List</button>
+<button class="tab-btn"  onclick="window.location.href='{{ route('quran.sponsor.create') }}'">Create Sponsor</button>
+<button class="tab-btn" onclick="window.location.href='{{ route('quran.sponsor.list') }}'">Sponsor List</button>
 </div>
   </div>
 
@@ -25,7 +25,7 @@
                 {{ $sponsor->name }}
             </div>
             <div class="card-body">
-                <p><strong>Competition:</strong> {{ $sponsor->competition->name }}</p>
+                <p><strong>Competition:</strong> {{ isset($sponsor->competition) ? $sponsor->competition->main_name: '' }}</p>
                 @if($sponsor->logo)
                     <p><strong>Logo:</strong></p>
                     <img src="{{ asset('public/'.$sponsor->logo) }}" alt="Sponsor Logo" width="150">
