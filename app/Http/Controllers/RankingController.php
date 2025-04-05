@@ -381,7 +381,7 @@ return view('winning-announcement.index', compact('competitors','competition'));
     $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
     // Pass the data to the view
-    return view('client.host.announce', compact('sortedCompetitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));
+    return view('client.quran.host.announce', compact('sortedCompetitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));
 }
 
 

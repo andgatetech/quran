@@ -180,12 +180,13 @@
 
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        Create Host
-    </header>
+        <h1>Create Host</h1>
+      </header>
+
     <div class="button-group1">
-        <a href="{{ route('host.create') }}" class="btn btn-outline-success active-button">Host Competition</a>
-        <a href="{{ route('competitions.list') }}" class="btn btn-outline-success ">Competitions</a>
-        <a href="{{ route('host.announce') }}" class="btn btn-outline-success">Announce Winners</a>
+        <a href="{{ route('quran.host.create') }}" class="btn btn-outline-success active-button">Host Competition</a>
+        <a href="{{ route('quran.competitions.list') }}" class="btn btn-outline-success ">Competitions</a>
+        <a href="{{ route('quran.host.announce') }}" class="btn btn-outline-success">Announce Winners</a>
     </div>
 
     <div class="container">
@@ -197,7 +198,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <form action="{{ route('host.store') }}" method="POST">
+                <form action="{{ route('quran.host.store') }}" method="POST">
                     @csrf
                     {{-- <label for="host-id">Competition Informations</label> --}}
 

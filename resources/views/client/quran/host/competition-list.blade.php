@@ -98,14 +98,16 @@
 
 
     </style>
+
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-         Announce Winners
-    </header>
+        <h1>Announce Winners</h1>
+      </header>
+    
     <div class="button-group1">
-        <a href="{{ route('host.create') }}" class="btn  ">Host Competition</a>
-        <a href="{{ route('competitions.list') }}" class="btn  active-button">Competitions</a>
-        <a href="{{ route('host.announce') }}" class="btn  ">Announce Winners</a>
+        <a href="{{ route('quran.host.create') }}" class="btn  ">Host Competition</a>
+        <a href="{{ route('quran.competitions.list') }}" class="btn  active-button">Competitions</a>
+        <a href="{{ route('quran.host.announce') }}" class="btn  ">Announce Winners</a>
     </div>
     <div class="container">
         <div class="list-container">
@@ -121,11 +123,11 @@
                     @if($host->status == 'active')
                     <p><strong>Host Date:</strong> {{ \Carbon\Carbon::parse($host->created_at)->format('d-m-Y') }}</p>
                     <div class="button-group-inline">
-                        <form action="{{ route('host.continue', $host->id) }}" method="POST">
+                        <form action="{{ route('quran.host.continue', $host->id) }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-complete">Continue</button>
                         </form>
-                        <form action="" method="POST">
+                        <form action="" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-result">Result</button>
                         </form>
@@ -133,7 +135,7 @@
                     @elseif($host->status == 'done')
                     <p><strong>Host Date:</strong> {{ \Carbon\Carbon::parse($host->created_at)->format('d-m-Y') }}</p>
                     <p><strong>Completed Date:</strong> {{ \Carbon\Carbon::parse($host->updated_at)->format('d-m-Y') }}</p>
-                    <form action="" method="POST">
+                    <form action="" method="GET">
                         @csrf
                         <button type="submit" class="btn btn-result">Result</button>
                     </form>

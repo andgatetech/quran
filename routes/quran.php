@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAgeCategoryController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
+use App\Http\Controllers\Quran\QuranHostController;
 use App\Http\Controllers\Quran\QuranJudgeController;
 use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Quran\QuranSponsorController;
 use App\Http\Controllers\Quran\RecitationPieceController;
 use App\Http\Controllers\Quran\RecitationMethodController;
 use App\Http\Controllers\Quran\QuranCompetitorController;
+use App\Http\Controllers\RankingController;
 use App\Http\Middleware\CheckSession;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
@@ -121,6 +123,18 @@ Route::prefix('client')->group(function () {
         Route::put('sponsor/update/{id}', [QuranSponsorController::class, 'update'])->name('quran.sponsor.update');
         Route::delete('sponsor/delete/{id}', [QuranSponsorController::class, 'destroy'])->name('quran.sponsor.delete');
         Route::get('sponsor/show/{id}', [QuranSponsorController::class, 'show'])->name('quran.sponsor.show');
+
+        // TO START THE COMPETITION (HOST)
+        Route::get('host/create', [QuranHostController::class, 'create'])->name('quran.host.create');
+        
+        // Route for the competition list
+        Route::get('host/competition-list', [QuranHostController::class, 'competitionList'])->name('quran.competitions.list');
+               
+        Route::post('host/store', [QuranHostController::class, 'store'])->name('quran.host.store');
+        Route::post('host/{host}/continue', [QuranHostController::class, 'continue'])->name('quran.host.continue');
+        // Route for announcing winners
+        Route::get('host/announce', [RankingController::class, 'announceWinners'])->name('quran.host.announce');
+        
 
     }); 
 

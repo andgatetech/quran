@@ -354,18 +354,7 @@ Route::prefix('client/judge')->group(function () {
 
 
 
-Route::prefix('client/host')->group(function () {
-    Route::get('/create', [HostController::class, 'create'])->name('host.create');
 
-    // Route for the competition list
-    Route::get('/competition-list', [HostController::class, 'competitionList'])->name('competitions.list');
-
-    // Route for announcing winners
-    Route::get('/announce', [RankingController::class, 'announceWinners'])->name('host.announce');
-    Route::post('/store', [HostController::class, 'store'])->name('host.store');
-    Route::post('/{host}/continue', [HostController::class, 'continue'])->name('host.continue');
-
-});
 
 
 

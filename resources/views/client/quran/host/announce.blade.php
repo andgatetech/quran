@@ -57,24 +57,24 @@
     </style>
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-         Announce Winners
+         <h1>Announce Winners</h1>
     </header>
     <div class="button-group1">
-        <a href="{{ route('host.create') }}" class="btn  ">Host Competition</a>
-        <a href="{{ route('competitions.list') }}" class="btn  ">Competitions</a>
-        <a href="{{ route('host.announce') }}" class="btn  active-button">Announce Winners</a>
+        <a href="{{ route('quran.host.create') }}" class="btn btn-outline-success">Host Competition</a>
+        <a href="{{ route('quran.competitions.list') }}" class="btn btn-outline-success ">Competitions</a>
+        <a href="{{ route('quran.host.announce') }}" class="btn btn-outline-success active-button">Announce Winners</a>
     </div>
 
     <div class="button-group1" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border-radius:1rem;padding:.5rem; border:1px solid  var(--secondary-color);">
         <select id="sideCategoryFilter" class="btn ">
-            <option value="">Select Side Category</option>
+            <option value="">Select Recitation Piece</option>
             @foreach ($sideCategories as $sideCategory)
                 <option value="{{ $sideCategory->id }}">{{ $sideCategory->name }}</option>
             @endforeach
         </select>
 
         <select id="readCategoryFilter" class="btn ">
-            <option value="">Select Read Category</option>
+            <option value="">Select Recitation Method</option>
             @foreach ($readCategories as $readCategory)
                 <option value="{{ $readCategory->id }}">{{ $readCategory->name }}</option>
             @endforeach

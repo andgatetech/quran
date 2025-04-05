@@ -158,7 +158,7 @@ position:relative;
       <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Questions</button>
       <button class="btn" onclick="window.location.href='{{ route('quran.competitor.create') }}'">Participants</button>
       <button class="btn" onclick="window.location.href='{{ route('quran.sponsor.create') }}'">Sponsors</button>
-      <button class="btn" onclick="window.location.href='{{ route('host.create') }}'">To start the competition </button>
+      <button class="btn" onclick="window.location.href='{{ route('quran.host.create') }}'">To start the competition </button>
 
       <!-- new buttons -->
       <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award
