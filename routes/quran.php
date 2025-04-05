@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientLoginController;
+use App\Http\Controllers\Quran\QuranAgeCategoryController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
@@ -69,6 +70,15 @@ Route::prefix('client')->group(function () {
         Route::get('recitation/method/edit/{id}', [RecitationMethodController::class, 'edit'])->name('quran.recitation.method.edit');
         Route::put('recitation/method/update/{id}', [RecitationMethodController::class, 'update'])->name('quran.recitation.method.update');
         Route::delete('recitation/method/delete/{id}', [RecitationMethodController::class, 'destroy'])->name('quran.recitation.method.delete');
+
+        // AGE CATEGORY
+        Route::get('agecategory/create', [QuranAgeCategoryController::class, 'create'])->name('quran.agecategory.create');
+        Route::post('agecategory/store', [QuranAgeCategoryController::class, 'store'])->name('quran.agecategory.store');
+        Route::get('agecategory/list', [QuranAgeCategoryController::class, 'index'])->name('quran.agecategory.index');
+
+        Route::get('agecategory/edit/{id}', [QuranAgeCategoryController::class, 'edit'])->name('quran.agecategory.edit');
+        Route::put('agecategory/update/{id}', [QuranAgeCategoryController::class, 'update'])->name('quran.agecategory.update');
+        Route::delete('agecategory/delete/{id}', [QuranAgeCategoryController::class, 'destroy'])->name('quran.agecategory.delete');
 
     }); 
 

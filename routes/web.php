@@ -464,22 +464,7 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-// Create age category
-Route::get('/client/agecategory/create', [AgeCategoryController::class, 'create'])->name('agecategory.create');
-Route::post('/client/agecategory/store', [AgeCategoryController::class, 'store'])->name('agecategory.store');
 
-// List age categories
-Route::get('/client/agecategory/list', [AgeCategoryController::class, 'index'])->name('agecategory.index');
-
-// Edit age category
-Route::post('/client/agecategory/setSession', [AgeCategoryController::class, 'setSession'])->name('agecategory.setSession');
-Route::get('/client/agecategory/edit', [AgeCategoryController::class, 'edit'])->name('agecategory.edit');
-
-// Update Age Category
-Route::post('/client/agecategory/update', [AgeCategoryController::class, 'update'])->name('agecategory.update');
-
-// Delete Age Category
-Route::post('/client/agecategory/delete/{id}', [AgeCategoryController::class, 'destroy'])->name('agecategory.delete');
 Route::get('/client/pointcategory/create', [PointCategoryController::class, 'create'])->name('pointcategory.create');
 Route::post('/client/pointcategory/store', [PointCategoryController::class, 'store'])->name('pointcategory.store');
 Route::get('/client/pointcategory/list', [PointCategoryController::class, 'index'])->name('pointcategory.list');
