@@ -32,12 +32,30 @@
             margin: 20px auto;
             /* padding: 20px; */
         }
+            /* Main Content */
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
         .list-container {
-            background: #fff;
+            background-color: var(--primary-color);
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+            padding: 1rem .5rem;
+            max-height: 50rem;
+            overflow-y: auto;
         }
 
         .list-title {
@@ -49,16 +67,15 @@
             margin-bottom: 20px;
             font-size: 18px;
         }
-
         .category-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
+      background: white;
+      margin: 10px auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 40rem;
+    }
 
         .card-header {
             display: flex;
@@ -96,20 +113,31 @@
         }
 
         .card-actions {
-            display: none;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
+  display: none; /* Hide by default */
+  justify-content: center;
+  margin-top: 10px;
+  text-align: center;
+  align-items: center;
+}
 
-        .btn {
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
+.btn {
+      font-size: .9rem !important;
+      border-radius: .3rem !important;
+      padding: .4rem 0 !important;
+      border: 1px solid var(--secondary-color) !important;
+      background-color: var(--secondary-color) !important;
+      color: var(--primary-color) !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      margin: 5px !important;
+    }
+       .btn:hover {
+
+        border: 1px solid var(--secondary-color) !important;
+      background-color: var(--primary-color) !important;
+      color: var(--secondary-color) !important;
+
+    }
 
         .delete-btn {
             background: #e74c3c;
@@ -171,24 +199,23 @@
 </head>
 
 <body>
-    @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
-<header class="header">
-    <a class="back-btn" href="{{ route('client.menu.menu') }}"><i class="fas fa-home"></i></a>
-    <h1>Point Category List</h1>
-</header>
     <div class="tabs">
-        <button class="tab-btn" onclick="window.location.href='{{ route('pointcategory.create') }}'">Create Point Category</button>
-        <button class="tab-btn active" onclick="window.location.href='{{ route('pointcategory.list') }}'">Point Category List</button>
+        <button class="tab-btn" onclick="window.location.href='{{ route('quran.pointcategory.create') }}'">Create Point Category</button>
+        <button class="tab-btn active" onclick="window.location.href='{{ route('quran.pointcategory.list') }}'">Point Category List</button>
     </div>
 
-    <div class="content">
+    <div class="container">
+
+        <div class="row">
+        <div class="col-md-6 col-sm-12 offset-md-3">
         <div class="list-container">
+        @if(session('success'))
+          <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-
-            {{-- <h2 class="list-title">Point Category List</h2> --}}
             @foreach ($pointCategories as $pointCategory)
                 <div class="category-card">
                     <div class="card-header" onclick="toggleDetails(this)">
@@ -196,13 +223,6 @@
                         </span></p>
                     </div>
                     <div class="details">
-
-
-
-
-
-
-
                         <p>
                             Total Number of Points:
                             <span>{{ $pointCategory->total_points }}</span>
@@ -213,15 +233,12 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <form action="{{ route('pointcategory.delete', $pointCategory->id) }}" method="POST">
+                        <form action="{{ route('quran.pointcategory.delete', $pointCategory->id) }}" method="POST">
                             @csrf
+                            @method('delete')
                             <button type="submit" class="btn delete-btn">Delete</button>
                         </form>
-                        <form action="{{ route('pointcategory.setSession') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="point_category_id" value="{{ $pointCategory->id }}">
-                            <button type="submit" class="btn edit-btn">Edit</button>
-                        </form>
+                        <a href="{{ route('quran.pointcategory.edit', $pointCategory->id) }}" class="btn edit-btn">Edit</a>
 
                     </div>
                 </div>
@@ -231,6 +248,9 @@
                 <p>No point categories found. Click "Create Point Category" to add one.</p>
             @endif
         </div>
+        </div>
+        </div>
+        
     </div>
 
     <style>

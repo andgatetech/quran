@@ -139,15 +139,13 @@ position:relative;
 </head>
 <body>
 
-    <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        <h1>Point Category Edit</h1>
-    </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
       <div class="container1">
   <div class="tabs">
-    <button class="tab-btn "  onclick="window.location.href='{{ route('pointcategory.create') }}'">Create Point Category</button>
-    <button class="tab-btn " onclick="window.location.href='{{ route('pointcategory.list') }}'">Point Category List</button>
+    <button class="tab-btn "  onclick="window.location.href='{{ route('quran.pointcategory.create') }}'">Create Point Category</button>
+    <button class="tab-btn " onclick="window.location.href='{{ route('quran.pointcategory.list') }}'">Point Category List</button>
   </div>
       </div>
 
@@ -156,8 +154,9 @@ position:relative;
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <form method="POST" action="{{ route('pointcategory.update') }}">
+            <form method="POST" action="{{ route('quran.pointcategory.update', $pointCategory->id) }}">
                 @csrf
+                @method('put')
                 <div>
                     <label for="name">Point Category Name</label>
                     <input type="text" id="name" name="name" value="{{ $pointCategory->name }}" required>
@@ -180,3 +179,5 @@ position:relative;
 
 </body>
 </html>
+
+

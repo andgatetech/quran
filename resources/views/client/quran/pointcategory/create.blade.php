@@ -75,30 +75,15 @@
     </style>
 </head>
 <body>
-
-
-
-
-    <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        <h1>Create Point Category</h1>
-    </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
       <div class="container1">
   <div class="tabs">
-    <button class="tab-btn active"  onclick="window.location.href='{{ route('pointcategory.create') }}'">Create Point Category</button>
-    <button class="tab-btn " onclick="window.location.href='{{ route('pointcategory.list') }}'">Point Category List</button>
+    <button class="tab-btn active"  onclick="window.location.href='{{ route('quran.pointcategory.create') }}'">Create Point Category</button>
+    <button class="tab-btn " onclick="window.location.href='{{ route('quran.pointcategory.list') }}'">Point Category List</button>
   </div>
       </div>
-
-
-
-
-
-
-
-
-
 
 
     <div class="wrapper">
@@ -106,7 +91,7 @@
         <div class="main-content">
 
             <div class="form-container">
-                <form method="POST" action="{{ route('pointcategory.store') }}">
+                <form method="POST" action="{{ route('quran.pointcategory.store') }}">
                     @csrf
                     <input type="text" name="name" placeholder="Point Category Name" required>
                     <input type="number" name="total_points" placeholder="Total Points" required>

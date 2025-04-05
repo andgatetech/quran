@@ -465,20 +465,7 @@ Route::get('/client/quiz/menu', function () {
 
 
 
-Route::get('/client/pointcategory/create', [PointCategoryController::class, 'create'])->name('pointcategory.create');
-Route::post('/client/pointcategory/store', [PointCategoryController::class, 'store'])->name('pointcategory.store');
-Route::get('/client/pointcategory/list', [PointCategoryController::class, 'index'])->name('pointcategory.list');
-// Set session for editing point category
-Route::post('/client/pointcategory/set-session', [PointCategoryController::class, 'setSession'])->name('pointcategory.setSession');
 
-// Edit point category (no ID in URL, session used)
-Route::get('/client/pointcategory/edit', [PointCategoryController::class, 'edit'])->name('pointcategory.edit');
-
-// Update point category
-Route::post('/client/pointcategory/update', [PointCategoryController::class, 'update'])->name('pointcategory.update');
-
-// Delete point category
-Route::post('/client/pointcategory/delete', [PointCategoryController::class, 'destroy'])->name('pointcategory.delete');
 
 //Quran Report
 

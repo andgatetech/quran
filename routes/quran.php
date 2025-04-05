@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAgeCategoryController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
+use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
 use App\Http\Controllers\Quran\RecitationPieceController;
 use App\Http\Controllers\Quran\RecitationMethodController;
@@ -79,6 +80,15 @@ Route::prefix('client')->group(function () {
         Route::get('agecategory/edit/{id}', [QuranAgeCategoryController::class, 'edit'])->name('quran.agecategory.edit');
         Route::put('agecategory/update/{id}', [QuranAgeCategoryController::class, 'update'])->name('quran.agecategory.update');
         Route::delete('agecategory/delete/{id}', [QuranAgeCategoryController::class, 'destroy'])->name('quran.agecategory.delete');
+
+        // SCORING METHOD
+        Route::get('pointcategory/create', [QuranPointCategoryController::class, 'create'])->name('quran.pointcategory.create');
+        Route::post('pointcategory/store', [QuranPointCategoryController::class, 'store'])->name('quran.pointcategory.store');
+        Route::get('pointcategory/list', [QuranPointCategoryController::class, 'index'])->name('quran.pointcategory.list');
+
+        Route::get('pointcategory/edit/{id}', [QuranPointCategoryController::class, 'edit'])->name('quran.pointcategory.edit');
+        Route::put('pointcategory/update/{id}', [QuranPointCategoryController::class, 'update'])->name('quran.pointcategory.update');
+        Route::delete('pointcategory/delete/{id}', [QuranPointCategoryController::class, 'destroy'])->name('quran.pointcategory.delete');
 
     }); 
 
