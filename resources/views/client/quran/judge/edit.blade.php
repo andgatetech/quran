@@ -1,20 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- top bar -->
+@include('client.layouts.top-bar')
+
+    <div class="tabs">
+
+        <button class="tab-btn active" onclick="window.location.href='{{ route('quran.judges.create') }}'">Create Judge</button>
+        <button class="tab-btn " onclick="window.location.href='{{ route('quran.judges.list') }}'">Judge List</button>
+    </div>
     <div class="container my-5">
-        <h2>Edit Judge</h2>
-
-        <!-- Button Group -->
-        <div class="button-group mb-4">
-            <a href="{{ route('judges.create') }}" class="btn btn-outline-success">Create Judge</a>
-            <a href="{{ route('judges.index') }}" class="btn btn-outline-success active-button">Judge List</a>
-        </div>
-
-
-
 
         <!-- The Form -->
-        <form action="{{ route('judges.update', $judge->id) }}" method="POST" class="form-container mt-4">
+        <form action="{{ route('quran.judges.update', $judge->id) }}" method="POST" class="form-container mt-4">
             @csrf
             @method('PUT')
 
@@ -60,8 +58,7 @@
                 <select class="form-control" id="competition_id" name="competition_id" required>
                     <option value="">Select Competition</option>
                     @foreach ($competitions as $competition)
-                        <option value="{{ $competition->id }}"
-                            {{ old('competition_id', $judge->competition_id) == $competition->id ? 'selected' : '' }}>
+                        <option value="{{ $competition->id }}" {{ ($judge->competition_id == $competition->id) ? 'selected' : '' }}>
                             {{ $competition->main_name }}
                         </option>
                     @endforeach

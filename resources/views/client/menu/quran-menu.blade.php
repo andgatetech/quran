@@ -154,7 +154,7 @@ position:relative;
       <button class="btn" onclick="window.location.href='{{ route('quran.agecategory.create') }}'">Age Category</button>
 
       <button class="btn" onclick="window.location.href='{{ route('quran.pointcategory.create') }}'">Scoring method</button>
-      <button class="btn" onclick="window.location.href='{{ route('judges.create') }}'">Judge</button>
+      <button class="btn" onclick="window.location.href='{{ route('quran.judges.create') }}'">Judge</button>
       <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Questions</button>
       <button class="btn" onclick="window.location.href='{{ route('competitors.create') }}'">Participants</button>
       <button class="btn" onclick="window.location.href='{{ route('sponsors.create') }}'">Sponsors</button>

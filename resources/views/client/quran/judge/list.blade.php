@@ -3,15 +3,13 @@
 @section('content')
 
 
-    <header class="header">
-        <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-        <h1>Judge List</h1>
-      </header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
 
         <div class="tabs">
-            <button class="tab-btn" onclick="window.location.href='{{ route('judges.create') }}'">Create Judge</button>
-            <button class="tab-btn active" onclick="window.location.href='{{ route('judges.index') }}'">Judge List</button>
+            <button class="tab-btn" onclick="window.location.href='{{ route('quran.judges.create') }}'">Create Judge</button>
+            <button class="tab-btn active" onclick="window.location.href='{{ route('quran.judges.list') }}'">Judge List</button>
         </div>
 
     <div class="content">
@@ -49,13 +47,13 @@
                         <p>Email Address: <span>{{ $judge->email }}</span></p>
                         <p>Password: <span>************</span></p>
                         <div class="button-group-inline">
-                            <form action="{{ route('judges.destroy', $judge->id) }}" method="POST"
+                            <form action="{{ route('quran.judges.delete', $judge->id) }}" method="POST"
                                 style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn delete-btn">Delete</button>
                             </form>
-                            <a href="{{ route('judges.edit', $judge->id) }}" class="btn edit-btn">Edit</a>
+                            <a href="{{ route('quran.judges.edit', $judge->id) }}" class="btn edit-btn">Edit</a>
                         </div>
                     </div>
                 </div>
