@@ -90,7 +90,7 @@
 
       <button class="btn" onclick="window.location.href='{{ route('poetry.pointcategory.create') }}'">Scoring method</button>
       <button class="btn" onclick="window.location.href='{{ route('poetry.judges.create') }}'">Judge</button>
-      <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Poetry</button>
+      <button class="btn" onclick="window.location.href='{{ route('poetry.poetry.create') }}'">Poetry</button>
       <button class="btn" onclick="window.location.href='{{ route('poetry.competitors.create') }}'">Participants</button>
       <button class="btn" onclick="window.location.href='{{ route('poetry.sponsors.create') }}'">Sponsors</button>
       <button class="btn" onclick="window.location.href='{{ route('poetry.host.create') }}'">To start the competition </button>

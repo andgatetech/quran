@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Poetry;
 
 use App\Models\Competitor;
+use App\Models\Poetry;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\CompetitionType;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CompetitorsImport; // Add this line
 
-class PoetryCompetitorController extends Controller
+class PoetryController extends Controller
 {
 
 
@@ -32,7 +33,7 @@ class PoetryCompetitorController extends Controller
             // Import the CSV using Laravel Excel
             Excel::import(new CompetitorsImport, $request->file('competitors_csv'));
 
-            return redirect()->route('poetry.competitors.index')->with('success', 'Competitors imported successfully!');
+            return redirect()->route('poetry.poetry.index')->with('success', 'Competitors imported successfully!');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
 
@@ -54,56 +55,12 @@ class PoetryCompetitorController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Display a listing of the competitors.
      */
     public function index()
     {
-        $competitors = Competitor::with([
+        $competitors = Poetry::with([
             'competition',
             'sideCategory',
             'readCategory',
@@ -112,7 +69,7 @@ class PoetryCompetitorController extends Controller
         // ->where('user_id', Auth::id()) // Filter by user_id
         // ->get();
 
-        return view('client.poetry.competitor.list', compact('competitors'));
+        return view('client.poetry.poetry.list', compact('competitors'));
     }
 
 
@@ -136,7 +93,7 @@ class PoetryCompetitorController extends Controller
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
-        return view('client.poetry.competitor.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories'));
+        return view('client.poetry.poetry.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories'));
     }
 
     /**
@@ -147,20 +104,12 @@ public function store(Request $request)
 {
     // Validate the incoming request data
     $validatedData = $request->validate([
-        'full_name' => 'required',
-        'full_name_dhivehi' => 'nullable',
-        'id_card_number' => 'required',
-        'address' => 'required',
-        'island_city' => 'required',
-        'school_name' => 'nullable',
-        'parent_name' => 'required',
-        'phone_number' => 'required',
+        'poetry_name' => 'required',
         'competition_id' => 'required',
         'side_category_id' => 'required',
         'read_category_id' => 'required',
         'age_category_id' => 'required',
-        'number_of_questions' => 'required',
-        'full_name' => 'required',
+        
     ]);
 
     try {
@@ -168,10 +117,10 @@ public function store(Request $request)
         $validatedData['user_id'] = Auth::id(); // Store the user_id of the logged-in user
 
         // Create the competitor
-        Competitor::create($validatedData);
+        Poetry::create($validatedData);
 
         // Redirect back with success message
-        return redirect()->route('poetry.competitors.index')->with('success', 'Competitor created successfully!');
+        return redirect()->route('poetry.poetry.index')->with('success', 'Competitor created successfully!');
     } catch (\Exception $e) {
         // Log the error
         \Log::error('Error creating competitor: ' . $e->getMessage());
@@ -188,7 +137,7 @@ public function store(Request $request)
     public function edit($id)
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $competitor = Competitor::findOrFail($id);
+        $competitor = Poetry::findOrFail($id);
         $competitions = Competition::where('user_id', Auth::id())->get();
         $sideCategories = SideCategory::where('user_id', Auth::id())
         ->where('competition_type_id',$competitionType->id)
@@ -200,7 +149,7 @@ public function store(Request $request)
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
-        return view('client.poetry.competitor.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
+        return view('client.poetry.poetry.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
     }
 
     /**
@@ -208,31 +157,24 @@ public function store(Request $request)
      */
     public function update(Request $request, $id)
     {
-        $competitor = Competitor::findOrFail($id);
+        $poetry = Poetry::findOrFail($id);
 
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'full_name' => 'required',
-            'full_name_dhivehi' => 'nullable',
-            'id_card_number' => 'required',
-            'address' => 'required',
-            'island_city' => 'required',
-            'school_name' => 'nullable',
-            'parent_name' => 'required',
-            'phone_number' => 'required',
+            'poetry_name' => 'required',
             'competition_id' => 'required',
             'side_category_id' => 'required',
             'read_category_id' => 'required|integer',
             'age_category_id' => 'required|integer',
-            'number_of_questions' => 'required|integer|min:1',
+            
         ]);
 
         try {
             // Update the competitor
-            $competitor->update($validatedData);
+            $poetry->update($validatedData);
 
             // Redirect back with success message
-            return redirect()->route('poetry.competitors.index')->with('success', 'Competitor updated successfully!');
+            return redirect()->route('poetry.poetry.index')->with('success', 'Competitor updated successfully!');
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error updating competitor: ' . $e->getMessage());
@@ -247,14 +189,14 @@ public function store(Request $request)
      */
     public function destroy($id)
     {
-        $competitor = Competitor::findOrFail($id);
+        $poetry = Poetry::findOrFail($id);
 
         try {
-            $competitor->delete();
-            return redirect()->route('poetry.competitors.index')->with('success', 'Competitor deleted successfully!');
+            $poetry->delete();
+            return redirect()->route('poetry.poetry.index')->with('success', 'Competitor deleted successfully!');
         } catch (\Exception $e) {
             \Log::error('Error deleting competitor: ' . $e->getMessage());
-            return redirect()->route('poetry.competitors.index')->with('error', 'Failed to delete competitor. Please try again.');
+            return redirect()->route('poetry.poetry.index')->with('error', 'Failed to delete competitor. Please try again.');
         }
     }
 }

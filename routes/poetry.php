@@ -8,6 +8,7 @@ use App\Http\Controllers\Poetry\PoetryReadCategoryController;
 use App\Http\Controllers\Poetry\PoetryAgeCategoryController;
 use App\Http\Controllers\Poetry\PoetryPointCategoryController;
 use App\Http\Controllers\Poetry\PoetryJudgeController;
+use App\Http\Controllers\Poetry\PoetryController;
 use App\Http\Controllers\Poetry\PoetryCompetitorController;
 use App\Http\Controllers\Poetry\PoetrySponsorController;
 use App\Http\Controllers\Poetry\PoetryHostController;
@@ -120,6 +121,16 @@ Route::prefix('client')->group(function () {
         Route::put('/{id}', [PoetryJudgeController::class, 'update'])->name('poetry.judges.update');
         Route::delete('/{id}', [PoetryJudgeController::class, 'destroy'])->name('poetry.judges.destroy');
 
+
+        // POETRY
+        Route::post('/poetry/bulk-store', [PoetryController::class, 'bulkStore'])->name('poetry.poetry.bulkStore');
+        Route::get('/poetry/create', [PoetryController::class, 'create'])->name('poetry.poetry.create');
+        Route::post('/poetry/post', [PoetryController::class, 'store'])->name('poetry.poetry.store');
+        Route::get('/poetry/list', [PoetryController::class, 'index'])->name('poetry.poetry.index');
+        Route::get('/poetry/{id}/edit', [PoetryController::class, 'edit'])->name('poetry.poetry.edit');
+        Route::put('/poetry/update/{id}', [PoetryController::class, 'update'])->name('poetry.poetry.update');
+        Route::delete('/poetry/delete/{id}', [PoetryController::class, 'destroy'])->name('poetry.poetry.destroy');
+        
 
         // COMPETITATOR
         Route::post('/competitors/bulk-store', [PoetryCompetitorController::class, 'bulkStore'])->name('poetry.competitors.bulkStore');
