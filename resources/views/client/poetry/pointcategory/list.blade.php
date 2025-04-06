@@ -213,16 +213,12 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <form action="{{ route('poetry.pointcategory.delete') }}" method="POST">
+                        <form action="{{ route('poetry.pointcategory.delete',$pointCategory->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="point_category_id" value="{{ $pointCategory->id }}">
+                            @method('DELETE')
                             <button type="submit" class="btn delete-btn">Delete</button>
                         </form>
-                        <form action="{{ route('poetry.pointcategory.setSession') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="point_category_id" value="{{ $pointCategory->id }}">
-                            <button type="submit" class="btn edit-btn">Edit</button>
-                        </form>
+                        <a href="{{ route('poetry.pointcategory.edit',$pointCategory->id) }}" class="btn edit-btn">Edit</a>
 
                     </div>
                 </div>

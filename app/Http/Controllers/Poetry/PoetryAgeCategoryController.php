@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PoetryAgeCategoryController extends Controller
 {
+    
+    private $module = "Poetry";
     // Show the create form
     public function create()
     {
@@ -45,41 +47,31 @@ class PoetryAgeCategoryController extends Controller
     }
 
     // Edit an age category
-    public function edit()
+    public function edit($id)
     {
-        $ageCategoryId = session('age_category_id'); // Get the ID from the session
 
-        if (!$ageCategoryId) {
+        $ageCategory = AgeCategory::findOrFail($id);
+        if (!$ageCategory) {
             return redirect()->route('poetry.agecategory.index')->with('error', 'No category selected for editing.');
         }
-
-        $ageCategory = AgeCategory::findOrFail($ageCategoryId);
 
         return view('client.poetry.agecategory.edit', compact('ageCategory'));
     }
 
 
     // Update an age category
-    public function update(Request $request)
+    public function update($id,Request $request)
 {
-    $ageCategoryId = session('age_category_id'); // Get the ID from the session
-
-    if (!$ageCategoryId) {
-        return redirect()->route('poetry.agecategory.index')->with('error', 'No category selected for updating.');
-    }
-
+    
     $request->validate([
         'name' => 'required|string|max:255',
     ]);
 
-    $ageCategory = AgeCategory::findOrFail($ageCategoryId);
+    $ageCategory = AgeCategory::findOrFail($id);
     $ageCategory->update([
         'name' => $request->name,
     ]);
-
-    // Clear the session
-    session()->forget('age_category_id');
-
+    
     return redirect()->route('poetry.agecategory.index')->with('success', 'Age Category updated successfully!');
 }
 
@@ -88,24 +80,12 @@ class PoetryAgeCategoryController extends Controller
     {
         // Find the AgeCategory by ID
         $ageCategory = AgeCategory::findOrFail($id);
-
         // Delete the AgeCategory
         $ageCategory->delete();
-
         // Redirect with success message
         return redirect()->route('poetry.agecategory.index')->with('success', 'Age Category deleted successfully!');
     }
 
-    public function setSession(Request $request)
-{
-    $request->validate([
-        'age_category_id' => 'required|exists:age_categories,id',
-    ]);
-
-    // Store the ID in the session
-    session(['age_category_id' => $request->age_category_id]);
-
-    return redirect()->route('poetry.agecategory.edit');
-}
+    
 
 }

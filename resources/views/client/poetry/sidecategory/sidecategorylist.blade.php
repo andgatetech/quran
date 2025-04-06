@@ -196,16 +196,12 @@
             </div>
             <div class="card-actions">
 
-              <form action="{{ route('poetry.sidecategory.delete') }}" method="POST" style="display:inline-block;">
+              <form action="{{ route('poetry.sidecategory.delete',$sideCategory->id) }}" method="POST" style="display:inline-block;">
                 @csrf
-                <input type="hidden" name="side_category_id" value="{{ $sideCategory->id }}">
+                @method('DELETE')
                 <button type="submit" class="btn delete-btn">Delete</button>
               </form>
-              <form action="{{ route('poetry.sidecategory.setSession') }}" method="POST" style="display:inline-block;">
-                @csrf
-                <input type="hidden" name="side_category_id" value="{{ $sideCategory->id }}">
-                <button type="submit" class="btn edit-btn">Edit</button>
-              </form>
+              <a href="{{ route('poetry.sidecategory.edit',$sideCategory->id) }}" class="btn edit-btn">Edit</a>
             </div>
           </div>
         @endforeach

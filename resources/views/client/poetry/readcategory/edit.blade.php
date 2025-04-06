@@ -132,8 +132,9 @@ position:relative;
 
 
 
-      <form class="read-category-form" method="POST" action="{{ route('poetry.readcategory.update') }}">
+      <form class="read-category-form" method="POST" action="{{ route('poetry.readcategory.update',$readCategory->id) }}">
         @csrf
+        @method('put')
         <input type="text" name="name" placeholder="Read Category Name" required  value="{{ $readCategory->name }}">
         <button type="submit" class="btn save-btn">Save</button>
       </form>

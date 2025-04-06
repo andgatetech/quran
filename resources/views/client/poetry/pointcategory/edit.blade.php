@@ -156,8 +156,9 @@ position:relative;
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <form method="POST" action="{{ route('poetry.pointcategory.update') }}">
+            <form method="POST" action="{{ route('poetry.pointcategory.update',$pointCategory->id) }}">
                 @csrf
+                @method('PUT')
                 <div>
                     <label for="name">Point Category Name</label>
                     <input type="text" id="name" name="name" value="{{ $pointCategory->name }}" required>

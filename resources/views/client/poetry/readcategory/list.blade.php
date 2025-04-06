@@ -179,20 +179,16 @@ position:relative;
           <div class="card-header" onclick="toggleDropdown(this)">
 
 
-            <p>Read Category: <span>{{ $readCategory->name }} <i class="fas fa-chevron-down"></i></span></p>
+          <p>Read Category: <span>{{ $readCategory->name }} <i class="fas fa-chevron-down"></i></span></p>
           </div>
           <div class="card-actions">
 
-            <form action="{{ route('poetry.readcategory.delete') }}" method="POST" style="display:inline-block;">
+            <form action="{{ route('poetry.readcategory.delete',$readCategory->id) }}" method="POST" style="display:inline-block;">
               @csrf
-              <input type="hidden" name="read_category_id" value="{{ $readCategory->id }}">
+              @method('DELETE')
               <button type="submit" class="btn delete-btn">Delete</button>
             </form>
-            <form action="{{ route('poetry.readcategory.setSession') }}" method="POST" style="display:inline-block;">
-                @csrf
-                <input type="hidden" name="read_category_id" value="{{ $readCategory->id }}">
-                <button type="submit" class="btn edit-btn">Edit</button>
-              </form>
+            <a href="{{ route('poetry.readcategory.edit',$readCategory->id) }}" class="btn edit-btn">Edit</a>
           </div>
         </div>
       @endforeach

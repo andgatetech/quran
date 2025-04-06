@@ -130,8 +130,9 @@ border: 1px solid  var(--secondary-color);;
 
   <!-- Main Content -->
   <div class="container">
-    <form method="POST" action="{{ route('poetry.sidecategory.update') }}">
+    <form method="POST" action="{{ route('poetry.sidecategory.update',$sideCategory->id) }}">
       @csrf
+      @method('put')
       <label for="name">Category Name</label>
       <input type="text" name="name" id="name" value="{{ $sideCategory->name }}" required>
       <button type="submit">Update</button>

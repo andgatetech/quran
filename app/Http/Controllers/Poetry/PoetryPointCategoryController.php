@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class PoetryPointCategoryController extends Controller
 {
+    private $module = "Poetry";
     public function create()
     {
          return view('client.poetry.pointcategory.create');
@@ -44,55 +45,42 @@ class PoetryPointCategoryController extends Controller
         return view('client.poetry.pointcategory.list', compact('pointCategories'));
     }
 
-    // Set session for the selected point category
-    public function setSession(Request $request)
-    {
-        $request->validate(['point_category_id' => 'required|exists:point_categories,id']);
-        Session::put('point_category_id', $request->point_category_id);
-        return redirect()->route('poetry.pointcategory.edit');
-    }
+   
 
     // Edit page for the selected point category
-    public function edit()
+    public function edit($id)
     {
-        $pointCategoryId = Session::get('point_category_id');
-        if (!$pointCategoryId) {
+        $pointCategory = PointCategory::findOrFail($id);
+        if (!$pointCategory) {
             return redirect()->route('poetry.pointcategory.list')->with('error', 'No category selected for editing.');
         }
 
-        $pointCategory = PointCategory::findOrFail($pointCategoryId);
         return view('client.poetry.pointcategory.edit', compact('pointCategory'));
     }
 
     // Update the selected point category
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
-        $pointCategoryId = Session::get('point_category_id');
-        if (!$pointCategoryId) {
-            return redirect()->route('poetry.pointcategory.list')->with('error', 'No category selected for updating.');
-        }
-
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'total_points' => 'required|integer',
             'deduction_amount' => 'required|numeric',
         ]);
 
-        $pointCategory = PointCategory::findOrFail($pointCategoryId);
+        $pointCategory = PointCategory::findOrFail($id);
         $pointCategory->update([
             'name' => $request->name,
             'total_points' => $request->total_points,
             'deduction_amount' => $request->deduction_amount,
         ]);
 
-        Session::forget('point_category_id');
         return redirect()->route('poetry.pointcategory.list')->with('success', 'Point Category updated successfully!');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $request->validate(['point_category_id' => 'required|exists:point_categories,id']);
-        $pointCategory = PointCategory::findOrFail($request->point_category_id);
+        $pointCategory = PointCategory::findOrFail($id);
         $pointCategory->delete();
         return redirect()->route('poetry.pointcategory.list')->with('success', 'Point Category deleted successfully!');
     }

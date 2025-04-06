@@ -57,34 +57,30 @@ Route::prefix('client')->group(function () {
 
         //RECITATION PIECE
         // Show create side category form
-        Route::get('/sidecategory/create', [PoetrySideCategoryController::class, 'create'])->name('poetry.sidecategory.create');
+        Route::get('recitation/piece/create', [PoetrySideCategoryController::class, 'create'])->name('poetry.sidecategory.create');
         // Store side category data
-        Route::post('/sidecategory/store', [PoetrySideCategoryController::class, 'store'])->name('poetry.sidecategory.store');
-        Route::get('/sidecategory/list', [PoetrySideCategoryController::class, 'index'])->name('poetry.sidecategory.list');
-        // Set session for editing
-        Route::post('/sidecategory/set-session', [PoetrySideCategoryController::class, 'setSession'])->name('poetry.sidecategory.setSession');
+        Route::post('recitation/piece/store', [PoetrySideCategoryController::class, 'store'])->name('poetry.sidecategory.store');
+        Route::get('recitation/piece/list', [PoetrySideCategoryController::class, 'index'])->name('poetry.sidecategory.list');
         // Show edit form
-        Route::get('/sidecategory/edit', [PoetrySideCategoryController::class, 'edit'])->name('poetry.sidecategory.edit');
+        Route::get('recitation/piece/edit/{id}', [PoetrySideCategoryController::class, 'edit'])->name('poetry.sidecategory.edit');
         // Update side category
-        Route::post('/sidecategory/update', [PoetrySideCategoryController::class, 'update'])->name('poetry.sidecategory.update');
+        Route::put('recitation/piece/update/{id}', [PoetrySideCategoryController::class, 'update'])->name('poetry.sidecategory.update');
         // Delete side category
-        Route::post('/sidecategory/delete', [PoetrySideCategoryController::class, 'destroy'])->name('poetry.sidecategory.delete');
+        Route::delete('recitation/piece/delete/{id}', [PoetrySideCategoryController::class, 'destroy'])->name('poetry.sidecategory.delete');
 
         // METHOD OF RECITATION
         // Show create read category form
-        Route::get('/readcategory/create', [PoetryReadCategoryController::class, 'create'])->name('poetry.readcategory.create');
+        Route::get('recitation/method/create', [PoetryReadCategoryController::class, 'create'])->name('poetry.readcategory.create');
         // Store read category data
-        Route::post('/readcategory/store', [PoetryReadCategoryController::class, 'store'])->name('poetry.readcategory.store');
+        Route::post('recitation/method/store', [PoetryReadCategoryController::class, 'store'])->name('poetry.readcategory.store');
         // Show list of read categories
-        Route::get('/readcategory/list', [PoetryReadCategoryController::class, 'index'])->name('poetry.readcategory.list');
-        // Set session for edit
-        Route::post('/readcategory/set-session', [PoetryReadCategoryController::class, 'setSession'])->name('poetry.readcategory.setSession');
+        Route::get('recitation/method/list', [PoetryReadCategoryController::class, 'index'])->name('poetry.readcategory.list');
         // Edit a read category
-        Route::get('/readcategory/edit', [PoetryReadCategoryController::class, 'edit'])->name('poetry.readcategory.edit');
+        Route::get('recitation/method/edit/{id}', [PoetryReadCategoryController::class, 'edit'])->name('poetry.readcategory.edit');
         // Update a read category
-        Route::post('/readcategory/update', [PoetryReadCategoryController::class, 'update'])->name('poetry.readcategory.update');
+        Route::put('recitation/method/update/{id}', [PoetryReadCategoryController::class, 'update'])->name('poetry.readcategory.update');
         // Delete a read category
-        Route::post('/readcategory/delete', [PoetryReadCategoryController::class, 'destroy'])->name('poetry.readcategory.delete');
+        Route::delete('recitation/method/delete/{id}', [PoetryReadCategoryController::class, 'destroy'])->name('poetry.readcategory.delete');
 
         // AGE CATEGORY
         // Create age category
@@ -93,25 +89,24 @@ Route::prefix('client')->group(function () {
         // List age categories
         Route::get('/agecategory/list', [PoetryAgeCategoryController::class, 'index'])->name('poetry.agecategory.index');
         // Edit age category
-        Route::post('/agecategory/setSession', [PoetryAgeCategoryController::class, 'setSession'])->name('poetry.agecategory.setSession');
-        Route::get('/agecategory/edit', [PoetryAgeCategoryController::class, 'edit'])->name('poetry.agecategory.edit');
+        
+        Route::get('/agecategory/edit/{id}', [PoetryAgeCategoryController::class, 'edit'])->name('poetry.agecategory.edit');
         // Update Age Category
-        Route::post('/agecategory/update', [PoetryAgeCategoryController::class, 'update'])->name('poetry.agecategory.update');
+        Route::put('/agecategory/update/{id}', [PoetryAgeCategoryController::class, 'update'])->name('poetry.agecategory.update');
         // Delete Age Category
-        Route::post('/agecategory/delete/{id}', [PoetryAgeCategoryController::class, 'destroy'])->name('poetry.agecategory.delete');
+        Route::delete('/agecategory/delete/{id}', [PoetryAgeCategoryController::class, 'destroy'])->name('poetry.agecategory.delete');
 
         // POINT CATEGORY
         Route::get('/pointcategory/create', [PoetryPointCategoryController::class, 'create'])->name('poetry.pointcategory.create');
         Route::post('/pointcategory/store', [PoetryPointCategoryController::class, 'store'])->name('poetry.pointcategory.store');
         Route::get('/pointcategory/list', [PoetryPointCategoryController::class, 'index'])->name('poetry.pointcategory.list');
-        // Set session for editing point category
-        Route::post('/pointcategory/set-session', [PoetryPointCategoryController::class, 'setSession'])->name('poetry.pointcategory.setSession');
+        
         // Edit point category (no ID in URL, session used)
-        Route::get('/pointcategory/edit', [PoetryPointCategoryController::class, 'edit'])->name('poetry.pointcategory.edit');        
+        Route::get('/pointcategory/edit/{id}', [PoetryPointCategoryController::class, 'edit'])->name('poetry.pointcategory.edit');        
         // Update point category
-        Route::post('/pointcategory/update', [PoetryPointCategoryController::class, 'update'])->name('poetry.pointcategory.update');        
+        Route::put('/pointcategory/update/{id}', [PoetryPointCategoryController::class, 'update'])->name('poetry.pointcategory.update');        
         // Delete point category
-        Route::post('/pointcategory/delete', [PoetryPointCategoryController::class, 'destroy'])->name('poetry.pointcategory.delete');
+        Route::delete('/pointcategory/delete/{id}', [PoetryPointCategoryController::class, 'destroy'])->name('poetry.pointcategory.delete');
          
         // JUDGE
         Route::get('/judge/create', [PoetryJudgeController::class, 'create'])->name('poetry.judges.create');

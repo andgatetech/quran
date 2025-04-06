@@ -15,6 +15,20 @@
 box-shadow: none !important;
 padding-bottom: 0 !important;
 }
+
+.btn {
+      font-size: .9rem !important;
+      border-radius: .3rem !important;
+      padding: .4rem 0 !important;
+      border: 1px solid var(--secondary-color) !important;
+      background-color: var(--secondary-color) !important;
+      color: var(--primary-color) !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      margin: 5px !important;
+}
+
+
 /* Side Category Form */
 .side-category-form {
     display: flex;
@@ -57,35 +71,40 @@ padding-bottom: 0 !important;
 
 </style>
 <body>
-
+  
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
         <h1>Create Side Category(Poetry)</h1>
-      </header>
+    </header>
 
       {{-- <div class="container1"> --}}
-  <div class="tabs">
-    <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Side Category</button>
-    <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Side Category List</button>
-  </div>
+  <div class="container1">    
+    <div class="tabs">
+      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Side Category</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Side Category List</button>
+    </div>
+  </div>  
       {{-- </div> --}}
 
   <!-- Content Section -->
   <div class="container">
 
+    <div class="row">
+        <div class="col-md-6 col-sm-12 offset-md-3">
+            <!-- Form Section -->
+            <div class="form-container">
+              @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+              @endif
 
-    <!-- Form Section -->
-    <div class="form-container">
-      @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-      @endif
-
-      <form class="side-category-form" method="POST" action="{{ route('poetry.sidecategory.store') }}">
-        @csrf
-        <input type="text" name="name" placeholder="Side Category Name" required>
-        <button type="submit" class="btn save-btn">Save</button>
-      </form>
-    </div>
+              <form class="side-category-form" method="POST" action="{{ route('poetry.sidecategory.store') }}">
+                @csrf
+                <input type="text" name="name" placeholder="Side Category Name" required>
+                <button type="submit" class="btn save-btn">Save</button>
+              </form>
+            </div>
+        </div>    
+    </div>        
   </div>
 
   @include('includes.footer')

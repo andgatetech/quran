@@ -175,8 +175,9 @@ position:relative;
         <div>{{ session('success') }}</div>
       @endif
 
-      <form method="POST" action="{{ route('poetry.agecategory.update') }}" class="age-category-form">
+      <form method="POST" action="{{ route('poetry.agecategory.update',$ageCategory->id) }}" class="age-category-form">
         @csrf
+        @method('PUT')
         <label for="name">Age Category</label>
         <input type="text" id="name" name="name" value="{{ $ageCategory->name }}" placeholder="Age Category" required>
         <button type="submit" class="save-btn">Save</button>

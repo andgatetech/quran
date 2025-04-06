@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 
 class PoetryReadCategoryController extends Controller
 {
+    private $module = "Poetry";
     // Show the create form
     public function create()
     {
@@ -43,64 +44,38 @@ class PoetryReadCategoryController extends Controller
         return view('client.poetry.readcategory.list', compact('readCategories'));
     }
 
-    // Set session for editing
-    public function setSession(Request $request)
-    {
-        $request->validate([
-            'read_category_id' => 'required|exists:read_categories,id',
-        ]);
-
-        Session::put('read_category_id', $request->read_category_id);
-
-        return redirect()->route('poetry.readcategory.edit');
-    }
+    
 
     // Show edit form
-    public function edit()
+    public function edit($id)
     {
-        $readCategoryId = Session::get('read_category_id');
-
-        if (!$readCategoryId) {
+        $readCategory = ReadCategory::findOrFail($id);
+        if (!$readCategory) {
             return redirect()->route('readcategory.list')->with('error', 'No category selected for editing.');
         }
-
-        $readCategory = ReadCategory::findOrFail($readCategoryId);
         return view('client.poetry.readcategory.edit', compact('readCategory'));
     }
 
     // Update the read category
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
-        $readCategoryId = Session::get('read_category_id');
-
-        if (!$readCategoryId) {
-            return redirect()->route('poetry.readcategory.list')->with('error', 'No category selected for updating.');
-        }
 
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $readCategory = ReadCategory::findOrFail($readCategoryId);
+        $readCategory = ReadCategory::findOrFail($id);
         $readCategory->update([
             'name' => $request->name,
         ]);
-
-        Session::forget('read_category_id');
-
         return redirect()->route('poetry.readcategory.list')->with('success', 'Read Category updated successfully!');
     }
 
     // Delete a read category
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $request->validate([
-            'read_category_id' => 'required|exists:read_categories,id',
-        ]);
-
-        $readCategory = ReadCategory::findOrFail($request->read_category_id);
+        $readCategory = ReadCategory::findOrFail($id);
         $readCategory->delete();
-
         return redirect()->route('poetry.readcategory.list')->with('success', 'Read Category deleted successfully!');
     }
 }

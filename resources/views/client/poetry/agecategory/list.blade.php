@@ -188,13 +188,10 @@
               <div class="card-actions">
                 <form action="{{ route('poetry.agecategory.delete', $ageCategory->id) }}" method="POST" style="display:inline-block;">
                     @csrf
+                    @method('DELETE')
                     <button type="submit" class="btn delete-btn">Delete</button>
                   </form>
-                <form action="{{ route('poetry.agecategory.setSession') }}" method="POST" style="display:inline-block;">
-                  @csrf
-                  <input type="hidden" name="age_category_id" value="{{ $ageCategory->id }}">
-                  <button type="submit" class="btn edit-btn">Edit</button>
-                </form>
+                  <a href="{{ route('poetry.agecategory.edit',$ageCategory->id) }}" class="btn edit-btn">Edit</a>
 
               </div>
             </div>
