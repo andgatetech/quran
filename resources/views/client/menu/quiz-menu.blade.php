@@ -67,10 +67,11 @@ position:relative;
 
 </style>
 <body>
+  @include('client.layouts.top-bar')
   <div class="container">
     <!-- Menu Buttons -->
     <div class="button-group">
-    <button class="btn btn-main" onclick="window.location.href='{{ route('competition.create') }}'">Competition</button>
+    <button class="btn btn-main" onclick="window.location.href='{{ route('quiz.competition.create') }}'">Competition</button>
     <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Questions</button>
     <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Answer</button>
     <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Winner Announce</button>
