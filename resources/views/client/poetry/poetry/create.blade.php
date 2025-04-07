@@ -118,7 +118,7 @@
         <hr>
 
         <!-- Bulk Upload Form -->
-        <h3 class="mt-5">Bulk Upload Competitors</h3>
+        <h3 class="mt-5">Bulk Upload</h3>
         <form action="{{ route('poetry.poetry.bulkStore') }}" method="POST" enctype="multipart/form-data" class="form-container mt-4">
             @csrf
             <div class="form-group mb-3">

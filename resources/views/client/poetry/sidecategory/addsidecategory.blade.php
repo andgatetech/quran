@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Side Category</title>
+  <title>Create Perform Option</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="css/CreateSideCategory.css">
 </head>
@@ -74,14 +74,14 @@ padding-bottom: 0 !important;
   
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
-        <h1>Create Side Category(Poetry)</h1>
+        <h1>Create Perform Option(Poetry)</h1>
     </header>
 
       {{-- <div class="container1"> --}}
   <div class="container1">    
     <div class="tabs">
-      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Side Category</button>
-      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Side Category List</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Perform Option</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Perform Option List</button>
     </div>
   </div>  
       {{-- </div> --}}
@@ -99,7 +99,7 @@ padding-bottom: 0 !important;
 
               <form class="side-category-form" method="POST" action="{{ route('poetry.sidecategory.store') }}">
                 @csrf
-                <input type="text" name="name" placeholder="Side Category Name" required>
+                <input type="text" name="name" placeholder="Perform Option Name" required>
                 <button type="submit" class="btn save-btn">Save</button>
               </form>
             </div>

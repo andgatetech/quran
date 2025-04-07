@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Side Category</title>
+  <title>Edit Perform Option</title>
   <style>
     /* Reset */
     * {
@@ -117,13 +117,13 @@ border: 1px solid  var(--secondary-color);;
 
   <header class="header">
     <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
-    <h1>Edit Side Category(Poetry)</h1>
+    <h1>Edit Perform Option(Poetry)</h1>
   </header>
 
   <div class="container1">
 <div class="tabs">
-<button class="tab-btn " onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Side Category</button>
-<button class="tab-btn " onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Side Category List</button>
+<button class="tab-btn " onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Perform Option</button>
+<button class="tab-btn " onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Perform Option List</button>
 </div>
   </div>
 
@@ -133,7 +133,7 @@ border: 1px solid  var(--secondary-color);;
     <form method="POST" action="{{ route('poetry.sidecategory.update',$sideCategory->id) }}">
       @csrf
       @method('put')
-      <label for="name">Category Name</label>
+      <label for="name">Perform Option Name</label>
       <input type="text" name="name" id="name" value="{{ $sideCategory->name }}" required>
       <button type="submit">Update</button>
     </form>

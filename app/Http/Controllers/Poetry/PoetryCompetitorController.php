@@ -189,7 +189,9 @@ public function store(Request $request)
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $competitor = Competitor::findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get();
         $sideCategories = SideCategory::where('user_id', Auth::id())
         ->where('competition_type_id',$competitionType->id)
         ->get();

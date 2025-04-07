@@ -92,28 +92,8 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group mb-3">
-                <label for="side_category_id" class="form-label">Side Category</label>
-                <select class="form-control" id="side_category_id" name="side_category_id" required>
-                    <option value="">Select Side Category</option>
-                    @foreach($sideCategories as $sideCategory)
-                        <option value="{{ $sideCategory->id }}" {{ old('side_category_id', $competitor->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
-                            {{ $sideCategory->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group mb-3">
-                <label for="read_category_id" class="form-label">Read Category</label>
-                <select class="form-control" id="read_category_id" name="read_category_id" required>
-                    <option value="">Select Read Category</option>
-                    @foreach($readCategories as $readCategory)
-                        <option value="{{ $readCategory->id }}" {{ old('read_category_id', $competitor->read_category_id) == $readCategory->id ? 'selected' : '' }}>
-                            {{ $readCategory->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+
+
             <div class="form-group mb-4">
                 <label for="age_category_id" class="form-label">Age Category</label>
                 <select class="form-control" id="age_category_id" name="age_category_id" required>
@@ -125,10 +105,35 @@
                     @endforeach
                 </select>
             </div>
+
+
+            <div class="form-group mb-3">
+                <label for="side_category_id" class="form-label">Perform Option</label>
+                <select class="form-control" id="side_category_id" name="side_category_id" required>
+                    <option value="">Select Perform Option</option>
+                    @foreach($sideCategories as $sideCategory)
+                        <option value="{{ $sideCategory->id }}" {{ old('side_category_id', $competitor->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
+                            {{ $sideCategory->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="read_category_id" class="form-label">Method Of Perform</label>
+                <select class="form-control" id="read_category_id" name="read_category_id" required>
+                    <option value="">Select Method Of Perform</option>
+                    @foreach($readCategories as $readCategory)
+                        <option value="{{ $readCategory->id }}" {{ old('read_category_id', $competitor->read_category_id) == $readCategory->id ? 'selected' : '' }}>
+                            {{ $readCategory->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
             <div class="form-group mb-4">
-                <label for="number_of_questions" class="form-label">Number of Questions</label>
+                <label for="number_of_questions" class="form-label">Number of Poetry</label>
                 <select class="form-control" id="number_of_questions" name="number_of_questions" required>
-                    <option value="">Select Number of Questions</option>
+                    <option value="">Select Number of Poetry</option>
                     @for($i = 1; $i <= 100; $i++)
                         <option value="{{ $i }}" {{ old('number_of_questions', $competitor->number_of_questions) == $i ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor

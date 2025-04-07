@@ -188,7 +188,7 @@
             <div class="row my-3">
                 <div class="col-6">
                     <select class="form-select" name="side_category" id="side_category">
-                        <option value="">Side Category</option>
+                        <option value="">Perform Option</option>
                         @foreach ($side_categories as $side_category)
                             <option {{ request()->side_category == $side_category->id ? 'Selected' : '' }}
                                 value="{{ $side_category->id }}">{{ $side_category->name }}</option>
@@ -197,7 +197,7 @@
                 </div>
                 <div class="col-6">
                     <select class="form-select" name="read_category" id="read_category">
-                        <option value="">Read Category</option>
+                        <option value="">Method of Perform</option>
                         @foreach ($read_categories as $read_category)
                             <option {{ request()->read_category == $read_category->id ? 'Selected' : '' }}
                                 value="{{ $read_category->id }}">{{ $read_category->name }}</option>
@@ -239,8 +239,9 @@
                             <p>Parent Name : <span>{{ $application->parent_name ?? 'NA' }}</span></p>
                             <p>Contact # : <span>{{ $application->number }}</span></p>
                             <p>Age Category : <span>{{ $application->ageCategory->name }}</span></p>
-                            <p>Recitation Piece : <span>{{ isset($application->sideCategory)? $application->sideCategory->name: '' }}</span></p>
-                            <p>Recitation Method : <span>{{ isset($application->readCategory)? $application->readCategory->name : '' }}</span></p>
+                            <p>Perform Option : <span>{{ isset($application->sideCategory)? $application->sideCategory->name: '' }}</span></p>
+                            <p>Method Of Perform : <span>{{ isset($application->readCategory)? $application->readCategory->name : '' }}</span></p>
+                            <p>Poetry : <span>{{ isset($application->poetry_name)? $application->poetry_name : '' }}</span></p>
                             <p class="pt-2">Participant Photo:
                                 <span>
                                     <button type="button" class="tab-btn active px-4 py-1" data-bs-toggle="modal"

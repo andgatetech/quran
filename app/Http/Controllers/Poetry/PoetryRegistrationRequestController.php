@@ -27,7 +27,9 @@ class PoetryRegistrationRequestController extends Controller
         $age_category = request()->age_category ?? null;
         $side_category = request()->side_category ?? null;
         $read_category = request()->read_category ?? null;
-        $applications = CompetitionApplication::leftJoin('competitions', 'competition_applications.competition_id', '=', 'competitions.id')
+        $applications = CompetitionApplication::
+        leftJoin('competitions', 'competition_applications.competition_id', '=', 'competitions.id')
+        ->leftJoin('poetries', 'competition_applications.poetry_id', '=', 'poetries.id')
         ->where('competition_applications.status',$status)
         ->where('competitions.competition_type_id',$competitionType->id)
         ->when($competition_id, function($query) use($competition_id){
@@ -42,14 +44,20 @@ class PoetryRegistrationRequestController extends Controller
         ->when($read_category, function($query) use($read_category){
             $query->where('competition_applications.read_category',$read_category);
         })
-        ->select('competition_applications.*')
+        ->select('competition_applications.*','poetries.poetry_name')
         ->get();
         $competitions = Competition::where('status','On-Going')
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $side_categories = SideCategory::get();
-        $read_categories = ReadCategory::get();
-        $age_categories = AgeCategory::get();
+        $side_categories = SideCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $read_categories = ReadCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $age_categories = AgeCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
 
         return view('client.poetry.registrations.index',compact('applications','competitions','status',
         'side_categories','read_categories','age_categories'));

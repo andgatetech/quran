@@ -67,14 +67,14 @@
 
     <div class="button-group1" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border-radius:1rem;padding:.5rem; border:1px solid  var(--secondary-color);">
         <select id="sideCategoryFilter" class="btn ">
-            <option value="">Select Side Category</option>
+            <option value="">Select Perform Option</option>
             @foreach ($sideCategories as $sideCategory)
                 <option value="{{ $sideCategory->id }}">{{ $sideCategory->name }}</option>
             @endforeach
         </select>
 
         <select id="readCategoryFilter" class="btn ">
-            <option value="">Select Read Category</option>
+            <option value="">Select Method Of Perform</option>
             @foreach ($readCategories as $readCategory)
                 <option value="{{ $readCategory->id }}">{{ $readCategory->name }}</option>
             @endforeach

@@ -60,16 +60,41 @@ class PoetryController extends Controller
      */
     public function index()
     {
+        $age_category = request()->age_category ?? null;
+        $side_category = request()->side_category ?? null;
+        $read_category = request()->read_category ?? null;
+        $competitionType = CompetitionType::where('name', 'Poetry')->first();
+        $side_categories = SideCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $read_categories = ReadCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $age_categories = AgeCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+
         $competitors = Poetry::with([
             'competition',
             'sideCategory',
             'readCategory',
             'ageCategory'
-        ])->get();
+        ])
+        
+        ->when($age_category, function($query) use($age_category){
+            $query->where('age_category_id',$age_category);
+        })
+        ->when($side_category, function($query) use($side_category){
+            $query->where('side_category_id',$side_category);
+        })
+        ->when($read_category, function($query) use($read_category){
+            $query->where('read_category_id',$read_category);
+        })
+        ->get();
         // ->where('user_id', Auth::id()) // Filter by user_id
         // ->get();
 
-        return view('client.poetry.poetry.list', compact('competitors'));
+        return view('client.poetry.poetry.list', compact('competitors','side_categories','read_categories','age_categories'));
     }
 
 
@@ -136,9 +161,12 @@ public function store(Request $request)
      */
     public function edit($id)
     {
+        
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $competitor = Poetry::findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get();
         $sideCategories = SideCategory::where('user_id', Auth::id())
         ->where('competition_type_id',$competitionType->id)
         ->get();

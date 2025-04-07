@@ -89,7 +89,7 @@
 
 
             <div class="form-group mb-3">
-                <label for="side_category_id" class="form-label">Side Category</label>
+                <label for="side_category_id" class="form-label">Perform Option</label>
                 <select class="form-control" id="side_category_id" name="side_category_id" required>
                     <option value="">Perform Option</option>
                     @foreach($sideCategories as $sideCategory)
@@ -100,7 +100,7 @@
                 </select>
             </div>
             <div class="form-group mb-3">
-                <label for="read_category_id" class="form-label">Read Category</label>
+                <label for="read_category_id" class="form-label">Method Of Perform</label>
                 <select class="form-control" id="read_category_id" name="read_category_id" required>
                     <option value="">Method of Perform</option>
                     @foreach($readCategories as $readCategory)

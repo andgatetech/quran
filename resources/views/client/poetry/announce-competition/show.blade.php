@@ -1526,9 +1526,9 @@ $user = User::find(Auth::id());
                       
                       <div class="col-md-4">
                         <div class="form-control-container">
-                          <label for="ageCategory2" class="form-label">Recitation Piece</label>
+                          <label for="ageCategory2" class="form-label">Perform Option</label>
                           <select name="side_category" class="form-select" id="ageCategory2" required>
-                            <option selected disabled value="">Recitation Piece</option>
+                            <option selected disabled value="">Perform Option</option>
                             @foreach ($side_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
@@ -1539,9 +1539,9 @@ $user = User::find(Auth::id());
                       
                       <div class="col-md-4">
                         <div class="form-control-container">
-                          <label for="ageCategory3" class="form-label">Recitation Method</label>
+                          <label for="ageCategory3" class="form-label">Method of Perform</label>
                           <select name="read_category" class="form-select" id="ageCategory3" required>
-                            <option selected disabled value="">Recitation Method</option>
+                            <option selected disabled value="">Method of Perform</option>
                             @foreach ($read_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
@@ -1550,6 +1550,23 @@ $user = User::find(Auth::id());
                         </div>
                       </div>
                     </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="poetry3" class="form-label">Poetry</label>
+                          <select name="poetry_id" class="form-select" id="ageCategory3" required>
+                            <option selected disabled value="">Select Poetry</option>
+                            @foreach ($poetries as $entry)
+                                <option {{ old('poetry') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->poetry_name }}</option>
+                            @endforeach
+                          </select>
+                          <i class="bi bi-filter input-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+
                   </div>
                   
                   <!-- Upload Section -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Poetry;
 use App\Models\Host;
 use App\Models\Ranking;
 use App\Models\Competitor;
+use App\Models\CompetitionType;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\ReadCategory;
@@ -307,6 +308,8 @@ return view('client.poetry.winning-announcement.index', compact('competitors','c
 
     public function announceWinners()
 {
+
+    $competitionType = CompetitionType::where('name', 'Poetry')->first();
     // Retrieve the competition_id from the session
     $competition_id = session('competition_id');
 
@@ -333,9 +336,15 @@ return view('client.poetry.winning-announcement.index', compact('competitors','c
     }
 
     // Retrieve all categories for filtering (if needed)
-    $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-    $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-    $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+    $sideCategories = SideCategory::where('user_id', Auth::id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
+    $readCategories = ReadCategory::where('user_id', Auth::id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
+    $ageCategories = AgeCategory::where('user_id', Auth::id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
 
     // Pass the data to the view
     return view('client.poetry.host.announce', compact('sortedCompetitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));
