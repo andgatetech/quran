@@ -23,6 +23,62 @@
 <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.poetry.index') }}'">Poetry List</button>
 </div>
 
+<form action="{{ route('poetry.poetry.index') }}" method="get">
+            <div class="row">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+                
+                
+                <div class="col-6">
+                    <select class="form-select" name="age_category" id="age_category">
+                        <option value="">Age Category</option>
+                        @foreach ($age_categories as $age_category)
+                            <option {{ request()->age_category == $age_category->id ? 'Selected' : '' }}
+                                value="{{ $age_category->id }}">{{ $age_category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <select class="form-select" name="side_category" id="side_category">
+                        <option value="">Perform Option</option>
+                        @foreach ($side_categories as $side_category)
+                            <option {{ request()->side_category == $side_category->id ? 'Selected' : '' }}
+                                value="{{ $side_category->id }}">{{ $side_category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+            </div>
+            <div class="row my-3">
+                
+                <div class="col-6">
+                    <select class="form-select" name="read_category" id="read_category">
+                        <option value="">Method of Perform</option>
+                        @foreach ($read_categories as $read_category)
+                            <option {{ request()->read_category == $read_category->id ? 'Selected' : '' }}
+                                value="{{ $read_category->id }}">{{ $read_category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-6">
+                        
+                    <input style="width:200px;" type="submit" value="Search" class="tab-btn active">
+                        
+                </div>
+
+            </div>
+            
+        </form>
+
 
   <style>
      .container {
@@ -85,15 +141,15 @@
             @forelse($competitors as $competitor)
             <div class="list-item mb-3 p-3 border rounded" onclick="this.classList.toggle('active')">
                 <div class="question-header">
-                    <span><strong>{{ $competitor->poetry_name }}</strong> ({{ $competitor->id_card_number }})</span>
+                    <span><strong>{{ $competitor->poetry_name }}</strong></span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
         
                     <div class="details mt-2" style="display: none; box-shadow:0 !important;">
                     <p><strong>Poetry Name:</strong> {{ $competitor->poetry_name }}</p>
                     <p><strong>Competition Name:</strong> {{ $competitor->competition->main_name ?? 'N/A' }}</p>
-                    <p><strong>Side Category:</strong> {{ $competitor->sideCategory->name ?? 'N/A' }}</p>
-                    <p><strong>Read Category:</strong> {{ $competitor->readCategory->name ?? 'N/A' }}</p>
+                    <p><strong>Perform Option:</strong> {{ $competitor->sideCategory->name ?? 'N/A' }}</p>
+                    <p><strong>Method Of Perform:</strong> {{ $competitor->readCategory->name ?? 'N/A' }}</p>
                     <p><strong>Age Category:</strong> {{ $competitor->ageCategory->name ?? 'N/A' }}</p>
                     <p><strong>Number of Questions:</strong> {{ $competitor->number_of_questions }}</p>
                     <div class="button-group-inline mt-3">

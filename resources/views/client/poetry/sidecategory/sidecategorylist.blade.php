@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Side Category List</title>
+  <title>Perform Option List</title>
   <link rel="stylesheet" href="css/SideCategoryList.css">
   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> --}}
   <style>
@@ -172,12 +172,12 @@
 
   <header class="header">
     <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
-    <h1>Side Category List(Poetry)</h1>
+    <h1>Perform Option List(Poetry)</h1>
   </header>
 
     <div class="tabs">
-      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Side Category</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Side Category List</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.sidecategory.create') }}'">Create Perform Option</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.sidecategory.list') }}'">Perform Option List</button>
     </div>
 
   {{-- <div class="main-content"> --}}
@@ -187,12 +187,12 @@
           <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        {{-- <h2 class="list-title">Side Category List</h2> --}}
+        {{-- <h2 class="list-title">Perform Option List</h2> --}}
 
         @foreach($sideCategories as $sideCategory)
           <div class="category-card">
             <div class="card-header" onclick="toggleDropdown(this)">
-              <p>Side Category: <span>{{ $sideCategory->name }}</span> <i class="fas fa-chevron-down"></i></p>
+              <p>Perform Option: <span>{{ $sideCategory->name }}</span> <i class="fas fa-chevron-down"></i></p>
             </div>
             <div class="card-actions">
 

@@ -11,7 +11,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Read Category</title>
+  <title>Edit Method Of Perform</title>
   <link rel="stylesheet" href="css/CreateReadCategory.css">
   <style>
     /* Reset */
@@ -101,13 +101,13 @@ position:relative;
 
     <header class="header">
         <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
-        <h1>Create Read Category(Poetry)</h1>
+        <h1>Edit Method Of Perform(Poetry)</h1>
     </header>
 
       <div class="container1">
   <div class="tabs">
-    <button class="tab-btn "  onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Create Read Category</button>
-    <button class="tab-btn " onclick="window.location.href='{{ route('poetry.readcategory.list') }}'">Read Category  List</button>
+    <button class="tab-btn "  onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Create Method Of Perform</button>
+    <button class="tab-btn " onclick="window.location.href='{{ route('poetry.readcategory.list') }}'">Method Of Perform List</button>
   </div>
       </div>
 
@@ -135,7 +135,7 @@ position:relative;
       <form class="read-category-form" method="POST" action="{{ route('poetry.readcategory.update',$readCategory->id) }}">
         @csrf
         @method('put')
-        <input type="text" name="name" placeholder="Read Category Name" required  value="{{ $readCategory->name }}">
+        <input type="text" name="name" placeholder="Method Of Perform Name" required  value="{{ $readCategory->name }}">
         <button type="submit" class="btn save-btn">Save</button>
       </form>
     </div>

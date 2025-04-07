@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Read Category List</title>
+  <title>Method Of Perform List</title>
   <style>
     /* Reset */
     * {
@@ -156,13 +156,13 @@ position:relative;
   <!-- Header -->
   <header class="header">
     <a class="back-btn" href="{{ route('client.menu.poetry') }}"><i class="fas fa-home"></i></a>
-    <h1>Read Category List(Poetry)</h1>
+    <h1>Method Of Perform List(Poetry)</h1>
   </header>
 
   <div class="container1">
     <div class="tabs">
-      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Create Read Category</button>
-      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.readcategory.list') }}'">Read Category List</button>
+      <button class="tab-btn" onclick="window.location.href='{{ route('poetry.readcategory.create') }}'">Create Method Of Perform</button>
+      <button class="tab-btn active" onclick="window.location.href='{{ route('poetry.readcategory.list') }}'">Method Of Perform List</button>
     </div>
   </div>
 
@@ -179,7 +179,7 @@ position:relative;
           <div class="card-header" onclick="toggleDropdown(this)">
 
 
-          <p>Read Category: <span>{{ $readCategory->name }} <i class="fas fa-chevron-down"></i></span></p>
+          <p>Method Of Perform: <span>{{ $readCategory->name }} <i class="fas fa-chevron-down"></i></span></p>
           </div>
           <div class="card-actions">
 

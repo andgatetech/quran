@@ -8,6 +8,7 @@ use App\Models\Competition;
 use App\Models\CompetitionType;
 use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
+use App\Models\Poetry;
 use App\Models\SideCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -104,15 +105,26 @@ class PoetryAnnounceCompetitionController extends Controller
     public function show(string $id)
     {
         $moduleName = $this->module;
+        $competitionType = CompetitionType::where('name', 'Poetry')->first();
         
         $competition = Competition::where('encrypted_id',$id)->firstOrFail();
-        $age_categories = AgeCategory::get();
-        $read_categories = ReadCategory::get();
-        $side_categories = SideCategory::get();
+        $age_categories = AgeCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $read_categories = ReadCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $side_categories = SideCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+
+        $poetries = Poetry::
+        where('competition_id',$competition->id)
+        ->get();
 
         $moduleName = $competition->main_name;
 
-        return view("client.poetry.announce-competition.show",compact('moduleName','competition','side_categories','read_categories','age_categories'));
+        return view("client.poetry.announce-competition.show",compact('moduleName','poetries','competition','side_categories','read_categories','age_categories'));
 
     }
 
@@ -176,6 +188,7 @@ class PoetryAnnounceCompetitionController extends Controller
             'side_category' => 'required',
             'read_category' => 'required',
             'competition_id' => 'required',
+            'poetry_id' => 'required',
             'photo' => 'required|mimes:jpg,jpeg,png|max:2048', // 2MB max
             'id_card_photo' => 'required|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
         ]);
@@ -194,6 +207,7 @@ class PoetryAnnounceCompetitionController extends Controller
         $application->age_category = $request->age_category;
         $application->side_category = $request->side_category;
         $application->read_category = $request->read_category;
+        $application->poetry_id = $request->poetry_id;
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->move(public_path('assets/img'), $request->file('photo')->getClientOriginalName());
