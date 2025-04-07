@@ -161,9 +161,7 @@ position:relative;
       <button class="btn" onclick="window.location.href='{{ route('quran.host.create') }}'">To start the competition </button>
 
       <!-- new buttons -->
-      <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award
-        certificates</button>
-      <button class="btn" onclick="window.location.href='{{ url('') }}'">To create the curriculum</button>
+      <button class="btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">To award certificates</button>
       <button class="btn" onclick="window.location.href='{{ route('report.index') }}'">Report</button>
       <button class="btn" onclick="window.location.href='{{ route('curriculum.create') }}'">Curriculum</button>
 

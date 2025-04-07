@@ -85,9 +85,9 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="side_category_id">Side Category</label>
+            <label for="side_category_id">Recitation Piece</label>
             <select class="form-control" name="side_category_id" required>
-                <option value="">Select Side Category</option>
+                <option value="">Select Recitation Piece</option>
                 @foreach($sideCategories as $sideCategory)
                     <option value="{{ $sideCategory->id }}" 
                         {{ old('side_category_id', $curriculum->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
@@ -98,7 +98,7 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="read_category_id">Read Category</label>
+            <label for="read_category_id">Recitation Method</label>
             <select class="form-control" name="read_category_id" required>
                 <option value="">Select Read Category</option>
                 @foreach($readCategories as $readCategory)

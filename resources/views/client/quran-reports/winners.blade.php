@@ -187,7 +187,7 @@
             <div class="row my-3">
                 <div class="col-6">
                     <select class="form-select" name="side_category" id="side_category">
-                        <option value="">Side Category</option>
+                        <option value="">Recitation Piece</option>
                         @foreach ($side_categories as $side_category)
                             <option {{ request()->side_category == $side_category->id ? 'Selected' : '' }}
                                 value="{{ $side_category->id }}">{{ $side_category->name }}</option>
@@ -196,7 +196,7 @@
                 </div>
                 <div class="col-6">
                     <select class="form-select" name="read_category" id="read_category">
-                        <option value="">Read Category</option>
+                        <option value="">Recitation Piece</option>
                         @foreach ($read_categories as $read_category)
                             <option {{ request()->read_category == $read_category->id ? 'Selected' : '' }}
                                 value="{{ $read_category->id }}">{{ $read_category->name }}</option>
@@ -247,8 +247,8 @@
                         <div class="competition-sub-name">
                             <p>Competition Name: <span></span></p>
                             <p>Age Category: <span></span></p>
-                            <p>Site Category : <span></span></p>
-                            <p>Read Category : <span></span></p>
+                            <p>Recitation Piece : <span></span></p>
+                            <p>Recitation Method : <span></span></p>
                             <p>Date of Announce : <span></span></p>
                             <p>Date Of Close : <span></span></p>
                             <p>Status : <span></span></p>
