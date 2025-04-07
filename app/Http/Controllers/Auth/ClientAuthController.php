@@ -11,11 +11,15 @@ class ClientAuthController extends Controller
 {
     public function showLogin()
     {
+        if(Auth::guard('client')->check()){
+            return redirect()->route('client.menu');
+        }
         return view('client.login');
     }
 
     public function login(Request $request)
     {
+        
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -40,6 +44,6 @@ class ClientAuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('client')->logout();
-        return redirect()->route('client.login')->with('success', 'Logged out');
+        return redirect()->route('welcome')->with('success', 'Logged out');
     }
 }
