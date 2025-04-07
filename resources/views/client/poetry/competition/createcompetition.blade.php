@@ -2,7 +2,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-$user = User::find(Auth::id());
+$user = User::find(Auth::guard('client')->id());
 ?>
 
 <!DOCTYPE html>

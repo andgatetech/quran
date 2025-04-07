@@ -15,20 +15,16 @@ use App\Http\Controllers\Poetry\PoetryHostController;
 use App\Http\Controllers\Poetry\PoetryRankingController;
 use App\Http\Controllers\Poetry\PoetryManageCertificateController;
 use App\Http\Middleware\CheckSession;
+use App\Http\Middleware\ClientAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
 use App\Http\Controllers\PDFController;
 
 
-Route::prefix('client')->group(function () {
+Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(function () {
     // MENU
     Route::get('top/menu', [ClientLoginController::class, 'clientTopMenu'])->name('client.menu');
     Route::get('poetry/menu', function () {
-        // if (!Auth::check()) {
-        //     // Redirect to login page if not authenticated
-        //     return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-        // }
-        // Display the menu page if authenticated
         return view('client.menu.poetry-menu');
     })->name('client.menu.poetry');
 

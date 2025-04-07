@@ -360,21 +360,11 @@ Route::prefix('client/judge')->group(function () {
 
 // poetry menu
 Route::get('/client/poetry/menu', function () {
-    if (!Auth::check()) {
-        // Redirect to login page if not authenticated
-        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-    }
-    // Display the menu page if authenticated
     return view('client.menu.poetry-menu');
 })->name('client.menu.poetry');
 
 // quiz  menu
 Route::get('/client/quiz/menu', function () {
-    if (!Auth::check()) {
-        // Redirect to login page if not authenticated
-        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-    }
-    // Display the menu page if authenticated
     return view('client.menu.quiz-menu');
 })->name('client.menu.quiz');
 
