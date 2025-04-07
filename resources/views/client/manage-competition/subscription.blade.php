@@ -131,27 +131,29 @@
   <div class="container">
     <div class="row mb-4">
         <div class="col-md-6 col-sm-12 offset-md-3">
+          @foreach ($subscriptionPlans as $subsubcriptionPlan)
                 <div class="competition-card">
-                <h6 class="heading col-12 py-3 my-3">Magey Plan</h6>
+                <h6 class="heading col-12 py-3 my-3">{{ $subsubcriptionPlan->name }}</h6>
                     <div class="competition-sub-name">
                         <p>Office Name : 
                           <span>
-                            Secretariat of Faaful, Atoll
+                            {{ $subsubcriptionPlan->office_name }}
                         </span></p>
                         <p>Subscription type : 
                           <span>
-                            Yearly
+                            {{ $subsubcriptionPlan->subscription_type }}
                         </span></p>
                         <p>From Date : 
                           <span>
-                          01-03-2025
+                          {{ $subsubcriptionPlan->from_date }}
                         </span></p>
                         <p>To Date : 
                           <span>
-                            01-03-2026
+                            {{ $subsubcriptionPlan->to_date }}
                         </span></p>
                     </div>      
                 </div>
+                @endforeach
         </div>
     </div>
 </div>

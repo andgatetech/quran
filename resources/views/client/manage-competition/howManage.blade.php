@@ -16,7 +16,7 @@
 .btn {
       font-size: .9rem !important;
       border-radius: .3rem !important;
-      padding: .4rem 0 !important;
+      padding: .4rem .4rem !important;
       border: 1px solid var(--secondary-color) !important;
       background-color: var(--secondary-color) !important;
       color: var(--primary-color) !important;
@@ -140,15 +140,16 @@
   <div class="container">
     <div class="row mb-4">
         <div class="col-md-6 col-sm-12 offset-md-3">
-            
+            @foreach ($howFiles as $howfile)
                 <div class="competition-card">
-                <h6 class="heading col-12 py-3 my-3">Tutorial</h6>
+                <h6 class="heading col-12 py-3 my-3">{{ $howfile->name }}</h6>
                     <div class="competition-sub-name">
                     <div class="pdf-section"><img src="{{url('public/assets/img/pdf.png')}}" alt="Pdf" width="80px"/></div> 
-                    <div class="button-section"><button class="btn btn-primary">View</button>
-                    <button class="btn btn-primary">Download</button></div>
+                    <div class="button-section"><a href="{{ $howfile->path }}" class="btn btn-primary">View</a>
+                    <a href="{{ $howfile->path }}" class="btn btn-primary">Download</a></div>
                     </div>      
                 </div>
+                @endforeach
         </div>
     </div>
 </div>

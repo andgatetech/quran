@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuyAddon;
 use App\Models\Host;
-use App\Models\Sponsor;
-use App\Models\Question;
-use App\Models\Competitor;
-use App\Models\AgeCategory;
-use App\Jobs\DeactivateBell;
-use App\Models\ReadCategory;
-use App\Models\SideCategory;
-use Illuminate\Http\Request;
 use App\Models\QuestionChild;
-use App\Models\BellNotification;
+use App\Models\SampleFile;
+use App\Models\SubscriptionPlan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -24,32 +19,32 @@ class ManageCompetitionController extends Controller
 
     public function mageyPlan()
     {
-        $competition_id = session('competition_id');
+        $subscriptionPlans = SubscriptionPlan::get();
 
-        return view('client.manage-competition.list', compact('competition_id'));
+        return view('client.manage-competition.subscription', compact('subscriptionPlans'));
     }
 
     public function howManage()
     {
-        $competition_id = session('competition_id');
+        $howFiles = SampleFile::where('file_type', 'how_to')->get();
 
-        return view('client.manage-competition.howManage', compact('competition_id'));
+        return view('client.manage-competition.howManage', compact('howFiles'));
     }
 
 
     public function bulkUpload()
     {
-        $competition_id = session('competition_id');
+        $bulkUploadSampleFiles = SampleFile::where('file_type', 'bulk_upload')->get();
 
-        return view('client.manage-competition.bulkUpload', compact('competition_id'));
+        return view('client.manage-competition.bulkUpload', compact('bulkUploadSampleFiles'));
     }
 
 
     public function buyAddOns()
     {
-        $competition_id = session('competition_id');
+        $addOns = BuyAddon::get();
 
-        return view('client.manage-competition.buyAddOns', compact('competition_id'));
+        return view('client.manage-competition.buyAddOns', compact('addOns'));
     }
 
 

@@ -140,22 +140,15 @@
   <div class="container">
     <div class="row mb-4">
         <div class="col-md-6 col-sm-12 offset-md-3">
-            
+            @foreach ($addOns as $addOn)
                 <div class="competition-card">
-                <h6 class="heading col-12 py-3 my-3">Custom Certificate</h6>
+                <h6 class="heading col-12 py-3 my-3">{{ $addOn->name }}</h6>
                     <div class="competition-sub-name">
-                    <p>Contact# :<span>+960-0000000</span></p>
-                    <p>Email :<span>+960-0000000</span></p>
+                    <p>Contact :<span>{{ $addOn->contact }}</span></p>
+                    <p>Email :<span>{{ $addOn->email }}</span></p>
                     </div>      
                 </div>
-
-                <div class="competition-card">
-                <h6 class="heading col-12 py-3 my-3">Create Question</h6>
-                <div class="competition-sub-name">
-                    <p>Contact# :<span>+960-0000000</span></p>
-                    <p>Email :<span>+960-0000000</span></p>
-                    </div>     
-                </div>
+            @endforeach    
         </div>
     </div>
 </div>
