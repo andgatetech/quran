@@ -60,11 +60,6 @@ class ClientLoginController extends Controller
     }
 
     public function clientTopMenu(){
-        // if (!Auth::check()) {
-        //     // Redirect to login page if not authenticated
-        //     return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-        // }
-        //Display the menu page if authenticated
         return view('client.menu.client-menu');
     }
 

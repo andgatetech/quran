@@ -2,7 +2,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-$user = User::find(Auth::id());
+$user = User::find(Auth::guard('client')->id());
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ $user = User::find(Auth::id());
     <title>Announce Competition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/createcompetition.css">
+    <!-- <link rel="stylesheet" href="css/createcompetition.css"> -->
     <style>
         .btn {
             font-size: .9rem !important;
@@ -61,6 +61,7 @@ $user = User::find(Auth::id());
             background-color: var(--secondary-color);
         }
     </style>
+    
 </head>
 
 <body>
@@ -110,6 +111,21 @@ $user = User::find(Auth::id());
     </div>
 
     @include('includes.footer')
+    <script>
+        function toggleDropdown() {
+            var menu = document.getElementById("dropdownMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function(event) {
+            var profile = document.querySelector(".profile");
+            var menu = document.getElementById("dropdownMenu");
+            if (!profile.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
 
 </body>
 </html>

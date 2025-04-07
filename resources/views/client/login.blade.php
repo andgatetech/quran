@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="{{ asset('public/assets/css/color.css') }}">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Magey Competition</title>
@@ -8,6 +10,33 @@
   <link rel="stylesheet" href="css/login.css">
 </head>
 <style>
+    /* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Body Styling */
+   body {
+position:relative;
+
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vw;
+    padding: 10px; /* For proper spacing on smaller devices */
+  }
+
+  /* Container */
+  .container {
+    width: 100%;
+    max-width: 400px; /* Responsive max width */
+    text-align: center;
+    padding: 20px;
+  }
 
   /* Logo */
   .logo img {
@@ -48,8 +77,8 @@
   }
 
   .login-form .btn {
-    background-color: #00bfa6;
-    color: white;
+    background-color: var(--secondary-color);;
+    color: var(--primary-color);
     padding: 12px;
     font-size: 16px;
     border: none;
@@ -62,6 +91,14 @@
     background-color: #008f79;
   }
 
+  .alert {
+    color: var(--secondary-color);
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px;
+  }
+
   @media (min-width: 768px) {
     .login-form .btn {
       padding: 15px;
@@ -70,22 +107,9 @@
   }
 
 
-  .footer-content {
-    font-size: 14px;
-    color: #00bfa6;
-  }
 
-  @media (min-width: 768px) {
-    .footer-content {
-      font-size: 16px;
-    }
-  }
-
-
-.container{height: fit-content !important;}
 </style>
 <body>
-    
   <div class="container">
     <!-- Logo -->
     @include('includes.auth-header')
@@ -94,23 +118,51 @@
 
     <!-- Login Form -->
     <form class="login-form" method="POST" action="{{ route('client.login.submit') }}">
-      @csrf
-      <input type="email" name="email" placeholder="Email" required >
-      <input type="password" name="password" placeholder="Password" required >
-      <button type="submit" class="btn">Login</button>
+        @csrf
+        <input type="email" name="email" placeholder="Email" required >
+        <input type="password" name="password" placeholder="Password" required >
+        <button type="submit" class="btn">Login</button>
     </form>
 
     @if ($errors->any())
+    @foreach ($errors->all() as $error)
       <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
+          {{ $error }}
       </div>
+      @endforeach
     @endif
   </div>
+  <style>
+    /* Body Styling */
+body {
 
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure body takes full height of the screen */
+  padding: 0; /* Remove default padding */
+}
+
+/* Container Styling */
+.container {
+  flex-grow: 1; /* Allow the content to expand and fill available space */
+  padding-bottom: 100px; /* Add space at the bottom for footer */
+}
+
+/* Footer Styling */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* background-color: #f1f1f1; Footer background color */
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px; /* Margin above the footer */
+}
+
+  </style>
+  {{-- @include('includes.footer')   --}}
   @include('includes.footer')
 
 </body>

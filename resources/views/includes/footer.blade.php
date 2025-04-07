@@ -89,7 +89,7 @@ padding-bottom: 0 !important;
         /* Text Styling */
         .footer-text {
             font-size: .8rem;
-            color: #016da8;
+            color: var(--secondary-color);
             font-weight: 600;
             text-align: left;
             text-align: center;
@@ -305,8 +305,6 @@ position:relative;
 <div class="footer">
     <img src="{{ asset('public/assets/img/logo1.png') }}" alt="Logo">
     <div class="footer-text">
-      C o py r i g h t 2 0 2 5
-      © The Garden of Quran<br>
-        
+      Copyright 2025 © The Garden of Quran        
     </div>
 </div>

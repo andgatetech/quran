@@ -14,24 +14,20 @@ use App\Http\Controllers\Quran\RecitationMethodController;
 use App\Http\Controllers\Quran\QuranCompetitorController;
 use App\Http\Controllers\RankingController;
 use App\Http\Middleware\CheckSession;
+use App\Http\Middleware\ClientAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
 use App\Http\Controllers\PDFController;
 
 
-
-// Login Routes
-Route::get('/client/login', [ClientLoginController::class, 'showLoginForm'])->name('client.login');
-Route::post('/client/login', [ClientLoginController::class, 'login'])->name('client.login.submit');
-
-Route::prefix('client')->group(function () {
+Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(function () {
     // MENU
     Route::get('top/menu', [ClientLoginController::class, 'clientTopMenu'])->name('client.menu');
     Route::get('quran/menu', function () {
-        if (!Auth::check()) {
-            // Redirect to login page if not authenticated
-            return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-        }
+        // if (!Auth::check()) {
+        //     // Redirect to login page if not authenticated
+        //     return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+        // }
         // Display the menu page if authenticated
         return view('client.menu.quran-menu');
     })->name('client.menu.quran');
@@ -154,30 +150,30 @@ Route::get('/pdf/download/{path}', [PDFController::class, 'download'])->name('pd
 
 
 // Top Layer Menu  After Authentication
-Route::get('/client/top/menu', [ClientLoginController::class, 'clientTopMenu'])->name('client.menu');
+// Route::get('/client/top/menu', [ClientLoginController::class, 'clientTopMenu'])->name('client.menu');
 
-// Menu Page (Manual Authentication Check)
-Route::get('/client/quran/menu', function () {
-    if (!Auth::check()) {
-        // Redirect to login page if not authenticated
-        return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
-    }
-    // Display the menu page if authenticated
-    return view('client.menu.quran-menu');
-})->name('client.menu.quran');
-
-
+// // Menu Page (Manual Authentication Check)
+// Route::get('/client/quran/menu', function () {
+//     if (!Auth::check()) {
+//         // Redirect to login page if not authenticated
+//         return redirect()->route('client.login')->with('error', 'You must be logged in to access this page.');
+//     }
+//     // Display the menu page if authenticated
+//     return view('client.menu.quran-menu');
+// })->name('client.menu.quran');
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/department', function () {
-        return 'Here test route of department';
-    });
-    Route::get('/department/{id}', function ($id) {
-        return "Department details for ID: $id";
-    });
-});
+
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/department', function () {
+//         return 'Here test route of department';
+//     });
+//     Route::get('/department/{id}', function ($id) {
+//         return "Department details for ID: $id";
+//     });
+// });
 // route test : need to remove later
 
 

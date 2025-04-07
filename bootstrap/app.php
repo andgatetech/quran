@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckSession;
+use App\Http\Middleware\ClientAuthMiddleware;
 use FontLib\Table\Type\name;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,12 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // $middleware->authenticateSessions();
+        // $middleware->append(ClientAuthMiddleware::class);
+        $middleware->alias([
+            'client' => ClientAuthMiddleware::class,
+        ]);
+        
         // $middleware->append(StartSession::class);
         // $middleware->append(CheckSession::class);
         

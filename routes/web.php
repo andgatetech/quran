@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\ClientAuthController;
+
 require base_path('routes/quran.php');
 require base_path('routes/poetry.php');
 require base_path('routes/quiz.php');
@@ -39,6 +41,19 @@ use App\Models\Quran;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+
+
+// AUTHENTICATION MODULE BY MODULE :: REFACTORED
+// AUTH: CLIENT
+Route::get('/client/login', [ClientAuthController::class, 'showLogin'])->name('client.login');
+Route::post('/client/login', [ClientAuthController::class, 'login'])->name('client.login.submit');
+Route::get('/client/logout', [ClientAuthController::class, 'logout'])->name('client.logout');
+
+// Login Routes
+// Route::get('/client/login', [ClientLoginController::class, 'showLoginForm'])->name('client.login');
+// Route::post('/client/login', [ClientLoginController::class, 'login'])->name('client.login.submit');
+
+// AUTHENTICATION
 
 Route::get('/api/get-ayahs/{bookNumber}', function ($bookNumber) {
     $ayahs = Quran::where('juz_no', $bookNumber)
@@ -120,9 +135,9 @@ Route::get('admin/dashboard', [UserController::class, 'dashboard'])->name('admin
 
 Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login.submit');
 
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+// Route::post('/logout', [UserController::class, 'logout'])->name('logout'); // to do : need to recheck functionality
 Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
-Route::get('/client/logout', [UserController::class, 'clientLogout'])->name('client.logout');
+// Route::get('/client/logout', [UserController::class, 'clientLogout'])->name('client.logout');
 
 
 
@@ -227,36 +242,6 @@ Route::patch('/{competitor_id}/update-status', [CallingController::class, 'updat
 Route::patch('/{competitor_id}/revert-status', [CallingController::class, 'revertStatus'])->name('competitor.revertStatus');
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
