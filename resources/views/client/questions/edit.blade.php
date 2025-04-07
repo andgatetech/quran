@@ -69,9 +69,9 @@
 
         <!-- Side Category -->
         <div class="form-group">
-            <label for="side_category_id">Side Category</label>
+            <label for="side_category_id">Recitation Piece</label>
             <select class="form-control" id="side_category_id" name="side_category_id" required>
-                <option value="">Select Side Category</option>
+                <option value="">Select Recitation Piece</option>
                 @foreach($sideCategories as $sideCategory)
                     <option value="{{ $sideCategory->id }}" {{ old('side_category_id', $question->side_category_id) == $sideCategory->id ? 'selected' : '' }}>
                         {{ $sideCategory->name }}
@@ -82,9 +82,9 @@
 
         <!-- Read Category -->
         <div class="form-group">
-            <label for="read_category_id">Read Category</label>
+            <label for="read_category_id">Recitation Method</label>
             <select class="form-control" id="read_category_id" name="read_category_id" required>
-                <option value="">Select Read Category</option>
+                <option value="">Select Recitation Method</option>
                 @foreach($readCategories as $readCategory)
                     <option value="{{ $readCategory->id }}" {{ old('read_category_id', $question->read_category_id) == $readCategory->id ? 'selected' : '' }}>
                         {{ $readCategory->name }}

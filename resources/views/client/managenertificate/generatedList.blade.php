@@ -163,9 +163,9 @@
         </div>
         <!-- Side Category Dropdown -->
         <div class="generate_certificate_search">
-            <label for="side_category" style="font-weight: bold; margin-right: 10px;">Side Category:</label>
+            <label for="side_category" style="font-weight: bold; margin-right: 10px;">Recitation Piece:</label>
             <select name="side_category_filter" id="side_category" class="form-control" style="width: 300px; display: inline-block;">
-                <option value="">Select Side Category</option>
+                <option value="">Select Recitation Piece</option>
                 @foreach($sideCategories as $sideCategory)
                     <option value="{{ $sideCategory->id }}">
                         {{ $sideCategory->name ?? 'Untitled Settings' }}
@@ -175,9 +175,9 @@
         </div>
         <!-- Read Category Dropdown -->
         <div class="generate_certificate_search">
-            <label for="read_category" style="font-weight: bold; margin-right: 10px;">Read Category:</label>
+            <label for="read_category" style="font-weight: bold; margin-right: 10px;">Recitation Method:</label>
             <select name="read_category_filter" id="read_category" class="form-control" style="width: 300px; display: inline-block;">
-                <option value="">Select Read Category</option>
+                <option value="">Select Recitation Piece</option>
                 @foreach($readCategories as $readCategory)
                     <option value="{{ $readCategory->id }}">
                         {{ $readCategory->name ?? 'Untitled Settings' }}

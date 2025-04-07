@@ -182,9 +182,9 @@ button[type="submit"]:hover {
     <!-- Filter Form -->
     <form method="GET" action="{{ route('questions.list') }}" class="filter-form">
         <div class="filter-group mt-2">
-            <label for="sideCategory" class="filter-label">Side Category:</label>
+            <label for="sideCategory" class="filter-label">Recitation Piece:</label>
             <select name="sideCategory" id="sideCategory" class="filter-dropdown">
-                <option value="">All Side Categories</option>
+                <option value="">All Recitation Pieces</option>
                 @foreach($sideCategories as $sideCategory)
                     <option value="{{ $sideCategory->id }}" {{ request('sideCategory') == $sideCategory->id ? 'selected' : '' }}>
                         {{ $sideCategory->name }}
@@ -194,9 +194,9 @@ button[type="submit"]:hover {
         </div>
 
         <div class="filter-group mt-2">
-            <label for="readCategory" class="filter-label">Read Category:</label>
+            <label for="readCategory" class="filter-label">Recitation Method:</label>
             <select name="readCategory" id="readCategory" class="filter-dropdown">
-                <option value="">All Read Categories</option>
+                <option value="">All Recitation Methods</option>
                 @foreach($readCategories as $readCategory)
                     <option value="{{ $readCategory->id }}" {{ request('readCategory') == $readCategory->id ? 'selected' : '' }}>
                         {{ $readCategory->name }}
@@ -234,8 +234,8 @@ button[type="submit"]:hover {
                 <p><strong>Question Name:</strong> {{ $question->question_name ? $question->question_name : 'N/A' }}</p>
                 <p><strong>Competition Name:</strong> {{ $question->competition ? $question->competition->main_name : 'N/A' }}</p>
                 <p><strong>Age Category:</strong> {{ $question->ageCategory ? $question->ageCategory->name : 'N/A' }}</p>
-                <p><strong>Side Category:</strong> {{ $question->sideCategory ? $question->sideCategory->name : 'N/A' }}</p>
-                <p><strong>Read Category:</strong> {{ $question->readCategory ? $question->readCategory->name : 'N/A' }}</p>
+                <p><strong>Recitation Piece:</strong> {{ $question->sideCategory ? $question->sideCategory->name : 'N/A' }}</p>
+                <p><strong>Recitation Method:</strong> {{ $question->readCategory ? $question->readCategory->name : 'N/A' }}</p>
 
                 <p><strong>Option #:</strong> {{ $question->option_name }}</p>
                 <?php if($question->option_name=="Book"){ ?>

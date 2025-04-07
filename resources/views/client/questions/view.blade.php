@@ -91,10 +91,10 @@
             <li><strong>Age Category:</strong>
                 <span>{{ $question->ageCategory ? $question->ageCategory->name : 'N/A' }}</span>
             </li>
-            <li><strong>Side Category:</strong>
+            <li><strong>Recitation Piece:</strong>
                 <span>{{ $question->sideCategory ? $question->sideCategory->name : 'N/A' }}</span>
             </li>
-            <li><strong>Read Category:</strong>
+            <li><strong>Read Piece:</strong>
                 <span>{{ $question->readCategory ? $question->readCategory->name : 'N/A' }}</span>
             </li>
             <li><strong>Book Number:</strong> <span>{{ $question->book_number }}</span></li>
