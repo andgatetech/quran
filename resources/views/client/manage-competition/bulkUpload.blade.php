@@ -100,7 +100,7 @@
         font-size: 16px;
     }
     .heading{
-        background: #016da8;
+        background: #C42B4A;
         border-radius: 15px;
         color: white;
     }
