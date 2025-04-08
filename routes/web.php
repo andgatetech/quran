@@ -413,21 +413,7 @@ Route::resource('report',QuranReportController::class);
 
 
 
-// Manage Certificate
 
-Route::prefix('client/managenertificate')->group(function () {
-    Route::get('/create', [ManageCertificateController::class, 'create'])->name('managenertificate.create');
-    Route::post('/post', [ManageCertificateController::class, 'store'])->name('managenertificate.store');
-    Route::get('/', [ManageCertificateController::class, 'index'])->name('managenertificate.index');
-    Route::get('/{id}/edit', [ManageCertificateController::class, 'edit'])->name('managenertificate.edit');
-    Route::put('update/{id}', [ManageCertificateController::class, 'update'])->name('managenertificate.update');
-    Route::delete('delete/{id}', [ManageCertificateController::class, 'destroy'])->name('managenertificate.destroy');
-    Route::get('/generate-view', [ManageCertificateController::class, 'generateView'])->name('managenertificate.generate.view');
-    Route::post('/generate-pdf', [ManageCertificateController::class, 'generatePDF'])->name('certificate.generate');
-    // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
-    //  ->name('certificate.generate');
-    Route::get('/generated/list', [ManageCertificateController::class, 'generatedList'])->name('managenertificate.generated.list');
-});
 
 // Manage Competition
 Route::prefix('client/manage/competition')->group(function () {

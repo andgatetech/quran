@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ManageCertificate;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ use App\Models\Competitor;
 use App\Models\GenerateCertificate;
 
 
-class ManageCertificateController extends Controller
+class QuranManageCertificateController extends Controller
 {
     public function create(){
         $competitions = Competition::where('user_id', Auth::id())->get();

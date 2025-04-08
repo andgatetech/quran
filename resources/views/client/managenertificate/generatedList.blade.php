@@ -2,7 +2,7 @@
 
 @section('content')
 <header class="header">
-    <a class="back-btn" href="{{ route('managenertificate.create') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('quran.managenertificate.create') }}"><i class="fas fa-home"></i></a>
     <h1>Generate List</h1>
 </header>
 
@@ -46,10 +46,10 @@
         }
     </style>
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.create') }}'">Certificate Settings</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.index') }}'">Settings List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.generate.view') }}'">Generate</button>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('quran.managenertificate.generated.list') }}'">Generated List</button>
     </div>
 </div>
 
@@ -127,7 +127,7 @@
         }
     </style>
     <!-- Competition Filter Dropdown -->
-    <form action="{{ route('managenertificate.generated.list') }}" method="get" style="margin-top: 1rem;">
+    <form action="{{ route('quran.managenertificate.generated.list') }}" method="get" style="margin-top: 1rem;">
                             @csrf
         <!-- Competition Filter -->
         <div class="generate_certificate_search">

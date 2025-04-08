@@ -7,6 +7,7 @@ use App\Http\Controllers\Quran\QuranCompetitionController;
 use App\Http\Controllers\Quran\QuranCurriculumController;
 use App\Http\Controllers\Quran\QuranHostController;
 use App\Http\Controllers\Quran\QuranJudgeController;
+use App\Http\Controllers\Quran\QuranManageCertificateController;
 use App\Http\Controllers\Quran\QuranPointCategoryController;
 use App\Http\Controllers\Quran\QuranRegistrationRequestController;
 use App\Http\Controllers\Quran\QuranSponsorController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Quran\QuranCompetitorController;
 use App\Http\Controllers\RankingController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\ClientAuthMiddleware;
+use App\Models\ManageCertificate;
 use Illuminate\Support\Facades\Route;
 // PDF view and Download Route
 use App\Http\Controllers\PDFController;
@@ -91,7 +93,7 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::get('pointcategory/edit/{id}', [QuranPointCategoryController::class, 'edit'])->name('quran.pointcategory.edit');
         Route::put('pointcategory/update/{id}', [QuranPointCategoryController::class, 'update'])->name('quran.pointcategory.update');
         Route::delete('pointcategory/delete/{id}', [QuranPointCategoryController::class, 'destroy'])->name('quran.pointcategory.delete');
-        
+
         // JUDGE
         Route::get('judge/create', [QuranJudgeController::class, 'create'])->name('quran.judges.create');
         Route::post('judge/store', [QuranJudgeController::class, 'store'])->name('quran.judges.store');
@@ -99,8 +101,8 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
 
         Route::get('judge//edit/{id}', [QuranJudgeController::class, 'edit'])->name('quran.judges.edit');
         Route::put('judge/{id}', [QuranJudgeController::class, 'update'])->name('quran.judges.update');
-        Route::delete('judge/{id}', [QuranJudgeController::class, 'destroy'])->name('quran.judges.delete');  
-        
+        Route::delete('judge/{id}', [QuranJudgeController::class, 'destroy'])->name('quran.judges.delete');
+
         // QUESTION
 
         // PARTICIPANT
@@ -111,6 +113,7 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::put('participant/update/{id}', [QuranCompetitorController::class, 'update'])->name('quran.competitor.update');
         Route::delete('participant/delete/{id}', [QuranCompetitorController::class, 'destroy'])->name('quran.competitor.delete');
         Route::post('participant/bulk-store', [QuranCompetitorController::class, 'bulkStore'])->name('quran.competitor.bulkStore');
+
 
         // SPONSOR
         Route::get('sponsor/create', [QuranSponsorController::class, 'create'])->name('quran.sponsor.create');
@@ -129,6 +132,21 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::post('host/{host}/continue', [QuranHostController::class, 'continue'])->name('quran.host.continue');
         // Route for announcing winners
         Route::get('host/announce', [RankingController::class, 'announceWinners'])->name('quran.host.announce');
+
+        // MANAGE CERTIFICATE
+
+            Route::get('/create', [QuranManageCertificateController::class, 'create'])->name('quran.managenertificate.create');
+            Route::post('/post', [QuranManageCertificateController::class, 'store'])->name('quran.managenertificate.store');
+            Route::get('/', [QuranManageCertificateController::class, 'index'])->name('quran.managenertificate.index');
+            Route::get('/{id}/edit', [QuranManageCertificateController::class, 'edit'])->name('quran.managenertificate.edit');
+            Route::put('update/{id}', [QuranManageCertificateController::class, 'update'])->name('quran.managenertificate.update');
+            Route::delete('delete/{id}', [QuranManageCertificateController::class, 'destroy'])->name('quran.managenertificate.destroy');
+            Route::get('/generate-view', [QuranManageCertificateController::class, 'generateView'])->name('quran.managenertificate.generate.view');
+            Route::post('/generate-pdf', [QuranManageCertificateController::class, 'generatePDF'])->name('quran.certificate.generate');
+            // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
+            //  ->name('certificate.generate');
+            Route::get('/generated/list', [QuranManageCertificateController::class, 'generatedList'])->name('quran.managenertificate.generated.list');
+
 
         // CURRICULUM
         Route::get('curriculum/create', [QuranCurriculumController::class, 'create'])->name('quran.curriculum.create');

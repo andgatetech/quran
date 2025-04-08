@@ -2,7 +2,7 @@
 
 @section('content')
 <header class="header">
-    <a class="back-btn" href="{{ route('managenertificate.create') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('quran.managenertificate.create') }}"><i class="fas fa-home"></i></a>
     <h1>Generate List</h1>
 </header>
 
@@ -46,10 +46,10 @@
         }
     </style>
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
-        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.create') }}'">Certificate Settings</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.index') }}'">Settings List</button>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('quran.managenertificate.generate.view') }}'">Generate</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.generated.list') }}'">Generated List</button>
     </div>
 </div>
 
@@ -127,7 +127,7 @@
         }
     </style>
     <!-- Competition Filter Dropdown -->
-    <form action="{{ route('managenertificate.generate.view') }}" method="get" style="margin-top: 1rem;">
+    <form action="{{ route('quran.managenertificate.generate.view') }}" method="get" style="margin-top: 1rem;">
                             @csrf
         <!-- Competition Filter -->
         <div class="generate_certificate_search">
@@ -163,7 +163,7 @@
         </div>
         <!-- Side Category Dropdown -->
         <div class="generate_certificate_search">
-            <label for="side_category" style="font-weight: bold; margin-right: 10px;">Side Category:</label>
+            <label for="side_category" style="font-weight: bold; margin-right: 10px;">Recitation Piece:</label>
             <select name="side_category_filter" id="side_category" class="form-control" style="width: 300px; display: inline-block;">
                 <option value="">Select Recitation Piece</option>
                 @foreach($sideCategories as $sideCategory)
@@ -175,7 +175,7 @@
         </div>
         <!-- Read Category Dropdown -->
         <div class="generate_certificate_search">
-            <label for="read_category" style="font-weight: bold; margin-right: 10px;">Read Category:</label>
+            <label for="read_category" style="font-weight: bold; margin-right: 10px;">Recitation Method:</label>
             <select name="read_category_filter" id="read_category" class="form-control" style="width: 300px; display: inline-block;">
                 <option value="">Select Recitation Method</option>
                 @foreach($readCategories as $readCategory)
@@ -209,7 +209,7 @@
                     
     
                         <!-- Certificate Generation Form -->
-                        <form action="{{ route('certificate.generate') }}" method="post" style="margin-top: 1rem;">
+                        <form action="{{ route('quran.certificate.generate') }}" method="post" style="margin-top: 1rem;">
                             @csrf
                             <input type="hidden" name="competitor_id" value="{{ $competitor->id }}">
                             <input type="hidden" name="certificate_settings" id="certificate_settings_{{ $competitor->id }}" value="1">

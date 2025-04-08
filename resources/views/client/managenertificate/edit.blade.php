@@ -111,12 +111,12 @@
 
 @section('content')
 <header class="header">
-    <a class="back-btn" href="{{ route('managenertificate.index') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('quran.managenertificate.index') }}"><i class="fas fa-home"></i></a>
     <h1>Edit Certificate</h1>
 </header>
 
 <div class="container">
-    <form action="{{ route('managenertificate.update', $certificate->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
+    <form action="{{ route('quran.managenertificate.update', $certificate->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
         @csrf
         @method('PUT')
 

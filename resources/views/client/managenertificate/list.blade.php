@@ -2,7 +2,7 @@
 
 @section('content')
 <header class="header">
-    <a class="back-btn" href="{{ route('managenertificate.create') }}"><i class="fas fa-home"></i></a>
+    <a class="back-btn" href="{{ route('quran.managenertificate.create') }}"><i class="fas fa-home"></i></a>
     <h1>Certificate List</h1>
 </header>
 
@@ -46,10 +46,10 @@
         }
     </style>
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.create') }}'">Certificate Settings</button>
-        <button class="nav-btn active" onclick="window.location.href='{{ route('managenertificate.index') }}'">Settings List</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generate.view') }}'">Generate</button>
-        <button class="nav-btn" onclick="window.location.href='{{ route('managenertificate.generated.list') }}'">Generated List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.create') }}'">Certificate Settings</button>
+        <button class="nav-btn active" onclick="window.location.href='{{ route('quran.managenertificate.index') }}'">Settings List</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.generate.view') }}'">Generate</button>
+        <button class="nav-btn" onclick="window.location.href='{{ route('quran.managenertificate.generated.list') }}'">Generated List</button>
     </div>
     
 </div>
@@ -59,7 +59,7 @@
     }
 </style>
 <div id="certificate-search" class="container my-3">
-        <form style="padding: 10px;" action="{{ route('managenertificate.index') }}" method="GET" enctype="multipart/form-data" class="d-block">
+        <form style="padding: 10px;" action="{{ route('quran.managenertificate.index') }}" method="GET" enctype="multipart/form-data" class="d-block">
         @csrf
         <select name="competition_id" class="form-control form-group-lg">
             <option value="">Select Competition</option>
@@ -144,8 +144,8 @@
                     <p><strong>Office Logo:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->office_logo) }}', '_blank')">View</button></p>
                     <p><strong>Office Stamp:</strong> <button style="margin-top: 10px;" class="view-btn" onclick="window.open('{{ asset('storage/app/public/' . $certificate->office_stamp) }}', '_blank')">View</button></p>
                     <!-- Edit and Delete Buttons -->
-                        <a href="{{ route('managenertificate.edit', $certificate->id) }}" class="btn btn-edit btn-warning">Edit</a>
-                        <form action="{{ route('managenertificate.destroy', $certificate->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('quran.managenertificate.edit', $certificate->id) }}" class="btn btn-edit btn-warning">Edit</a>
+                        <form action="{{ route('quran.managenertificate.destroy', $certificate->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Are you sure you want to delete this certificate?')">Delete</button>
@@ -171,7 +171,7 @@
 </script>
 
 <!-- Add this in your Blade template -->
-<form action="{{ route('certificate.generate') }}" method="POST" target="_blank">
+<form action="{{ route('quran.certificate.generate') }}" method="POST" target="_blank">
     @csrf
     <input type="hidden" name="serial_number" value="SN-2023-001">
     <input type="hidden" name="logo" value="{{ asset('path/to/your/logo.png') }}">
