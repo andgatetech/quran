@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<header class="header">
-    <a class="back-btn" href="{{ route('client.menu.quran') }}"><i class="fas fa-home"></i></a>
-    <h1> Curriculum List</h1>
-</header>
+<!-- top bar -->
+@include('client.layouts.top-bar')
 
 <div class="container1">
     <div class="tabs">

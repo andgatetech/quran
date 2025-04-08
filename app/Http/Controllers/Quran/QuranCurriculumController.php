@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Quran;
 
+use App\Models\CompetitionType;
 use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
@@ -14,11 +15,28 @@ use App\Models\SideCategory;
 use App\Models\Curriculum;
 use App\Models\Book;
 use App\Models\CurriculumBook;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 
 class QuranCurriculumController extends Controller
 {
-    public function index()
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+        View::share('moduleName', $this->module);
+        // Use middleware to push action name on each request
+        // $this->middleware(function ($request, $next) {
+        //     $actionFull = class_basename(Route::currentRouteAction()); // e.g. QuranController@index
+        //     $actionName = explode('@', $actionFull)[1] ?? '';
+        //     View::share('actionName', $actionName);
+        //     return $next($request);
+        // });
+    }
+public function index()
 {
     // Fetch curriculum data along with related models
     $curriculums = Curriculum::with([

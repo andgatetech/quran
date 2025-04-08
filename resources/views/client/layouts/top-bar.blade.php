@@ -84,7 +84,7 @@
     @endif
        
         <div class="navbar">
-        <h1>{{ isset($moduleName) ? $moduleName : 'Menu' }}</h1>
+        <h1>{{ isset($moduleName) ? $moduleName : 'Menu' }}  {{ isset($actionName) ? ' : '.$actionName : ''}}</h1>
           <div class="profile" onclick="toggleDropdown()">
           <i class="fa fa-user-circle"></i>
               <!-- <img src="https://via.placeholder.com/40" alt="Profile"> -->
