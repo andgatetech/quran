@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quran;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\AgeCategory;
@@ -15,7 +16,7 @@ use App\Models\Book;
 use App\Models\CurriculumBook;
 
 
-class CurriculumController extends Controller
+class QuranCurriculumController extends Controller
 {
     public function index()
 {
@@ -31,7 +32,7 @@ class CurriculumController extends Controller
     ->get();
 
     // Pass the data to the view
-    return view('client.curriculum.list', compact('curriculums'));
+    return view('client.quran.curriculum.list', compact('curriculums'));
 }
 
 
@@ -43,7 +44,7 @@ class CurriculumController extends Controller
         $readCategories = ReadCategory::where('user_id', Auth::id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
-        return view('client.curriculum.create', compact('books','competitions', 'sideCategories', 'readCategories', 'ageCategories'));
+        return view('client.quran.curriculum.create', compact('books','competitions', 'sideCategories', 'readCategories', 'ageCategories'));
     }
 
 
@@ -62,22 +63,6 @@ class CurriculumController extends Controller
     ]);
 
      $books=serialize($request->input('book'));
-    // echo $books;
-    // exit;
-
-    // Create the Curriculum record in the database
-    // Curriculum::create([
-    //     'title' => $request->input('title'),
-    //     //'number_of_questions' => $request->input('number_of_questions'),
-    //     'book_id' =>$books,
-    //     'total_ayah' => $request->input('total_ayah'),
-    //     'competition_id' => $request->input('competition_id'),
-    //     'side_category_id' => $request->input('side_category_id'),
-    //     'read_category_id' => $request->input('read_category_id'),
-    //     'age_category_id' => $request->input('age_category_id'),
-    //     'remarks' => $request->input('remarks'),
-    //     'user_id' => Auth::id(),
-    // ]);
 
     $curriculum=new Curriculum();
     $curriculum->title=$request->title;
@@ -100,7 +85,7 @@ class CurriculumController extends Controller
     }
 
     // Redirect back to the form with a success message
-    return redirect()->route('curriculum.create')->with('success', 'Curriculum has been added successfully!');
+    return redirect()->route('quran.curriculum.create')->with('success', 'Curriculum has been added successfully!');
 }
 
 
@@ -116,7 +101,7 @@ public function edit($id)
     $readCategories = ReadCategory::where('user_id', Auth::id())->get();
     $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
 
-    return view('client.curriculum.edit', compact('books','curriculum', 'competitions', 'sideCategories', 'readCategories', 'ageCategories'));
+    return view('client.quran.curriculum.edit', compact('books','curriculum', 'competitions', 'sideCategories', 'readCategories', 'ageCategories'));
 }
 
 
@@ -172,7 +157,7 @@ public function update(Request $request, $id)
 
 
         // Redirect back with success message
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum updated successfully!');
+        return redirect()->route('quran.curriculum.list')->with('success', 'Curriculum updated successfully!');
     } catch (\Exception $e) {
         // Log the error
         \Log::error('Error updating curriculum: ' . $e->getMessage());
@@ -206,13 +191,13 @@ public function destroy($id)
         }    
 
         // Redirect to the curriculum index page with a success message
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum deleted successfully!');
+        return redirect()->route('quran.curriculum.list')->with('success', 'Curriculum deleted successfully!');
     } catch (\Exception $e) {
         // Log any error that occurs during deletion
         \Log::error('Error deleting curriculum: ' . $e->getMessage());
 
         // Redirect to the curriculum index page with an error message
-        return redirect()->route('curriculum.index')->with('error', 'Failed to delete curriculum. Please try again.');
+        return redirect()->route('quran.curriculum.list')->with('error', 'Failed to delete curriculum. Please try again.');
     }
 }
 

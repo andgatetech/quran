@@ -410,16 +410,7 @@ Route::resource('report',QuranReportController::class);
 
 
 
-// curriculum Crud
 
-Route::prefix('client/curriculum')->group(function () {
-    Route::get('/create', [CurriculumController::class, 'create'])->name('curriculum.create');
-    Route::post('/post', [CurriculumController::class, 'store'])->name('curriculum.store');
-    Route::get('/', [CurriculumController::class, 'index'])->name('curriculum.index');
-    Route::get('/{id}/edit', [CurriculumController::class, 'edit'])->name('curriculum.edit');
-    Route::put('update/{id}', [CurriculumController::class, 'update'])->name('curriculum.update');
-    Route::delete('delete/{id}', [CurriculumController::class, 'destroy'])->name('curriculum.destroy');
-});
 
 
 // Manage Certificate

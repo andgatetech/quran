@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quran\QuranAgeCategoryController;
 use App\Http\Controllers\Quran\QuranAnnounceCompetitionController;
 use App\Http\Controllers\Quran\QuranCompetitionController;
+use App\Http\Controllers\Quran\QuranCurriculumController;
 use App\Http\Controllers\Quran\QuranHostController;
 use App\Http\Controllers\Quran\QuranJudgeController;
 use App\Http\Controllers\Quran\QuranPointCategoryController;
@@ -122,14 +123,20 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
 
         // TO START THE COMPETITION (HOST)
         Route::get('host/create', [QuranHostController::class, 'create'])->name('quran.host.create');
-        
         // Route for the competition list
         Route::get('host/competition-list', [QuranHostController::class, 'competitionList'])->name('quran.competitions.list');
-               
         Route::post('host/store', [QuranHostController::class, 'store'])->name('quran.host.store');
         Route::post('host/{host}/continue', [QuranHostController::class, 'continue'])->name('quran.host.continue');
         // Route for announcing winners
         Route::get('host/announce', [RankingController::class, 'announceWinners'])->name('quran.host.announce');
+
+        // CURRICULUM
+        Route::get('curriculum/create', [QuranCurriculumController::class, 'create'])->name('quran.curriculum.create');
+        Route::post('curriculum/store', [QuranCurriculumController::class, 'store'])->name('quran.curriculum.store');
+        Route::get('curriculum/list', [QuranCurriculumController::class, 'index'])->name('quran.curriculum.list');
+        Route::get('curriculum/edit/{id}', [QuranCurriculumController::class, 'edit'])->name('quran.curriculum.edit');
+        Route::put('curriculum/update/{id}', [QuranCurriculumController::class, 'update'])->name('quran.curriculum.update');
+        Route::delete('curriculum/delete/{id}', [QuranCurriculumController::class, 'destroy'])->name('quran.curriculum.destroy');
         
 
     }); 

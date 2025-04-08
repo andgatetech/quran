@@ -6,21 +6,12 @@
     <h1> Curriculum List</h1>
 </header>
 
-<div class="tabs">
-    <style>
-        .tab-btn {
-            float: left;
-            border-radius: 30px;
-            font-size: 16px;
-            transition: background-color 0.3s, color 0.3s;
-            width: 45% !important;
-            padding: .3rem 0;
-            margin: .5rem .2rem;
-        }
-    </style>
-    <button class="tab-btn" onclick="window.location.href='{{ route('curriculum.create') }}'">Create Curriculum</button>
-    <button class="tab-btn active" onclick="window.location.href='{{ route('curriculum.index') }}'">Curriculum List</button>
-</div>
+<div class="container1">
+    <div class="tabs">
+    <button class="tab-btn"  onclick="window.location.href='{{ route('quran.curriculum.create') }}'">Create curriculum</button>
+    <button class="tab-btn active" onclick="window.location.href='{{ route('quran.curriculum.list') }}'">Curriculum List</button>
+    </div>
+  </div>
 
 <style>
     .container {
@@ -90,8 +81,8 @@
                     <p><strong>Total # of Ayah:</strong> {{ $curriculum->total_ayah }}</p>
                     <p><strong>Remarks:</strong> {{ $curriculum->remarks ?? 'N/A' }}</p>
                     <div class="button-group-inline mt-3">
-                        <a href="{{ route('curriculum.edit', $curriculum->id) }}" class="btn btn-edit btn-warning">Edit</a>
-                        <form action="{{ route('curriculum.destroy', $curriculum->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('quran.curriculum.edit', $curriculum->id) }}" class="btn btn-edit btn-warning">Edit</a>
+                        <form action="{{ route('quran.curriculum.destroy', $curriculum->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Are you sure you want to delete this curriculum?')">Delete</button>

@@ -6,5 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    //
+    // Optional: define table name if it's not plural of the model name
+    // protected $table = 'documents';
+
+    // Optional: if you want to disable timestamps
+    // public $timestamps = false;
+
+    // Specify the fillable fields for mass assignment
+    protected $fillable = [
+        'book_name',
+        'total_ayah',
+    ];
 }

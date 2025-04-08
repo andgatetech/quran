@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('competition_applications', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             //
-            $table->integer('poetry_id')->after('id')->nullable()->default(null);
+            $table->integer('total_ayah')->after('book_name')->nullable()->default(null);
         });
     }
 
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('competition_applications', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             //
-            Schema::dropIfExists('poetry_id');
+            Schema::dropIfExists('total_ayah');
         });
     }
 };
