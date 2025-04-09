@@ -159,7 +159,7 @@
                     <div class="competition-sub-name">
                         <p>Rules : <span>
                         <button onclick="window.open('{{ route('pdf.view', $competition->rules) }}', '_blank')" class="btn view-btn">View</button>
-                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn download-btn">Download</a>
+                        <a  href="{{ asset('public/'.$competition->rules) }}" target="_blank" class="btn download-btn">Download</a>
                         </span></p>
                     </div>
                     <div class="clearfix"></div>

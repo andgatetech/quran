@@ -10,6 +10,7 @@ use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class QuranAnnounceCompetitionController extends Controller
@@ -42,7 +43,11 @@ class QuranAnnounceCompetitionController extends Controller
     public function create()
     {
             $moduleName = $this->module;
-            $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
+            $competitions = Competition::where([
+                ['user_id', '=', Auth::guard('client')->id()],
+                ['competition_type_id', '=', $this->competitionType->id],
+            ])->where('status','Pending')
+            ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
             return view('client.quran.announce-competition.create',compact('competitions', 'moduleName')); // Path to your Blade file
     }
 

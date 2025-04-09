@@ -20,7 +20,7 @@ class QuranCompetitionController extends Controller
         // find competition type;
         $this->competitionType = CompetitionType::where('name', 'Quran')->first();
     }
-    
+
     // Show the create competition form
     public function create()
     {
@@ -53,7 +53,10 @@ class QuranCompetitionController extends Controller
     public function index()
     {
         $moduleName = $this->module;
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions for logged-in user
+        $competitions = Competition::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get(); // Fetch competitions for logged-in user
         return view('client.quran.competition.competitionlist', compact('moduleName','competitions'));
     }
 

@@ -257,6 +257,7 @@
                                     </button>
                                 </span>
                             </p>
+                            
                             <!-- Add a new row for number_of_questions -->
                          <!--   <p class="pt-3 pb-2">Number of Questions:</p>-->
                            
@@ -279,10 +280,12 @@
                         
                             
                             @if($status == 'Pending')
+                            <p><input type="text" class="form-control mt-4 mb-2" name="number_of_questions_val" id="number_of_questions_val" placeholder="Number of Question" onchange="updateApproveUnproveRemarksField(this)"></p>
                             <input type="text" class="form-control mt-4 mb-2" name="remarks" id="remarks"
                                 placeholder="Remarks" onchange="updateApproveUnproveRemarksField(this)">
                             @else
                             <p>Status : <span class="{{ $application->status=='Approved' ? 'text-primary' : 'text-danger' }}">{{ $application->status }}</span></p>
+                            <p>Number of Questions : <span class="text-primary">{{ $application->number_of_questions }}</span></p>
                             <p>Remarks : <span class="text-primary">{{ $application->remarks }}</span></p>
                             @endif
                             <div>
@@ -290,6 +293,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Un-Approved">
                                         <input type="hidden" name="remarks" id="remarks_unapprove">
@@ -298,6 +302,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Approved">
                                         <input type="hidden" name="remarks" id="remarks_approve">
@@ -307,6 +312,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="status" value="Pending">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <button type="submit" class="btn delete-btn">Recheck</button>
@@ -366,11 +372,12 @@
 
     @include('includes.footer')
     <script>
-        function updateApproveUnproveRemarksField(){
+        function updateApproveUnproveRemarksField(inputElement){
+            var numberOfQuestionsInput = inputElement.value;
             var remarksInput = document.getElementById('remarks').value;
             var remarksValue = remarksInput.trim();
-            console.log("debug remarks");
-            console.log(remarksInput);
+
+            document.querySelector('input[name="number_of_questions"]').value = numberOfQuestionsInput;
             document.getElementById('remarks_unapprove').value = remarksValue;
             document.getElementById('remarks_approve').value = remarksValue;
             return true;

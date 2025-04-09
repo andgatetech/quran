@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuranRegistrationRequestController extends Controller
 {
@@ -48,10 +49,22 @@ class QuranRegistrationRequestController extends Controller
             $query->where('read_category',$read_category);
         })
         ->get();
-        $competitions = Competition::where('status','On-Going')->get();
-        $side_categories = SideCategory::get();
-        $read_categories = ReadCategory::get();
-        $age_categories = AgeCategory::get();
+        $competitions = Competition::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->where('status','On-Going')->get();
+        $side_categories = SideCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get();
+        $read_categories = ReadCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get();
+        $age_categories = AgeCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get();
 
         return view('client.quran.registrations.index',compact('applications','competitions','status',
         'side_categories','read_categories','age_categories'));
@@ -59,6 +72,7 @@ class QuranRegistrationRequestController extends Controller
     }
     public function updateStatus(Request $request)
     {
+
         $request->validate([
             'application_id' => 'required'
         ]);
@@ -68,6 +82,7 @@ class QuranRegistrationRequestController extends Controller
     
         // Update the application status and remarks
         $application->status = $request->status;
+        $application->number_of_questions = $request->number_of_questions;
         $application->remarks = $request->remarks ?? $application->remarks;
         $application->save();
     
@@ -86,7 +101,7 @@ class QuranRegistrationRequestController extends Controller
                     'side_category_id' => $application->side_category,
                     'read_category_id' => $application->read_category,
                     'age_category_id' => $application->age_category,
-                    'number_of_questions' => 0, // Default value
+                    'number_of_questions' => $application->number_of_questions, // Default value
                     'status' => 'ongoing', // Default status for competitors
                 ]);
             } catch (\Exception $e) {
@@ -100,51 +115,4 @@ class QuranRegistrationRequestController extends Controller
             ->with('success', 'Application status updated successfully.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
