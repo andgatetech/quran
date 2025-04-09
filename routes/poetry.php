@@ -14,6 +14,7 @@ use App\Http\Controllers\Poetry\PoetrySponsorController;
 use App\Http\Controllers\Poetry\PoetryHostController;
 use App\Http\Controllers\Poetry\PoetryRankingController;
 use App\Http\Controllers\Poetry\PoetryManageCertificateController;
+use App\Http\Controllers\Poetry\PoetryReportController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\ClientAuthMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -171,6 +172,7 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
         //  ->name('certificate.generate');
         Route::get('/certificat/generated/list', [PoetryManageCertificateController::class, 'generatedList'])->name('poetry.managenertificate.generated.list');
+        Route::get('/report',[PoetryReportController::class,'index'])->name('poetry.report');
     }); 
 
 });

@@ -31,7 +31,8 @@ class ClientLoginController extends Controller
 
         // Attempt to find the user by email
         $user = User::where('email', $request->email)->first();
-
+        echo 'test';
+        exit;
         if ($user) {
             // Check if the user role is 'user' and the status is 'active'
             if ($user->user_role === 'user' && $user->status === 'active') {

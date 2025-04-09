@@ -151,7 +151,7 @@
                     <p><strong>Perform Option:</strong> {{ $competitor->sideCategory->name ?? 'N/A' }}</p>
                     <p><strong>Method Of Perform:</strong> {{ $competitor->readCategory->name ?? 'N/A' }}</p>
                     <p><strong>Age Category:</strong> {{ $competitor->ageCategory->name ?? 'N/A' }}</p>
-                    <p><strong>Number of Questions:</strong> {{ $competitor->number_of_questions }}</p>
+                    
                     <div class="button-group-inline mt-3">
                         <a href="{{ route('poetry.poetry.edit', $competitor->id) }}" class="btn btn-edit btn-warning">Edit</a>
                         <form action="{{ route('poetry.poetry.destroy', $competitor->id) }}" method="POST" style="display:inline-block;">
