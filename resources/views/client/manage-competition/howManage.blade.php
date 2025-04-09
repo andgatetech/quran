@@ -145,8 +145,8 @@
                 <h6 class="heading col-12 py-3 my-3">{{ $howfile->name }}</h6>
                     <div class="competition-sub-name">
                     <div class="pdf-section"><img src="{{url('public/assets/img/pdf.png')}}" alt="Pdf" width="80px"/></div> 
-                    <div class="button-section"><a href="{{ $howfile->path }}" class="btn btn-primary">View</a>
-                    <a href="{{ $howfile->path }}" class="btn btn-primary">Download</a></div>
+                    <div class="button-section"><a href="{{ asset($howfile->path) }}" class="btn btn-primary">View</a>
+                    <a href="{{ asset($howfile->path) }}" class="btn btn-primary">Download</a></div>
                     </div>      
                 </div>
                 @endforeach
