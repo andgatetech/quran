@@ -51,4 +51,9 @@ class Curriculum extends Model
     {
         return $this->belongsTo(Competition::class, 'competition_id');
     }
+    public function curriulumBooks()
+    {
+        return $this->hasMany(CurriculumBook::class, 'cu_id');
+    }
+
 }

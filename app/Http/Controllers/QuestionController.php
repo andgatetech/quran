@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Book;
 use App\Models\Host;
 use App\Models\Judge;
 use App\Models\Quran;
@@ -411,7 +412,6 @@ public function loginSubmitUser(Request $request)
 
     public function getBookAyatAjax(Request $request)
     {
-        $competition_id = session('competition_id');
         
         $book_number= $request->input('book_number');
 
@@ -424,21 +424,41 @@ public function loginSubmitUser(Request $request)
     }
 
 
-    public function getCurriculumAyatAjax(Request $request)
+    
+public function getCurriculumAyatAjax(Request $request)
     {
-        $competition_id = session('competition_id');
-        
+
         $curriculum_number= $request->input('curriculum_number');
 
-        $curriculum_ayats = DB::table('curriculum')
-            ->select('*')
-            ->where('id', $curriculum_number)
-            ->get();
+        $curriculumn = Curriculum::where('id', $curriculum_number)->firstOrFail();
+        $bookIds = unserialize($curriculumn->book_id);
 
-        return response()->json($curriculum_ayats);
+        $books = Book::whereIn('id', $bookIds)->get();
+        
+
+        return response()->json($books);
     }
 
+    public function getBooksFromCurriculum(Request $request)
+    {
 
+        $curriculum_number= $request->input('curriculum_number');
+
+        $curriculum = Curriculum::where('id', $curriculum_number)->firstOrFail();
+        $bookIds = unserialize($curriculum->book_id);
+
+        $books = Book::whereIn('id', $bookIds)->get();
+        
+
+        return response()->json($books);
+    }
+
+    public function getBookById(Request $request){
+        $bookId = $request->input('book_number');
+        $book = Book::where('id', $bookId)->firstOrFail();
+
+        return response()->json($book);
+    }
 
 
 
@@ -467,6 +487,8 @@ public function loginSubmitUser(Request $request)
 
 public function store(Request $request)
 {
+    // dd($request);
+
     try {
         $validatedData = $request->validate([
             'competition_id' => 'required',
@@ -475,7 +497,7 @@ public function store(Request $request)
             'side_category_id' => 'required',
             'read_category_id' => 'required',
             //'book_number' => 'required|string',
-            'from_ayat_number' => 'required|integer',
+            // 'from_ayat_number' => 'required|integer',
             //'to_ayat_number' => 'required|integer',
             'hardness' => 'required|integer|min:0|max:100',
         ]);
@@ -492,13 +514,18 @@ public function store(Request $request)
        $question->side_category_id=$request->side_category_id;
        $question->read_category_id=$request->read_category_id;
        $question->option_name=$request->option_name;
+       $question->book_number=$request->book_number;
        if($request->option_name=="Book"){
+        
             $question->book_number=$request->book_number;
-       }else{
-            $question->curriculum_id=$request->curriculum_id;
+            $question->from_ayat_number=$request->from_ayat_number;
+            $question->to_ayat_number=$request->to_ayat_number;
+       }elseif($request->option_name=="Curriculum"){
+        $question->book_number=$request->curriculum_book_number;
+        $question->from_ayat_number=$request->curriculumn_book_from_ayat_number;
+        $question->to_ayat_number=$request->curriculumn_book_to_ayat_number;
        }
-       $question->from_ayat_number=$request->from_ayat_number;
-       $question->to_ayat_number=$request->to_ayat_number;
+
        $question->hardness=$request->hardness;
        $question->user_id=Auth::guard('client')->id();
        $question->save();
