@@ -158,7 +158,7 @@
         </select>
 
         <!-- Signature Count Dropdown -->
-        <select name="signature_count" class="form-control" required>
+        <select name="signature_count" id="number_of_signation" class="form-control" required>
             <option value="">Select number of signatures</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -182,34 +182,40 @@
         <!-- Award Date -->
         <input type="date" name="award_date" class="form-control" placeholder="Select Award Date" required>
 
-        <!-- Authorize Person 1 -->
-        <div class="input-group">
-            <input type="text" name="authorize_person_1" class="form-control" placeholder="Authorize person 1" required>
-            <label class="upload-btn">
-                <i class="fas fa-upload"></i>
-                Signature
-                <input type="file" name="signature_1" hidden accept="image/*" required onchange="displayFileName(this, 'signature1-name')">
-            </label>
-            <span id="signature1-name" class="file-name"></span>
+        <!-- Singature number 1 -->
+        <div id="signation-1" class="signation-group" style="display: none;">
+            <!-- Authorize Person 1 -->
+            <div class="input-group" >
+                <input type="text" name="authorize_person_1" class="form-control" placeholder="Authorize person 1" required>
+                <label class="upload-btn">
+                    <i class="fas fa-upload"></i>
+                    Signature
+                    <input type="file" name="signature_1" hidden accept="image/*" required onchange="displayFileName(this, 'signature1-name')">
+                </label>
+                <span id="signature1-name" class="file-name"></span>
+            </div>
+            <!-- Designation of Person 1 -->
+            <input type="text" name="designation_1" class="form-control" placeholder="Designation of the person 1" >
+
+        </div>    
+
+        <!-- Singature number 1 -->
+       <div id="signation-2" class="signation-group" style="display: none;">
+            
+            <!-- Authorize Person 2 -->
+            <div class="input-group" >
+                <input type="text" name="authorize_person_2" class="form-control" placeholder="Authorize person 2">
+                <label class="upload-btn">
+                    <i class="fas fa-upload"></i>
+                    Signature
+                    <input type="file" name="signature_2" hidden accept="image/*" onchange="displayFileName(this, 'signature2-name')">
+                </label>
+                <span id="signature2-name" class="file-name"></span>
+            </div>
+        
+            <!-- Designation of Person 2 -->
+            <input type="text" name="designation_2" class="form-control" placeholder="Designation of the person 2">
         </div>
-
-        <!-- Designation of Person 1 -->
-        <input type="text" name="designation_1" class="form-control" placeholder="Designation of the person 1" >
-
-        <!-- Authorize Person 2 -->
-        <div class="input-group">
-            <input type="text" name="authorize_person_2" class="form-control" placeholder="Authorize person 2">
-            <label class="upload-btn">
-                <i class="fas fa-upload"></i>
-                Signature
-                <input type="file" name="signature_2" hidden accept="image/*" onchange="displayFileName(this, 'signature2-name')">
-            </label>
-            <span id="signature2-name" class="file-name"></span>
-        </div>
-
-        <!-- Designation of Person 2 -->
-        <input type="text" name="designation_2" class="form-control" placeholder="Designation of the person 2">
-
         <!-- Office Logo and Stamp -->
         <div class="input-group">
             <label class="upload-btn" style="flex: 1">
@@ -238,6 +244,26 @@
         const fileName = input.files[0].name;
         document.getElementById(spanId).textContent = fileName;
     }
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const numberSelect = document.getElementById('number_of_signation');
+        const signation1 = document.getElementById('signation-1');
+        const signation2 = document.getElementById('signation-2');
+
+        function toggleSignationFields() {
+            const value = numberSelect.value;
+            signation1.style.display = value >= 1 ? 'block' : 'none';
+            signation2.style.display = value == 2 ? 'block' : 'none';
+        }
+
+        numberSelect.addEventListener('change', toggleSignationFields);
+
+        // Optionally trigger on page load if old value exists
+        toggleSignationFields();
+    });
 </script>
 
 <style>

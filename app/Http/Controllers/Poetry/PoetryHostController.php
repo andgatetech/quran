@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Poetry;
 use Carbon\Carbon;
 use App\Models\Host;
 use App\Models\Competition;
+use App\Models\CompetitionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,10 @@ class PoetryHostController extends Controller
     public function create()
     {
         // Fetch competitions for the logged-in user
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
+        $competitionType = CompetitionType::where('name', 'Poetry')->first();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get(); // Filter by user_id
 
         // Pass the data to the view
         return view('client.poetry.host.create', compact('competitions'));

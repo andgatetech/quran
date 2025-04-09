@@ -98,6 +98,7 @@
       <button class="btn" onclick="window.location.href='{{ route('poetry.managenertificate.create') }}'">To award
         certificates</button>
 
+      <button class="btn" onclick="window.location.href='{{ route('poetry.report') }}'">Report</button>
 
 
     </div>
