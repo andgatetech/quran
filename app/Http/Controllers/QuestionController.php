@@ -65,11 +65,11 @@ class QuestionController extends Controller
 
     public function create()
     {
-        $competitions = Competition::where('user_id', Auth::id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
-        $curriculums = Curriculum::where('user_id', Auth::id())->get(); // Add this line
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+        $curriculums = Curriculum::where('user_id', Auth::guard('client')->id())->get(); // Add this line
         $quran = Quran::select('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->groupBy('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->orderBy('surah_no', 'asc')
@@ -113,13 +113,13 @@ class QuestionController extends Controller
 
     public function list(Request $request)
     {
-        $competitions = Competition::where('user_id', Auth::id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
     
         // Start with all questions
-        $questions = Question::where('user_id', Auth::id());
+        $questions = Question::where('user_id', Auth::guard('client')->id());
     
         // Apply filters based on user input
         if ($request->has('sideCategory') && $request->sideCategory != '') {
@@ -150,11 +150,11 @@ class QuestionController extends Controller
 
     public function edit($id)
     {
-        $competitions = Competition::where('user_id', Auth::id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
-        $curriculums = Curriculum::where('user_id', Auth::id())->get(); // Add this line
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+        $curriculums = Curriculum::where('user_id', Auth::guard('client')->id())->get(); // Add this line
         $quran = Quran::select('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->groupBy('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->orderBy('surah_no', 'asc')
@@ -481,7 +481,7 @@ public function store(Request $request)
         ]);
 
         // Add the user_id to the validated data
-        $validatedData['user_id'] = Auth::id();
+        $validatedData['user_id'] = Auth::guard('client')->id();
 
         // Create the question
        // Question::create($validatedData);
@@ -500,7 +500,7 @@ public function store(Request $request)
        $question->from_ayat_number=$request->from_ayat_number;
        $question->to_ayat_number=$request->to_ayat_number;
        $question->hardness=$request->hardness;
-       $question->user_id=Auth::id();
+       $question->user_id=Auth::guard('client')->id();
        $question->save();
 
 
@@ -569,7 +569,7 @@ public function update(Request $request, $id)
        $question->from_ayat_number=$request->from_ayat_number;
        $question->to_ayat_number=$request->to_ayat_number;
        $question->hardness=$request->hardness;
-       $question->user_id=Auth::id();
+       $question->user_id=Auth::guard('client')->id();
        $question->save();
 
         return redirect()->route('questions.list')->with('success', 'Question updated successfully!');
@@ -666,7 +666,7 @@ public function bulkUpload(Request $request)
         // Process each row
         foreach ($rows as $row) {
             // Add user_id value to the row
-            array_unshift($row, Auth::id());
+            array_unshift($row, Auth::guard('client')->id());
 
             $rowData = array_combine($header, $row);
 

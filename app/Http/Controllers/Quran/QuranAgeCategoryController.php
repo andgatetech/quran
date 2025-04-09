@@ -32,7 +32,7 @@ class QuranAgeCategoryController extends Controller
 
         AgeCategory::create([
             'competition_type_id' => $this->competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
 
@@ -42,7 +42,7 @@ class QuranAgeCategoryController extends Controller
     // List all age categories
     public function index()
     {
-        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
         return view('client.quran.agecategory.list', compact('ageCategories'));
     }
 

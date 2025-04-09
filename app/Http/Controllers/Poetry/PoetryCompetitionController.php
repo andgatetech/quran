@@ -48,7 +48,7 @@ class PoetryCompetitionController extends Controller
         $moduleName = $this->module;
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $competitions = Competition::
-        where('user_id', Auth::id())
+        where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get(); // Fetch competitions for logged-in user
         return view('client.poetry.competition.competitionlist', compact('moduleName','competitions'));
@@ -65,7 +65,7 @@ class PoetryCompetitionController extends Controller
 
         Competition::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'main_name' => $request->main_name,
             'sub_name' => $request->sub_name,
         ]);
@@ -86,7 +86,7 @@ class PoetryCompetitionController extends Controller
 
         // Retrieve the competition and ensure it belongs to the logged-in user
         $competition = Competition::where('id', $competitionId)
-            ->where('user_id', Auth::id()) // Ensure the competition belongs to the logged-in user
+            ->where('user_id', Auth::guard('client')->id()) // Ensure the competition belongs to the logged-in user
             ->first();
 
         // If the competition doesn't exist or doesn't belong to the logged-in user, abort the request

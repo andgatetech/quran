@@ -27,7 +27,7 @@ class QuranJudgeController extends Controller
     public function index()
     {
         // Fetch judges for the logged-in user
-        // $judges = Judge::where('user_id', Auth::id())->get(); // Filter by user_id
+        // $judges = Judge::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
 
         $judges = Judge::get(); // Filter by user_id
 
@@ -39,10 +39,10 @@ class QuranJudgeController extends Controller
      */
     public function create()
     {
-        $pointCategories = PointCategory::where('user_id', Auth::id())->where('competition_type_id',$this->competitionType->id)->get();
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id',$this->competitionType->id)->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())->where('competition_type_id',$this->competitionType->id)->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id',$this->competitionType->id)->get();
 
         return view('client.quran.judge.create', compact('competitions', 'pointCategories'));
     }
@@ -91,10 +91,10 @@ class QuranJudgeController extends Controller
      */
     public function edit($id)
     {
-        $pointCategories = PointCategory::where('user_id', Auth::id())->where('competition_type_id',$this->competitionType->id)->get();
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id',$this->competitionType->id)->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())->where('competition_type_id',$this->competitionType->id)->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id',$this->competitionType->id)->get();
     
 
         $judge = Judge::findOrFail($id);

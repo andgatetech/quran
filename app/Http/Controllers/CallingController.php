@@ -49,9 +49,9 @@ class CallingController extends Controller
 //         ->where('competition_id', $competition_id)
 //         ->where('status', 'performed')
 //         ->get();
-//         $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-//         $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-//         $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+//         $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+//         $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+//         $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 //         return view('calling.performed', compact('competitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));
 
 // }
@@ -69,9 +69,9 @@ public function performed()
     })
     ->get();
     // Retrieve all categories for filtering
-    $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-    $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-    $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
     // Fetch questions based on competition_id and competitor_id from the question_child table
     $questions = Question::join('question_child as qc', 'qc.question_id', '=', 'questions.id')
@@ -342,9 +342,9 @@ public function loginSubmit(Request $request)
         ->get();
 
         // Retrieve all categories for filtering
-        $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
         // Pass the data to the view
         return view('calling.ready', compact('competitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));

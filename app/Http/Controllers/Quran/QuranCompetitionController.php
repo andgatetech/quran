@@ -46,7 +46,7 @@ class QuranCompetitionController extends Controller
     public function index()
     {
         $moduleName = $this->module;
-        $competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions for logged-in user
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions for logged-in user
         return view('client.quran.competition.competitionlist', compact('moduleName','competitions'));
     }
 
@@ -61,7 +61,7 @@ class QuranCompetitionController extends Controller
 
         Competition::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'main_name' => $request->main_name,
             'sub_name' => $request->sub_name,
         ]);
@@ -82,7 +82,7 @@ class QuranCompetitionController extends Controller
 
         // Retrieve the competition and ensure it belongs to the logged-in user
         $competition = Competition::where('id', $competitionId)
-            ->where('user_id', Auth::id()) // Ensure the competition belongs to the logged-in user
+            ->where('user_id', Auth::guard('client')->id()) // Ensure the competition belongs to the logged-in user
             ->first();
 
         // If the competition doesn't exist or doesn't belong to the logged-in user, abort the request

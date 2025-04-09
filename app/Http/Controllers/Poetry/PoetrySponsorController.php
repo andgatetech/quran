@@ -19,7 +19,7 @@ class PoetrySponsorController extends Controller
     public function index()
     {
         // Fetch sponsors for the logged-in user
-        $sponsors = Sponsor::where('user_id', Auth::id())->get(); // Filter by user_id
+        $sponsors = Sponsor::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
 
         return view('client.poetry.sponsor.list', compact('sponsors'));
     }
@@ -33,7 +33,7 @@ class PoetrySponsorController extends Controller
     {
         // Fetch all competitions and pass them to the view
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         return view('client.poetry.sponsor.create', compact('competitions'));
@@ -60,7 +60,7 @@ class PoetrySponsorController extends Controller
         $sponsorData = [
             'name' => $validatedData['name'],
             'competition_id' => $validatedData['competition_id'],
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('client')->id(),
             'Tin' => $validatedData['Tin'], // Add Tin field
             'Details' => $validatedData['Details'], // Add Details field
             'status' => $validatedData['status'], // Add status field
@@ -148,7 +148,7 @@ class PoetrySponsorController extends Controller
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $sponsor = Sponsor::with('competition')->findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
@@ -191,7 +191,7 @@ class PoetrySponsorController extends Controller
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $sponsor = Sponsor::with('competition')->findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 

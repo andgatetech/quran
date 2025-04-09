@@ -26,7 +26,7 @@ class QuranSponsorController extends Controller
     public function index()
     {
         // Fetch sponsors for the logged-in user
-        $sponsors = Sponsor::where('user_id', Auth::id())->get(); // Filter by user_id
+        $sponsors = Sponsor::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
 
         return view('client.quran.sponsor.list', compact('sponsors'));
     }
@@ -39,7 +39,7 @@ class QuranSponsorController extends Controller
     public function create()
     {
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
         return view('client.quran.sponsor.create', compact('competitions'));
 
     }
@@ -64,7 +64,7 @@ class QuranSponsorController extends Controller
         $sponsorData = [
             'name' => $validatedData['name'],
             'competition_id' => $validatedData['competition_id'],
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('client')->id(),
             'Tin' => $validatedData['Tin'], // Add Tin field
             'Details' => $validatedData['Details'], // Add Details field
             'status' => $validatedData['status'], // Add status field
@@ -151,7 +151,7 @@ class QuranSponsorController extends Controller
     public function edit($id)
     {
         $sponsor = Sponsor::with('competition')->findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
 
         return view('client.quran.sponsor.edit', compact('sponsor','competitions'));
     }
@@ -191,7 +191,7 @@ class QuranSponsorController extends Controller
     public function show($id)
     {
         $sponsor = Sponsor::with('competition')->findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
 
         return view('client.quran.sponsor.view', compact('sponsor','competitions'));
     }

@@ -92,7 +92,7 @@ class QuranManageCertificateController extends Controller
 
 public function index(Request $request)
 {
-    // $competitions = Competition::where('user_id', Auth::id())->get();
+    // $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
     $competitions = Competition::get();
 
     $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
@@ -102,7 +102,7 @@ if($search_competition_id !== null){
         // Fetch all certificates for the authenticated user
         $certificates = ManageCertificate::with('competition')
         ->whereHas('competition', function ($query) use ($search_competition_id){
-            $query->where('user_id', Auth::id())->where('id', $search_competition_id);
+            $query->where('user_id', Auth::guard('client')->id())->where('id', $search_competition_id);
         })
         ->get();
 
@@ -110,7 +110,7 @@ if($search_competition_id !== null){
     // Fetch all certificates for the authenticated user
     $certificates = ManageCertificate::with('competition')
         ->whereHas('competition', function ($query) {
-            $query->where('user_id', Auth::id());
+            $query->where('user_id', Auth::guard('client')->id());
         })
         ->get();
 }
@@ -220,7 +220,7 @@ public function edit($id)
     }
 
     // Fetch competitions for the dropdown
-    $competitions = Competition::where('user_id', Auth::id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
 
     // Return the edit view with the certificate and competitions data
     return view('client.managenertificate.edit', compact('certificate', 'competitions'));
@@ -229,11 +229,11 @@ public function edit($id)
     public function generateView(Request $request)
     {
 
-        //$competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions
+        //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
         $competitions = Competition::get(); // Fetch competitions
         $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
             // ->whereHas('competition', function ($query) {
-            //     $query->where('user_id', Auth::id());
+            //     $query->where('user_id', Auth::guard('client')->id());
             // })
             ->when(request('competition_filter'), function ($query, $competitionFilter) {
                 return $query->whereHas('competition', function ($q) use ($competitionFilter) {
@@ -257,9 +257,9 @@ public function edit($id)
 
         $manageCertificates = ManageCertificate::all();
 
-        // $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-        // $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-        // $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+        // $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+        // $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+        // $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
         $sideCategories = SideCategory::get();
         $readCategories = ReadCategory::get();
@@ -277,11 +277,11 @@ public function edit($id)
     }
 
 public function generatedList(){
-   //$competitions = Competition::where('user_id', Auth::id())->get(); // Fetch competitions
+   //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
    $competitions = Competition::get(); // Fetch competitions
    $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
        // ->whereHas('competition', function ($query) {
-       //     $query->where('user_id', Auth::id());
+       //     $query->where('user_id', Auth::guard('client')->id());
        // })
        ->when(request('competition_filter'), function ($query, $competitionFilter) {
            return $query->whereHas('competition', function ($q) use ($competitionFilter) {
@@ -302,9 +302,9 @@ public function generatedList(){
 
    $generatedCertificates = GenerateCertificate::all();
 
-   // $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-   // $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-   // $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+   // $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+   // $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+   // $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
    $sideCategories = SideCategory::get();
    $readCategories = ReadCategory::get();

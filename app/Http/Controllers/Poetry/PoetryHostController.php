@@ -33,7 +33,7 @@ class PoetryHostController extends Controller
         $hosts = DB::table('hosts')
             ->join('competitions', 'hosts.competition_id', '=', 'competitions.id')
             ->select('hosts.*', 'competitions.main_name', 'competitions.sub_name')
-            ->where('hosts.user_id', Auth::id()) // Filter by user_id
+            ->where('hosts.user_id', Auth::guard('client')->id()) // Filter by user_id
             ->get();
 
         // Pass the data to the view
@@ -52,7 +52,7 @@ class PoetryHostController extends Controller
     public function create()
     {
         // Fetch competitions for the logged-in user
-        $competitions = Competition::where('user_id', Auth::id())->get(); // Filter by user_id
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
 
         // Pass the data to the view
         return view('client.poetry.host.create', compact('competitions'));
@@ -73,7 +73,7 @@ class PoetryHostController extends Controller
             'competition_id' => $request->competition_id,
             'host_id' => $request->host_id,
             'password' => bcrypt($request->password), // Store encrypted password
-            'user_id' => Auth::id(), // Store the user_id of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // Store the user_id of the logged-in user
         ]);
 
         return redirect()->route('poetry.host.create')->with('success', 'Competition hosted successfully');

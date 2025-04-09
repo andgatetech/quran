@@ -21,7 +21,7 @@ class PoetryJudgeController extends Controller
     public function index()
     {
         // Fetch judges for the logged-in user
-        $judges = Judge::where('user_id', Auth::id())
+        $judges = Judge::where('user_id', Auth::guard('client')->id())
         ->get(); // Filter by user_id
 
         return view('client.poetry.judge.list', compact('judges'));
@@ -34,12 +34,12 @@ class PoetryJudgeController extends Controller
     {
         // Fetch point categories for the logged-in user
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $pointCategories = PointCategory::where('user_id', Auth::id())
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
@@ -158,12 +158,12 @@ class PoetryJudgeController extends Controller
     {
 
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $pointCategories = PointCategory::where('user_id', Auth::id())
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         $judge = Judge::findOrFail($id);

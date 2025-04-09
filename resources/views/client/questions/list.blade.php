@@ -131,10 +131,10 @@ p{}
 .filter-dropdown {
     width: 100%;
     padding: 8px;
-    border: 1px solid #016da8;
+    border: 1px solid var(--secondary-color);
     border-radius: 4px;
     background-color: #f4f8fb;
-    color: #016da8;
+    color: var(--secondary-color);
     font-size: 14px;
 }
 
@@ -148,7 +148,7 @@ p{}
 }
 
 button[type="submit"] {
-    background-color: #016da8;
+    background-color: var(--secondary-color);
     color: white;
     border: none;
     padding: 10px 15px;
@@ -158,7 +158,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #015b7a;
+    background-color: var(--secondary-color);
 }
 
 

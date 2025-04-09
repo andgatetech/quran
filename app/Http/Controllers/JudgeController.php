@@ -20,7 +20,7 @@ class JudgeController extends Controller
     public function index()
     {
         // Fetch judges for the logged-in user
-        $judges = Judge::where('user_id', Auth::id())->get(); // Filter by user_id
+        $judges = Judge::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
 
         return view('client.judge.list', compact('judges'));
     }
@@ -31,10 +31,10 @@ class JudgeController extends Controller
     public function create()
     {
         // Fetch point categories for the logged-in user
-        $pointCategories = PointCategory::where('user_id', Auth::id())->get();
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
 
         return view('client.judge.create', compact('competitions', 'pointCategories'));
     }
@@ -150,10 +150,10 @@ class JudgeController extends Controller
     public function edit($id)
     {
 
-        $pointCategories = PointCategory::where('user_id', Auth::id())->get();
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
         $judge = Judge::findOrFail($id);
         return view('client.judge.edit', compact('judge','pointCategories','competitions'));
     }

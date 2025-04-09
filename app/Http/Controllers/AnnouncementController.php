@@ -49,9 +49,9 @@ $winners = DB::table('rankings as r')
             ->orderBy('r.rank', 'asc') // Order by rank for proper display
             ->get();
 
-            $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-            $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-            $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+            $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+            $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+            $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
 
         return view('announcement.winners', compact('winners', 'sponsors', 'sideCategories', 'readCategories', 'ageCategories'));
@@ -104,7 +104,7 @@ $winners = DB::table('rankings as r')
     //     $competition_id = session('competition_id');
 
     //     // Fetch sponsors and competitors
-    //     $sponsors = Sponsor::where('user_id', Auth::id())->get(); // Assuming you have a Sponsor model
+    //     $sponsors = Sponsor::where('user_id', Auth::guard('client')->id())->get(); // Assuming you have a Sponsor model
     //     $competitors = Competitor::with([
     //             'sideCategory',
     //             'readCategory',

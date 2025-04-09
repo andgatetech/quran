@@ -247,8 +247,8 @@
                         <div class="competition-sub-name">
                             <p>Competition Name: <span></span></p>
                             <p>Age Category: <span></span></p>
-                            <p>Site Category : <span></span></p>
-                            <p>Read Category : <span></span></p>
+                            <p>Recitation Piece : <span></span></p>
+                            <p>Recitation Method : <span></span></p>
                             <p>Date of Announce : <span></span></p>
                             <p>Date Of Close : <span></span></p>
                             <p>Status : <span></span></p>

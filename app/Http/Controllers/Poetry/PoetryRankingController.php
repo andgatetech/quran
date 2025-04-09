@@ -294,9 +294,9 @@ return view('client.poetry.winning-announcement.index', compact('competitors','c
     //     ->get();
 
     //     // Retrieve all categories for filtering (if needed)
-    //     $sideCategories = SideCategory::where('user_id', Auth::id())->get();
-    //     $readCategories = ReadCategory::where('user_id', Auth::id())->get();
-    //     $ageCategories = AgeCategory::where('user_id', Auth::id())->get();
+    //     $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
+    //     $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
+    //     $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
     //     // Pass the data to the view
     //     return view('client.host.announce', compact('competitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));
@@ -317,7 +317,7 @@ return view('client.poetry.winning-announcement.index', compact('competitors','c
     // Retrieve competitors with related categories and their results
    $competitors = Competitor::with(['sideCategory', 'readCategory', 'ageCategory', 'results' ])
     ->where('status', 'performed')
-    ->where('user_id', Auth::id())
+    ->where('user_id', Auth::guard('client')->id())
     ->get();
     foreach ($competitors as $competitor) {
         $competitor->total_gained_points = $competitor->results->sum('gained_points');
@@ -336,13 +336,13 @@ return view('client.poetry.winning-announcement.index', compact('competitors','c
     }
 
     // Retrieve all categories for filtering (if needed)
-    $sideCategories = SideCategory::where('user_id', Auth::id())
+    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())
     ->where('competition_type_id',$competitionType->id)
     ->get();
-    $readCategories = ReadCategory::where('user_id', Auth::id())
+    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())
     ->where('competition_type_id',$competitionType->id)
     ->get();
-    $ageCategories = AgeCategory::where('user_id', Auth::id())
+    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())
     ->where('competition_type_id',$competitionType->id)
     ->get();
 

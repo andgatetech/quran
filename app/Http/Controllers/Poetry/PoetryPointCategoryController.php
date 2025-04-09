@@ -27,7 +27,7 @@ class PoetryPointCategoryController extends Controller
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         PointCategory::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('client')->id(),
             'name' => $request->name,
             'total_points' => $request->total_points,
             'deduction_amount' => $request->deduction_amount,
@@ -39,7 +39,7 @@ class PoetryPointCategoryController extends Controller
     public function index()
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $pointCategories = PointCategory::where('user_id', Auth::id())
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         return view('client.poetry.pointcategory.list', compact('pointCategories'));

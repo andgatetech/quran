@@ -28,7 +28,7 @@ class PoetrySideCategoryController extends Controller
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         SideCategory::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
         return redirect()->route('poetry.sidecategory.list')->with('success', 'Side Category created successfully!');
@@ -36,7 +36,7 @@ class PoetrySideCategoryController extends Controller
     public function index()
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $sideCategories = SideCategory::where('user_id', Auth::id())
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         return view('client.poetry.sidecategory.sidecategorylist', compact('sideCategories'));

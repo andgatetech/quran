@@ -91,7 +91,7 @@ class PoetryController extends Controller
             $query->where('read_category_id',$read_category);
         })
         ->get();
-        // ->where('user_id', Auth::id()) // Filter by user_id
+        // ->where('user_id', Auth::guard('client')->id()) // Filter by user_id
         // ->get();
 
         return view('client.poetry.poetry.list', compact('competitors','side_categories','read_categories','age_categories'));
@@ -105,16 +105,16 @@ class PoetryController extends Controller
     public function create()
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $sideCategories = SideCategory::where('user_id', Auth::id())
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 
@@ -139,7 +139,7 @@ public function store(Request $request)
 
     try {
         // Add the logged-in user_id to the validated data
-        $validatedData['user_id'] = Auth::id(); // Store the user_id of the logged-in user
+        $validatedData['user_id'] = Auth::guard('client')->id(); // Store the user_id of the logged-in user
 
         // Create the competitor
         Poetry::create($validatedData);
@@ -164,16 +164,16 @@ public function store(Request $request)
         
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         $competitor = Poetry::findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::id())
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $sideCategories = SideCategory::where('user_id', Auth::id())
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $readCategories = ReadCategory::where('user_id', Auth::id())
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
 

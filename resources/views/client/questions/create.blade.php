@@ -17,7 +17,7 @@
         <!-- Error messages -->
     @endif
 
-    <form id="manualForm" action="{{ route('questions.bulkUpload') }}" method="POST">
+    <form id="manualForm" action="{{ route('questions.store') }}" method="POST">
         @csrf
         <!-- Competition, Age, Side, Read dropdowns -->
 
@@ -149,13 +149,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+            console.log("jQuery is working!");
+        });
 
 function showBookOrCurriculum(){
     var check_option=$('#option_id').val();
     if(check_option=="Book"){
         $('#book_part').show();
+        console.log("book");
         $('#curriculum_part').hide();
     }else if(check_option=="Curriculum"){
+        console.log("curriculamn");
         $('#curriculum_part').show();
         $('#book_part').hide();
     }else{

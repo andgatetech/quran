@@ -29,7 +29,7 @@ class PoetryAgeCategoryController extends Controller
 
         AgeCategory::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
 
@@ -40,7 +40,7 @@ class PoetryAgeCategoryController extends Controller
     public function index()
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $ageCategories = AgeCategory::where('user_id', Auth::id())
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         return view('client.poetry.agecategory.list', compact('ageCategories'));

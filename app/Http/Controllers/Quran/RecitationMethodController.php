@@ -34,7 +34,7 @@ class RecitationMethodController extends Controller
 
         ReadCategory::create([
             'competition_type_id' => $this->competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
 
@@ -45,7 +45,7 @@ class RecitationMethodController extends Controller
     public function index()
     {
         $recitationMethods = ReadCategory::where([
-                                                        ['user_id', '=', Auth::id()],
+                                                        ['user_id', '=', Auth::guard('client')->id()],
                                                         ['competition_type_id', '=', $this->competitionType->id],
                                                     ])->get();
         return view('client.quran.recitation.method.list', compact('recitationMethods'));

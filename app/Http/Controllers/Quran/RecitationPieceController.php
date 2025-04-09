@@ -33,7 +33,7 @@ class RecitationPieceController extends Controller
 
         SideCategory::create([
             'competition_type_id' => $this->competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
 
@@ -42,7 +42,7 @@ class RecitationPieceController extends Controller
     public function index()
     {
         $recitationPieces = SideCategory::where([
-            ['user_id', '=', Auth::id()],
+            ['user_id', '=', Auth::guard('client')->id()],
             ['competition_type_id', '=', $this->competitionType->id],
         ])->get();
         return view('client.quran.recitation.piece.list', compact('recitationPieces'));

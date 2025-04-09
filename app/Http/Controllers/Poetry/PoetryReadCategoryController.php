@@ -27,7 +27,7 @@ class PoetryReadCategoryController extends Controller
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
         ReadCategory::create([
             'competition_type_id' => $competitionType->id,
-            'user_id' => Auth::id(), // ID of the logged-in user
+            'user_id' => Auth::guard('client')->id(), // ID of the logged-in user
             'name' => $request->name,
         ]);
 
@@ -38,7 +38,7 @@ class PoetryReadCategoryController extends Controller
     public function index()
     {
         $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        $readCategories = ReadCategory::where('user_id', Auth::id())
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())
         ->where('competition_type_id',$competitionType->id)
         ->get();
         return view('client.poetry.readcategory.list', compact('readCategories'));
