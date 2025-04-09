@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Quran;
 
 use App\Models\AgeCategory;
 use App\Models\Competition;
+use App\Models\CompetitionType;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
 use Illuminate\Http\Request;
@@ -18,6 +19,14 @@ use App\Models\GenerateCertificate;
 
 class QuranManageCertificateController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
+
     public function create(){
         $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
         return view("client.managenertificate.create", compact("competitions"));

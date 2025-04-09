@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Session;
 class QuranCompetitionController extends Controller
 {
     private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
+    
     // Show the create competition form
     public function create()
     {

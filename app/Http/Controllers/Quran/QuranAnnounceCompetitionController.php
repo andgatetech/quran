@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Quran;
 
+use App\Models\CompetitionType;
 use Illuminate\Routing\Controller;
 use App\Models\AgeCategory;
 use App\Models\Competition;
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Storage;
 class QuranAnnounceCompetitionController extends Controller
 {
     private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
+
     /**
      * Display a listing of the resource.
      */

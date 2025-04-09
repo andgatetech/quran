@@ -42,7 +42,10 @@ class QuranAgeCategoryController extends Controller
     // List all age categories
     public function index()
     {
-        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+        $ageCategories = AgeCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get();
         return view('client.quran.agecategory.list', compact('ageCategories'));
     }
 

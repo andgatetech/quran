@@ -44,7 +44,10 @@ class QuranPointCategoryController extends Controller
 
     public function index()
     {
-        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->get();
+        $pointCategories = PointCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id],
+        ])->get();
         return view('client.quran.pointcategory.list', compact('pointCategories'));
     }
 

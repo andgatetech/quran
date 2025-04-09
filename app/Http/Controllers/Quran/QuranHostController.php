@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Quran;
 
+use App\Models\CompetitionType;
 use Carbon\Carbon;
 use App\Models\Host;
 use App\Models\Competition;
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class QuranHostController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
 
 
     public function create()

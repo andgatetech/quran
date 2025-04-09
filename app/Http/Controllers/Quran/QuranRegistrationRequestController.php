@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Quran;
 use App\Models\AgeCategory;
 use App\Models\Competition;
 use App\Models\CompetitionApplication;
+use App\Models\CompetitionType;
 use App\Models\ReadCategory;
 use App\Models\SideCategory;
 use App\Models\Competitor;
@@ -15,6 +16,14 @@ use Illuminate\Http\Request;
 
 class QuranRegistrationRequestController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
+
     /**
      * Display a listing of the resource.
      */
