@@ -19,7 +19,7 @@ use App\Models\GenerateCertificate;
 class QuranManageCertificateController extends Controller
 {
     public function create(){
-        $competitions = Competition::where('user_id', Auth::id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
         return view("client.managenertificate.create", compact("competitions"));
     }
 
