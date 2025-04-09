@@ -188,7 +188,7 @@
             <div class="row my-3">
                 <div class="col-6">
                     <select class="form-select" name="side_category" id="side_category">
-                        <option value="">Side Category</option>
+                        <option value="">Recitation Piece</option>
                         @foreach ($side_categories as $side_category)
                             <option {{ request()->side_category == $side_category->id ? 'Selected' : '' }}
                                 value="{{ $side_category->id }}">{{ $side_category->name }}</option>
@@ -197,7 +197,7 @@
                 </div>
                 <div class="col-6">
                     <select class="form-select" name="read_category" id="read_category">
-                        <option value="">Read Category</option>
+                        <option value="">Method Of Recitation</option>
                         @foreach ($read_categories as $read_category)
                             <option {{ request()->read_category == $read_category->id ? 'Selected' : '' }}
                                 value="{{ $read_category->id }}">{{ $read_category->name }}</option>
@@ -293,7 +293,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
-                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions_unapprove" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Un-Approved">
                                         <input type="hidden" name="remarks" id="remarks_unapprove">
@@ -302,7 +302,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
-                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions_approve" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <input type="hidden" name="status" value="Approved">
                                         <input type="hidden" name="remarks" id="remarks_approve">
@@ -312,7 +312,7 @@
                                     <form action="{{ route('quran.competition.applicant.status.update') }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
-                                        <input type="hidden" name="number_of_questions" id="number_of_questions" value="{{ $application->number_of_questions }}">
+                                        <input type="hidden" name="number_of_questions" id="number_of_questions_unapprove" value="{{ $application->number_of_questions }}">
                                         <input type="hidden" name="status" value="Pending">
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                                         <button type="submit" class="btn delete-btn">Recheck</button>
@@ -373,13 +373,22 @@
     @include('includes.footer')
     <script>
         function updateApproveUnproveRemarksField(inputElement){
-            var numberOfQuestionsInput = inputElement.value;
+           // var numberOfQuestionsInput = inputElement.value;
             var remarksInput = document.getElementById('remarks').value;
             var remarksValue = remarksInput.trim();
 
-            document.querySelector('input[name="number_of_questions"]').value = numberOfQuestionsInput;
+
+            var numberOfQuestionsInput = document.getElementById('number_of_questions_val').value;
+            var questionValue = numberOfQuestionsInput.trim();
+
+            //document.querySelector('input[name="number_of_questions"]').value = numberOfQuestionsInput;
             document.getElementById('remarks_unapprove').value = remarksValue;
             document.getElementById('remarks_approve').value = remarksValue;
+
+            document.getElementById('number_of_questions_unapprove').value = questionValue;
+            document.getElementById('number_of_questions_approve').value = questionValue;
+
+
             return true;
         }
         function validateRemarks() {
