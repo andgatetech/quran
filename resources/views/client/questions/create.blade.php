@@ -72,8 +72,6 @@
                         {{ $readCategory->name }}
                     </option>
                 @endforeach
-
-
             </select>
         </div>
         
@@ -123,8 +121,8 @@
                 <select class="form-control" onchange="javascript:fetchBookAyat();" id="book_number" name="book_number">
                     <!-- Book options -->
                     <option value="">Select Juz (Book)</option>
-                    @foreach(range(1, 30) as $bookNumber)
-                        <option value="{{ $bookNumber }}">Juz {{ $bookNumber }}</option>
+                    @foreach($books as $book)
+                        <option value="{{ $book->id }}">[{{ $book->id }}] {{ $book->book_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -271,9 +269,9 @@ function showBookOrCurriculum(){
             },
             success: function(data) {
                 $('#curriculum_book_part').show();
-                var str='<option value="">Select Book</option>';
+                var str='<option value="">Select Juz (Book)</option>';
                 $.each(data, function(key,val) {
-                    str +='<option value="'+val.id+'">'+val.book_name+'</option>';
+                    str +='<option value="'+val.id+'">['+val.id+'] '+val.book_name+'</option>';
                 });
                 
                 $('#curriculum_book_number').html(str);
@@ -294,7 +292,7 @@ function fetchCurriculumAyat() {
         const curriculum_id = $('#curriculum_id').val();
         $('#to_ayat_number').html('');
         $j.ajax({
-            url: '{{ route('ajax.curriculumAyat') }}',
+            url: '{{ route('ajax.bookAyat') }}',
             method: 'GET',
             data: {
                 curriculum_number:curriculum_id
@@ -308,7 +306,7 @@ function fetchCurriculumAyat() {
                 });
                 
                 $('#from_ayat_number').html(str);
-                //$('#to_ayat_number').html(str);
+                $('#to_ayat_number').html(str);
 
             },
             error: function(xhr, status, error) {
