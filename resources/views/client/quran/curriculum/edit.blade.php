@@ -61,7 +61,6 @@
                     <?php foreach($books as $book){ ?>
                         <option <?php if(in_array($book->id,$total_book)) echo 'selected'; ?> value="{{ $book->id}}" data-id="{{ $book->id }}" data-name="{{ $book->book_name }}" data-ayah="{{ $book->total_ayah }}">{{ $book->book_name }}</option>
                     <?php } ?>
-                    
                 </select>
         </div>
         <!-- Placeholder to show selected items -->
@@ -81,6 +80,15 @@
         <button type="submit" class="btn btn-primary">Update Curriculum</button>
     </form>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Select books",
+            allowClear: false
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const selectBox = document.getElementById('bookSelect');
