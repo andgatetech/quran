@@ -66,4 +66,12 @@ class Question extends Model
     {
         return $this->belongsTo(Competition::class, 'competition_id');
     }
+    
+    public function book(){
+        return $this->hasOne(Book::class, 'id', 'book_number');
+    }
+    public function curriculum(){
+        return $this->hasOne(Curriculum::class, 'id', 'curriculum_id');
+    }
+
 }

@@ -71,12 +71,13 @@ class QuestionController extends Controller
         $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
         $curriculums = Curriculum::where('user_id', Auth::guard('client')->id())->get(); // Add this line
+        $books = Book::get();
         $quran = Quran::select('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->groupBy('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->orderBy('surah_no', 'asc')
             ->get();
     
-        return view('client.questions.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories', 'curriculums', 'quran'));
+        return view('client.questions.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories', 'curriculums', 'books', 'quran'));
     }
 
     public function checkCurriculum(Request $request)
@@ -140,7 +141,7 @@ class QuestionController extends Controller
             ->orderBy('surah_no', 'asc')
             ->get();
     
-        return view('client.questions.list', compact('questions', 'competitions', 'sideCategories', 'readCategories', 'ageCategories', 'quran'));
+        return view('client.questions.list', compact('questions', 'competitions', 'sideCategories', 'readCategories', 'ageCategories','quran'));
     }
     
 
@@ -155,6 +156,7 @@ class QuestionController extends Controller
         $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
         $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
         $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+        $books = Book::get();
         $curriculums = Curriculum::where('user_id', Auth::guard('client')->id())->get(); // Add this line
         $quran = Quran::select('surah_no', 'surah_name_ar', 'surah_name_roman')
             ->groupBy('surah_no', 'surah_name_ar', 'surah_name_roman')
@@ -163,7 +165,7 @@ class QuestionController extends Controller
 
         $question = Question::findOrFail($id);
 
-        return view('client.questions.edit', compact('question','curriculums', 'competitions', 'sideCategories', 'readCategories', 'ageCategories', 'quran'));
+        return view('client.questions.edit', compact('question','curriculums', 'competitions', 'sideCategories', 'readCategories', 'ageCategories','books', 'quran'));
     }
 
 
@@ -521,6 +523,7 @@ public function store(Request $request)
             $question->from_ayat_number=$request->from_ayat_number;
             $question->to_ayat_number=$request->to_ayat_number;
        }elseif($request->option_name=="Curriculum"){
+        $question->curriculum_id=$request->question_curriculum;
         $question->book_number=$request->curriculum_book_number;
         $question->from_ayat_number=$request->curriculumn_book_from_ayat_number;
         $question->to_ayat_number=$request->curriculumn_book_to_ayat_number;
@@ -542,6 +545,57 @@ public function store(Request $request)
 }
 
 
+public function update(Request $request, $id)
+{
+    try {
+        $validatedData = $request->validate([
+            'competition_id' => 'required',
+            'question_name' => 'required|string|max:255',
+            'age_category_id' => 'required',
+            'side_category_id' => 'required',
+            'read_category_id' => 'required',
+            //'book_number' => 'required|string', // Now a single value
+            //'from_ayat_number' => 'required|integer',
+            //'to_ayat_number' => 'required|integer',
+            'hardness' => 'required|integer|min:0|max:100',
+        ]);
+
+        $question = Question::findOrFail($id);
+
+        // Update the question
+        //$question->update($validatedData);
+
+        $question->competition_id=$request->competition_id;
+        $question->question_name=$request->question_name;
+        $question->age_category_id=$request->age_category_id;
+        $question->side_category_id=$request->side_category_id;
+        $question->read_category_id=$request->read_category_id;
+        $question->option_name=$request->option_name;
+        $question->book_number=$request->book_number;
+        if($request->option_name=="Book"){
+         
+             $question->book_number=$request->book_number;
+             $question->from_ayat_number=$request->from_ayat_number;
+             $question->to_ayat_number=$request->to_ayat_number;
+        }elseif($request->option_name=="Curriculum"){
+         $question->curriculum_id=$request->question_curriculum;
+         $question->book_number=$request->curriculum_book_number;
+         $question->from_ayat_number=$request->curriculumn_book_from_ayat_number;
+         $question->to_ayat_number=$request->curriculumn_book_to_ayat_number;
+        }
+ 
+        $question->hardness=$request->hardness;
+        $question->user_id=Auth::guard('client')->id();
+        $question->save();
+
+        return redirect()->route('questions.list')->with('success', 'Question updated successfully!');
+    } catch (\Exception $e) {
+        \Log::error('Error updating question: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Failed to update the question. Please try again.');
+    }
+}
+
+
 function bulkImport(){
     if (isset($_FILES['question'])) {
         $file = fopen($_FILES['question']['tmp_name'], "r");
@@ -559,51 +613,6 @@ function bulkImport(){
             $question->save();
         }    
     }    
-}
-
-public function update(Request $request, $id)
-{
-    try {
-        $validatedData = $request->validate([
-            'competition_id' => 'required',
-            'question_name' => 'required|string|max:255',
-            'age_category_id' => 'required',
-            'side_category_id' => 'required',
-            'read_category_id' => 'required',
-            //'book_number' => 'required|string', // Now a single value
-            // 'surah' => 'required',
-            'from_ayat_number' => 'required|integer',
-            //'to_ayat_number' => 'required|integer',
-            'hardness' => 'required|integer|min:0|max:100',
-        ]);
-
-        $question = Question::findOrFail($id);
-
-        // Update the question
-        //$question->update($validatedData);
-
-       $question->competition_id=$request->competition_id;
-       $question->question_name=$request->question_name;
-       $question->age_category_id=$request->age_category_id;
-       $question->side_category_id=$request->side_category_id;
-       $question->read_category_id=$request->read_category_id;
-       $question->option_name=$request->option_name;
-       if($request->option_name=="Book"){
-            $question->book_number=$request->book_number;
-       }else{
-            $question->curriculum_id=$request->curriculum_id;
-       }
-       $question->from_ayat_number=$request->from_ayat_number;
-       $question->to_ayat_number=$request->to_ayat_number;
-       $question->hardness=$request->hardness;
-       $question->user_id=Auth::guard('client')->id();
-       $question->save();
-
-        return redirect()->route('questions.list')->with('success', 'Question updated successfully!');
-    } catch (\Exception $e) {
-        \Log::error('Error updating question: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Failed to update the question. Please try again.');
-    }
 }
 
 
