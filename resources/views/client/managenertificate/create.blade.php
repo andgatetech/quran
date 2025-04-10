@@ -45,16 +45,16 @@
 
 .nav-btn {
     padding: 0.75rem;
-    border: 2px solid #016DA8;
+    border: 2px solid #C42B4A;
     border-radius: 0.5rem;
     background: none;
-    color: #016DA8;
+    color: #C42B4A;
     font-weight: 500;
     transition: all 0.2s;
 }
 
 .nav-btn.active {
-    background-color: #016DA8;
+    background-color: #C42B4A;
     color: white;
 }
 
@@ -93,11 +93,11 @@
 }
 
 .upload-btn i {
-    color: #016DA8;
+    color: #C42B4A;
 }
 
 .btn-view {
-    background-color: #3b82f6;
+    background-color: #C42B4A;
     color: white;
     border: none;
     padding: 0.40rem 1.5rem;

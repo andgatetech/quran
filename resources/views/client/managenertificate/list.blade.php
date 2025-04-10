@@ -32,16 +32,16 @@
 
         .nav-btn {
             padding: 0.75rem;
-            border: 2px solid #016DA8;
+            border: 2px solid #C42B4A;
             border-radius: 0.5rem;
             background: none;
-            color: #016DA8;
+            color: #C42B4A;
             font-weight: 500;
             transition: all 0.2s;
         }
 
         .nav-btn.active {
-            background-color: #016DA8;
+            background-color: #C42B4A;
             color: white;
         }
     </style>
@@ -63,6 +63,9 @@
         @csrf
         <select name="competition_id" class="form-control form-group-lg">
             <option value="">Select Competition</option>
+            @foreach ($competitions as $competition )
+                <option value={{ $competition->id }}>{{ $competition->main_name }}</option>       
+            @endforeach
             
         </select>
 
@@ -96,7 +99,7 @@
     .details p { color: var(--secondary-color) !important; margin: 0; }
     .list-item { padding: .4rem !important; }
     .view-btn {
-        background-color: #016DA8;
+        background-color: #C42B4A;
         color: white;
         border: none;
         padding: 5px 10px;
