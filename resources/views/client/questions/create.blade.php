@@ -91,13 +91,31 @@
 
         <!-- Curriculum Dropdown -->
         <div class="form-group mb-3" style="display:none;" id="curriculum_part">
-            <select class="form-control" onchange="javascript:fetchCurriculumAyat();" id="curriculum_id" name="curriculum_id">
+            <select class="form-control" onchange="javascript:fetchBooksByCurriculum();" id="question_curriculum" name="question_curriculum">
                 <option value="">Select Curriculum</option>
                 @foreach($curriculums as $curriculum)
                     <option value="{{ $curriculum->id }}">{{ $curriculum->title }}</option>
                 @endforeach
             </select>
         </div>
+        <div class="form-group" style="display:none;" id="curriculum_book_part">
+                <select class="form-control" onchange="javascript:fetchCurriculumBookAyah();" id="curriculum_book_number" name="curriculum_book_number">
+                    <!-- Book options -->
+                    <option value="">Select Book</option>
+                </select>
+        </div>
+        <div class="form-group">
+                <select class="form-control" style="display:none;" id="curriculumn_book_from_ayat_number" name="curriculumn_book_from_ayat_number">
+                    <option value="">Select From Ayat number</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" style="display:none;" id="curriculumn_book_to_ayat_number" name="curriculumn_book_to_ayat_number" >
+                    <option value="">Select To Ayat number</option>
+                </select>
+            </div>
+        <!-- // curriculum book part -->   
 
         <!-- Manual Fields -->
         <div id="manual-fields">
@@ -113,13 +131,13 @@
             <!-- From and To Ayat dropdowns -->
 
             <div class="form-group">
-                <select class="form-control" id="from_ayat_number" name="from_ayat_number" required>
+                <select class="form-control" style="display:none;" id="from_ayat_number" name="from_ayat_number">
                     <option value="">Select From (Verse) Ayat number</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <select class="form-control" id="to_ayat_number" name="to_ayat_number" >
+                <select class="form-control" style="display:none;" id="to_ayat_number" name="to_ayat_number" >
                     <option value="">Select To (Verse) Ayat number</option>
                 </select>
             </div>
@@ -156,12 +174,16 @@ function showBookOrCurriculum(){
     var check_option=$('#option_id').val();
     if(check_option=="Book"){
         $('#book_part').show();
-        console.log("book");
         $('#curriculum_part').hide();
+        $('#curriculum_book_part').hide();
+        $('#curriculumn_book_from_ayat_number').hide();
+        $('#curriculumn_book_to_ayat_number').hide();
+        
     }else if(check_option=="Curriculum"){
-        console.log("curriculamn");
         $('#curriculum_part').show();
         $('#book_part').hide();
+        $('#from_ayat_number').hide();
+        $('#to_ayat_number').hide();
     }else{
         $('#book_part').hide();
         $('#curriculum_part').hide();
@@ -174,6 +196,10 @@ function showBookOrCurriculum(){
     function fetchBookAyat() {
         
         const book_number = $('#book_number').val();
+        if(book_number){
+            $('#from_ayat_number').show();
+            $('#to_ayat_number').show();
+        }
         $('#from_ayat_number').html('');
         $('#to_ayat_number').html('');
         $j.ajax({
@@ -200,6 +226,65 @@ function showBookOrCurriculum(){
             }
         });
  }
+
+ function fetchCurriculumBookAyah(){
+    const book_number = $('#curriculum_book_number').val();
+        $j.ajax({
+            url: '{{ route('ajax.getBookById') }}',
+             method: 'GET',
+            data: {
+                book_number: book_number
+            },
+            success: function(book) {
+                $('#curriculumn_book_from_ayat_number').show();
+                $('#curriculumn_book_to_ayat_number').show();
+                var fromStr='<option value="">Select From Ayat number</option>';
+                var toStr='<option value="">Select To Ayat number</option>';
+                for (let ayah_number = 1; ayah_number <= book.total_ayah; ayah_number++) {
+                    fromStr +='<option value="'+ayah_number+'">Ayah Number: '+ayah_number+'</option>';
+                    toStr +='<option value="'+ayah_number+'">Ayah Number: '+ayah_number+'</option>';
+                }
+                // $.each(book.total, function(key,val) {
+                //     str +='<option value="'+val.ayah_no_juzz+'">'+val.ayah_no_juzz+'</option>';
+                // });
+                
+                $('#curriculumn_book_from_ayat_number').html(fromStr);
+                $('#curriculumn_book_to_ayat_number').html(toStr);
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching winners:', error);
+                //$('#slider').html('<p>Error loading winners. Please try again later.</p>');
+            }
+        });
+ }
+
+ function fetchBooksByCurriculum() {
+        
+        const curriculum_id = $('#question_curriculum').val();
+        $('#to_ayat_number').html('');
+        $j.ajax({
+            url: '{{ route('ajax.curriculumBooks') }}',
+            method: 'GET',
+            data: {
+                curriculum_number:curriculum_id
+            },
+            success: function(data) {
+                $('#curriculum_book_part').show();
+                var str='<option value="">Select Book</option>';
+                $.each(data, function(key,val) {
+                    str +='<option value="'+val.id+'">'+val.book_name+'</option>';
+                });
+                
+                $('#curriculum_book_number').html(str);
+
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching winners:', error);;
+            }
+        });
+}
  
 
 
@@ -253,9 +338,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.exists) {
                         curriculum.value = data.curriculum.id;
-                        updateCurriculumFields(data.curriculum);
+                        //updateCurriculumFields(data.curriculum);
                     } else {
-                        curriculum.value = '';
+                        // curriculum.value = '';
                         showManualFields();
                     }
                 });
