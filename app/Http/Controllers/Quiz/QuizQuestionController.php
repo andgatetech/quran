@@ -52,48 +52,21 @@ class QuizQuestionController extends Controller
 
         $request->validate([
             'competition_id' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'no_of_days' => 'required|numeric',
+            'dead_line' => 'required|date',
             'url' => 'required|url',
-            'curriculum' => 'nullable|file|mimes:pdf,doc,docx|max:5048', // Validate curriculum file
-            'rules' => 'nullable|file|mimes:pdf,doc,docx|max:5048', // Validate rules file
+            
         ]);
-
-           // Debugging: Check if files are present in the request
-            // if ($request->hasFile('curriculum')) {
-            //     dd('Curriculum file is present', $request->file('curriculum'));
-            // }
-            // if ($request->hasFile('rules')) {
-            //     dd('Rules file is present', $request->file('rules'));
-            // }
-    
+ 
         // Find the competition
         $competition = Competition::findOrFail($request->competition_id);
     
-        // Handle curriculum file upload
-        if ($request->hasFile('curriculum')) {
-            $file = $request->file('curriculum');
-            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate a unique file name
-            $file->move(public_path('curriculums'), $fileName); // Move the file to the public/curriculums directory
-            $competition->curriculum = 'curriculums/' . $fileName; // Save the file path
-        }
-
-        // Handle rules file upload
-        if ($request->hasFile('rules')) {
-            $file = $request->file('rules');
-            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate a unique file name
-            $file->move(public_path('rules'), $fileName); // Move the file to the public/rules directory
-            $competition->rules = 'rules/' . $fileName; // Save the file path
-        }
+        
     
         // Update competition details
-        $competition->status = 'On-Going';
+        
         $competition->start_date = $request->start_date;
-        $competition->end_date = $request->end_date;
-        $competition->no_of_days = $request->no_of_days;
         $competition->url = $request->url;
-        $competition->encrypted_id = $request->encrypted_id;
+        
         $competition->save();
     
         return redirect()->route('quiz.question.list')->with('success', 'Competition announced successfully!');
