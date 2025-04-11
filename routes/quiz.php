@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quiz\QuizCompetitionController;
+use App\Http\Controllers\Quiz\QuizQuestionController;
 
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\ClientAuthMiddleware;
@@ -28,8 +29,16 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::put('competition/update/{id}', [QuizCompetitionController::class, 'update'])->name('quiz.competition.update');
         Route::delete('competition/delete/{id}', [QuizCompetitionController::class, 'destroy'])->name('quiz.competition.delete');
 
-     
+        //QUESTION
+        Route::get('question/create', [QuizQuestionController::class, 'create'])->name('quiz.question.create');
+        Route::post('question/store', [QuizQuestionController::class, 'store'])->name('quiz.question.store');
+        Route::get('question/list', [QuizQuestionController::class, 'index'])->name('quiz.question.list');
+        Route::get('question/edit/{id}', [QuizQuestionController::class, 'edit'])->name('quiz.question.edit');
+        Route::put('question/update/{id}', [QuizQuestionController::class, 'update'])->name('quiz.question.update');
+        Route::delete('question/{id}',[QuizQuestionController::class, 'destroy'])->name('quiz.question.delete');
 
-});
+
+
+    });
 });
 

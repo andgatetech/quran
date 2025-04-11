@@ -602,21 +602,6 @@ $user = User::find(Auth::guard('client')->id());
       transition: transform var(--transition-medium) ease;
     }
 
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 200px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      border-radius: 12px;
-      color: white;
-      margin-right: 1rem;
-      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-      transition: transform var(--transition-medium) ease;
-    }
-
     .form-section:hover .section-title .icon {
       transform: rotateY(180deg);
     }
@@ -1319,23 +1304,7 @@ $user = User::find(Auth::guard('client')->id());
                 <p class="card-subtitle text-muted mb-0">Competition curriculum details and learning objectives</p>
               </div>
               <div class="card-body p-4">
-                
-                @if (empty($competition->curriculum))
-                        <p class="text-primary">There is no curriculum available.</p>
-                    @else
-                    <div style="text-align:center;">
-                        <button class="tab-btn button  {{ empty($competition->curriculum) ? 'disabled' : '' }}"
-                            onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
-                            title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
-                        Download
-                        </button>
-                        <button class="tab-btn button  {{ empty($competition->curriculum) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
-                                title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
-                            View
-                        </button>
-                    </div>
-                @endif
+                <p>Curriculum information will be displayed here.</p>
               </div>
             </div>
           </div>
@@ -1348,22 +1317,7 @@ $user = User::find(Auth::guard('client')->id());
                 <p class="card-subtitle text-muted mb-0">Competition rules and guidelines</p>
               </div>
               <div class="card-body p-4">
-                    @if (empty($competition->rules))
-                        <p class="text-primary">There is no rules available.</p>
-                    @else
-                    <div style="text-align:center;">
-                        <button class="tab-btn button  {{ empty($competition->rules) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
-                                title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
-                            Download
-                        </button>
-                        <button class="tab-btn button {{ empty($competition->rules) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
-                                title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
-                            View
-                        </button>
-                    </div>    
-                @endif
+                <p>Rules and guidelines will be displayed here.</p>
               </div>
             </div>
           </div>
@@ -1373,10 +1327,10 @@ $user = User::find(Auth::guard('client')->id());
             <div class="card" data-aos="fade-up" data-aos-duration="1000">
               <div class="card-header primary-header text-center">
                 <h3 class="card-title fw-bold fs-4 mb-1">To Register This Competition</h3>
-                <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :{{$competition->end_date}}</p>
+                <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :10/12/2025  10:10PM</p>
               </div>
               <div class="card-body p-4">
-                <form id="competitionForm" method="POST" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
+                <form id="competitionForm" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
                  @csrf
                   <!-- Personal Information Section -->
                   <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
@@ -1408,56 +1362,6 @@ $user = User::find(Auth::guard('client')->id());
                           <label for="idPassport" class="form-label">ID Card / Passport #</label>
                           <input type="text" value="{{ old('id_card') }}" class="form-control" id="idPassport" name="id_card" placeholder="Enter your ID or passport number" required>
                           <i class="bi bi-credit-card input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="dob" class="form-label">Date of Birth</label>
-                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
-                          <i class="bi bi-calendar3 input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="age" class="form-label">Age</label>
-                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
-                          <i class="bi bi-123 input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-
-                   <!-- Guardian Information Section -->
-                  <div class="form-section section-purple" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-                    <h4 class="section-title">
-                      <div class="icon">
-                        <i class="bi bi-person-fill"></i>
-                      </div>
-                      Guradian Information
-                    </h4>
-                    
-                    <div class="row g-4">
-                      
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
-                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
-                          <i class="bi bi-people input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
-                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
-                          <i class="bi bi-telephone input-icon"></i>
                         </div>
                       </div>
                     </div>
@@ -1497,7 +1401,21 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
+                      <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="dob" class="form-label">Date of Birth</label>
+                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
+                          <i class="bi bi-calendar3 input-icon"></i>
+                        </div>
+                      </div>
                       
+                      <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="age" class="form-label">Age</label>
+                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
+                          <i class="bi bi-123 input-icon"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
@@ -1519,7 +1437,21 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
-                     
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
+                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
+                          <i class="bi bi-people input-icon"></i>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
+                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
+                          <i class="bi bi-telephone input-icon"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
@@ -1770,8 +1702,41 @@ $user = User::find(Auth::guard('client')->id());
       const form = document.getElementById('competitionForm');
       const successCheckmark = document.getElementById('successCheckmark');
       
-
-      
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Basic form validation
+        const fullName = document.getElementById('fullName').value;
+        const idPassport = document.getElementById('idPassport').value;
+        
+        if (!fullName || !idPassport) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+        
+        // Show loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        document.getElementById('loadingOverlay').style.opacity = '1';
+        
+        // Simulate form submission
+        setTimeout(function() {
+          // Hide loading overlay
+          document.getElementById('loadingOverlay').style.opacity = '0';
+          setTimeout(function() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            
+            // Show success checkmark
+            successCheckmark.style.display = 'block';
+            
+            // Disable submit button
+            document.querySelector('.btn-submit').disabled = true;
+            document.querySelector('.btn-submit').innerHTML = '<i class="bi bi-check-circle-fill"></i> Registration Submitted';
+            
+            // Update progress bar to 100%
+            document.getElementById('formProgress').style.width = '100%';
+          }, 500);
+        }, 2000);
+      });
       
       // Update progress bar based on form completion
       function updateProgress() {

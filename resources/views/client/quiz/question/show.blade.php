@@ -1376,7 +1376,7 @@ $user = User::find(Auth::guard('client')->id());
                 <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :{{$competition->end_date}}</p>
               </div>
               <div class="card-body p-4">
-                <form id="competitionForm" method="POST" action="{{ route('quran.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
+                <form id="competitionForm" method="POST" action="{{ route('poetry.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
                  @csrf
                   <!-- Personal Information Section -->
                   <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
@@ -1408,56 +1408,6 @@ $user = User::find(Auth::guard('client')->id());
                           <label for="idPassport" class="form-label">ID Card / Passport #</label>
                           <input type="text" value="{{ old('id_card') }}" class="form-control" id="idPassport" name="id_card" placeholder="Enter your ID or passport number" required>
                           <i class="bi bi-credit-card input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="dob" class="form-label">Date of Birth</label>
-                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
-                          <i class="bi bi-calendar3 input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="age" class="form-label">Age</label>
-                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
-                          <i class="bi bi-123 input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-
-                   <!-- Guardian Information Section -->
-                  <div class="form-section section-purple" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-                    <h4 class="section-title">
-                      <div class="icon">
-                        <i class="bi bi-person-fill"></i>
-                      </div>
-                      Guradian Information
-                    </h4>
-                    
-                    <div class="row g-4">
-                      
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
-                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
-                          <i class="bi bi-people input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
-                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
-                          <i class="bi bi-telephone input-icon"></i>
                         </div>
                       </div>
                     </div>
@@ -1497,7 +1447,21 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
+                      <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="dob" class="form-label">Date of Birth</label>
+                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
+                          <i class="bi bi-calendar3 input-icon"></i>
+                        </div>
+                      </div>
                       
+                      <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="age" class="form-label">Age</label>
+                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
+                          <i class="bi bi-123 input-icon"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
@@ -1519,7 +1483,21 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
-                     
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
+                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
+                          <i class="bi bi-people input-icon"></i>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
+                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
+                          <i class="bi bi-telephone input-icon"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
@@ -1548,9 +1526,9 @@ $user = User::find(Auth::guard('client')->id());
                       
                       <div class="col-md-4">
                         <div class="form-control-container">
-                          <label for="ageCategory2" class="form-label">Recitation Piece</label>
+                          <label for="ageCategory2" class="form-label">Perform Option</label>
                           <select name="side_category" class="form-select" id="ageCategory2" required>
-                            <option selected disabled value="">Recitation Piece</option>
+                            <option selected disabled value="">Perform Option</option>
                             @foreach ($side_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
@@ -1561,9 +1539,9 @@ $user = User::find(Auth::guard('client')->id());
                       
                       <div class="col-md-4">
                         <div class="form-control-container">
-                          <label for="ageCategory3" class="form-label">Recitation Method</label>
+                          <label for="ageCategory3" class="form-label">Method of Perform</label>
                           <select name="read_category" class="form-select" id="ageCategory3" required>
-                            <option selected disabled value="">Recitation Method</option>
+                            <option selected disabled value="">Method of Perform</option>
                             @foreach ($read_categories as $entry)
                                 <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
                             @endforeach
@@ -1572,6 +1550,23 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                     </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                        <div class="form-control-container">
+                          <label for="poetry3" class="form-label">Poetry</label>
+                          <select name="poetry_id" class="form-select" id="ageCategory3" required>
+                            <option selected disabled value="">Select Poetry</option>
+                            @foreach ($poetries as $entry)
+                                <option {{ old('poetry') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->poetry_name }}</option>
+                            @endforeach
+                          </select>
+                          <i class="bi bi-filter input-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+
                   </div>
                   
                   <!-- Upload Section -->
