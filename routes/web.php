@@ -137,6 +137,7 @@ Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login
 
 // Route::post('/logout', [UserController::class, 'logout'])->name('logout'); // to do : need to recheck functionality
 Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
+Route::post('/admin/logout', [UserController::class, 'logout'])->name('logout');
 // Route::get('/client/logout', [UserController::class, 'clientLogout'])->name('client.logout');
 
 

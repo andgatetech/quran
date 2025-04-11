@@ -32,16 +32,16 @@
 
         .nav-btn {
             padding: 0.75rem;
-            border: 2px solid #016DA8;
+            border: 2px solid #C42B4A;
             border-radius: 0.5rem;
             background: none;
-            color: #016DA8;
+            color: #C42B4A;
             font-weight: 500;
             transition: all 0.2s;
         }
 
         .nav-btn.active {
-            background-color: #016DA8;
+            background-color: #C42B4A;
             color: white;
         }
     </style>
@@ -79,7 +79,7 @@
     .details p { color: var(--secondary-color) !important; margin: 0; }
     .list-item { padding: .4rem !important; }
     .view-btn {
-        background-color: #016DA8;
+        background-color: #C42B4A;
         color: white;
         border: none;
         padding: 5px 10px;
@@ -197,7 +197,7 @@
             <div class="list-item mb-3 p-4 border rounded shadow-sm" style="background-color: #fff; cursor: pointer; transition: transform 0.3s ease-in-out;" data-competition-id="{{ $generatedCertificate->id }}">
                 <div class="question-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <span><strong>Competition Name :</strong> {{ $generatedCertificate->competition_name ?? 'N/A' }}</span>
-                    <i class="fas fa-chevron-down" style="color: #016DA8;"></i>
+                    <i class="fas fa-chevron-down" style="color: #C42B4A;"></i>
                 </div>
     
                 <div class="details mt-2" style="margin-top: 1rem; color: #555; background-color: #f9f9f9; padding: 1rem; border-radius: 5px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out;">

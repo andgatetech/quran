@@ -115,10 +115,10 @@
 </head>
 <body>
     <div class="certificate">
-        <img src="{{ $logo }}" class="logo logo-top" alt="logo">
+        <img src="{{ storage_path('app/public/'.$logo) }}" class="logo logo-top" alt="logo">
         <h2 style="font-size: 18px; font-weight: 600;">{{$office_name}}</h2>
         <span style="margin-left: 450px; font-size: 15px;">{{$serial_number}}</span>
-        <img src="{{ $stamp }}" class="logo logo-left" alt="stamp">
+        <img src="{{ storage_path('app/public/'.$stamp) }}" class="logo logo-left" alt="stamp">
         <h1 class="title">CERTIFICATE</h1>
         <h3 class="subtitle">OF ACHIEVEMENT</h3>
         <button class="certificate-award">THIS CERTIFICATE IS AWARDED TO</button>
@@ -129,11 +129,20 @@
         <!-- Footer Section -->
         <div class="footer">
             <div class="left">
-                <img src="{{ $signature }}" alt="signature">
+                <img src="{{ storage_path('app/public/'.$signature) }}" alt="signature">
                 <hr class="left-line">
                 <p class="principal1">{{ $authorize_person }}</p>
                 <p class="principal2">{{ $designation }}</p>
             </div>
+            @if ($authorize_person2)
+            <div class="left">
+                <img src="{{ storage_path('app/public/'.$signature) }}" alt="signature">
+                <hr class="left-line">
+                <p class="principal1">{{ $authorize_person }}</p>
+                <p class="principal2">{{ $designation }}</p>
+            </div>
+            @endif
+
             <div class="right">
                 <p class="date" style="margin-top: -120px; margin-right: 30px;">{{ $date }}</p>
                 <hr class="right-line">

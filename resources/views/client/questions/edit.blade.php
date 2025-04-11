@@ -92,73 +92,75 @@
             </select>
         </div>
 
-        <!-- Curriculum Dropdown -->
+        <!-- Option Dropdown -->
         <div class="form-group mb-3">
+        <label for="read_category_id">Option by (#Book or Curriculum)</label>
             <select class="form-control" onchange="javascript:showBookOrCurriculum();" id="option_id" name="option_name">
-                <option value="">Select Option by (#Book or Curriculum)</option>     
-                <option {{ old('option_name', $question->option_name) == "Book" ? 'selected' : '' }} value="Book">Book</option>
-                <option {{ old('option_name', $question->option_name) == "Curriculum" ? 'selected' : '' }} value="Curriculum">Curriculum</option>
+                <option value="">Select Option by (#Book or Curriculum)</option>
+                <option value="Book" {{ old('option_name', $question->option_name) == 'Book' ? 'selected' : '' }}>Book</option>
+                <option value="Curriculum" {{ old('option_name', $question->option_name) == 'Curriculum' ? 'selected' : '' }}>Curriculum</option>
                 
             </select>
         </div>
 
-        <!-- Book Number -->
-        <div class="form-group" style="display:<?php if($question->option_name=="Book") echo 'block';else echo 'none'; ?>;">
-            <label for="book_number">Book Number</label>
-            <select class="form-control" id="book_number" name="book_number">
-                <option value="">Select Book Number</option>
-                @foreach(range(1, 30) as $juzNumber)
-                    <option value="{{ $juzNumber }}" {{ old('book_number', $question->book_number) == $juzNumber ? 'selected' : '' }}>
-                        Juz {{ $juzNumber }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-
-        <!-- Curriculum Dropdown -->
-        <div class="form-group mb-3" style="display:<?php if($question->option_name=="Book") echo 'block';else echo 'none'; ?>;" id="curriculum_part">
-            <select class="form-control" onchange="javascript:fetchCurriculumAyat();" id="curriculum_id" name="curriculum_id">
+         <!-- Curriculum Dropdown -->
+         <div class="form-group mb-3" style="display:none;" id="curriculum_part">
+            <select class="form-control" onchange="javascript:fetchBooksByCurriculum();" id="question_curriculum" name="question_curriculum">
                 <option value="">Select Curriculum</option>
                 @foreach($curriculums as $curriculum)
                     <option value="{{ $curriculum->id }}">{{ $curriculum->title }}</option>
                 @endforeach
             </select>
         </div>
-
-
-
-        <!-- Surah -->
-        {{-- <div class="form-group">
-            <label for="surah">Surah</label>
-            <select class="form-control" id="surah" name="surah" required>
-                <option value="">Select Surah</option>
-            </select>
-        </div> --}}
-
-        <!-- From Ayat Number -->
-        <div class="form-group">
-            <label for="from_ayat_number">From Ayat Number</label>
-            <input type="number" class="form-control" id="from_ayat_number" name="from_ayat_number"
-                   value="{{ old('from_ayat_number', $question->from_ayat_number) }}"
-                   placeholder="Enter From Ayat Number" required />
+        <div class="form-group" style="display:none;" id="curriculum_book_part">
+                <select class="form-control" onchange="javascript:fetchCurriculumBookAyah();" id="curriculum_book_number" name="curriculum_book_number">
+                    <!-- Book options -->
+                    <option value="">Select Book</option>
+                </select>
         </div>
-
-        <!-- To Ayat Number -->
         <div class="form-group">
-            <label for="to_ayat_number">To Ayat Number</label>
-            <input type="number" class="form-control" id="to_ayat_number" name="to_ayat_number"
-                   value="{{ old('to_ayat_number', $question->to_ayat_number) }}"
-                   placeholder="Enter To Ayat Number"  />
-        </div>
+                <select class="form-control" style="display:none;" id="curriculumn_book_from_ayat_number" name="curriculumn_book_from_ayat_number">
+                    <option value="">Select From Ayat number</option>
+                </select>
+            </div>
 
-        <!-- Hardness -->
-        <div class="form-group">
-            <label for="hardness">Hardness of this Question (%)</label>
-            <input type="number" class="form-control" id="hardness" name="hardness"
-                   value="{{ old('hardness', $question->hardness) }}"
-                   placeholder="Hardness of this Question %" min="0" max="100" required />
-        </div>
+            <div class="form-group">
+                <select class="form-control" style="display:none;" id="curriculumn_book_to_ayat_number" name="curriculumn_book_to_ayat_number" >
+                    <option value="">Select To Ayat number</option>
+                </select>
+            </div>
+        <!-- // curriculum book part --> 
+
+        <!-- Manual Fields -->
+        <div id="manual-fields">
+                <div class="form-group" style="display:none;" id="book_part">
+                    <select class="form-control" onchange="javascript:fetchBookAyat();" id="book_number" name="book_number">
+                        <!-- Book options -->
+                        <option value="">Select Juz (Book)</option>
+                        @foreach($books as $book)
+                            <option value="{{ $book->id }}">[{{ $book->id }}] {{ $book->book_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- From and To Ayat dropdowns -->
+
+                <div class="form-group">
+                    <select class="form-control" style="display:none;" id="from_ayat_number" name="from_ayat_number">
+                        <option value="">Select From (Verse) Ayat number</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control" style="display:none;" id="to_ayat_number" name="to_ayat_number" >
+                        <option value="">Select To (Verse) Ayat number</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="hardness" class="form-control" placeholder="Hardness of this Question %" required>
+                </div>
+
+            </div>
 
         <button type="submit" class="btn btn-save">Update</button>
     </form>
@@ -167,16 +169,26 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+            console.log("jQuery is working!");
+        });
 
 function showBookOrCurriculum(){
     var check_option=$('#option_id').val();
     if(check_option=="Book"){
         $('#book_part').show();
         $('#curriculum_part').hide();
+        $('#curriculum_book_part').hide();
+        $('#curriculumn_book_from_ayat_number').hide();
+        $('#curriculumn_book_to_ayat_number').hide();
+        
     }else if(check_option=="Curriculum"){
         $('#curriculum_part').show();
         $('#book_part').hide();
+        $('#from_ayat_number').hide();
+        $('#to_ayat_number').hide();
     }else{
         $('#book_part').hide();
         $('#curriculum_part').hide();
@@ -189,6 +201,10 @@ function showBookOrCurriculum(){
     function fetchBookAyat() {
         
         const book_number = $('#book_number').val();
+        if(book_number){
+            $('#from_ayat_number').show();
+            $('#to_ayat_number').show();
+        }
         $('#from_ayat_number').html('');
         $('#to_ayat_number').html('');
         $j.ajax({
@@ -215,9 +231,66 @@ function showBookOrCurriculum(){
             }
         });
  }
+
+ function fetchCurriculumBookAyah(){
+    const book_number = $('#curriculum_book_number').val();
+        $j.ajax({
+            url: '{{ route('ajax.getBookById') }}',
+             method: 'GET',
+            data: {
+                book_number: book_number
+            },
+            success: function(book) {
+                $('#curriculumn_book_from_ayat_number').show();
+                $('#curriculumn_book_to_ayat_number').show();
+                var fromStr='<option value="">Select From Ayat number</option>';
+                var toStr='<option value="">Select To Ayat number</option>';
+                for (let ayah_number = 1; ayah_number <= book.total_ayah; ayah_number++) {
+                    fromStr +='<option value="'+ayah_number+'">Ayah Number: '+ayah_number+'</option>';
+                    toStr +='<option value="'+ayah_number+'">Ayah Number: '+ayah_number+'</option>';
+                }
+                // $.each(book.total, function(key,val) {
+                //     str +='<option value="'+val.ayah_no_juzz+'">'+val.ayah_no_juzz+'</option>';
+                // });
+                
+                $('#curriculumn_book_from_ayat_number').html(fromStr);
+                $('#curriculumn_book_to_ayat_number').html(toStr);
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching winners:', error);
+                //$('#slider').html('<p>Error loading winners. Please try again later.</p>');
+            }
+        });
+ }
+
+ function fetchBooksByCurriculum() {
+        
+        const curriculum_id = $('#question_curriculum').val();
+        $('#to_ayat_number').html('');
+        $j.ajax({
+            url: '{{ route('ajax.curriculumBooks') }}',
+            method: 'GET',
+            data: {
+                curriculum_number:curriculum_id
+            },
+            success: function(data) {
+                $('#curriculum_book_part').show();
+                var str='<option value="">Select Juz (Book)</option>';
+                $.each(data, function(key,val) {
+                    str +='<option value="'+val.id+'">['+val.id+'] '+val.book_name+'</option>';
+                });
+                
+                $('#curriculum_book_number').html(str);
+
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching winners:', error);;
+            }
+        });
+}
  
-
-
 
 
 
@@ -226,7 +299,7 @@ function fetchCurriculumAyat() {
         const curriculum_id = $('#curriculum_id').val();
         $('#to_ayat_number').html('');
         $j.ajax({
-            url: '{{ route('ajax.curriculumAyat') }}',
+            url: '{{ route('ajax.bookAyat') }}',
             method: 'GET',
             data: {
                 curriculum_number:curriculum_id
@@ -240,7 +313,7 @@ function fetchCurriculumAyat() {
                 });
                 
                 $('#from_ayat_number').html(str);
-                //$('#to_ayat_number').html(str);
+                $('#to_ayat_number').html(str);
 
             },
             error: function(xhr, status, error) {
@@ -250,53 +323,67 @@ function fetchCurriculumAyat() {
         });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const competition = document.getElementById('competition_id');
+    const age = document.getElementById('age_category_id');
+    const side = document.getElementById('side_category_id');
+    const read = document.getElementById('read_category_id');
+    const curriculum = document.getElementById('curriculum_id');
+    const manualFields = document.getElementById('manual-fields');
 
+    function checkMatchingCurriculum() {
+        const competitionId = competition.value;
+        const ageId = age.value;
+        const sideId = side.value;
+        const readId = read.value;
 
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const bookDropdown = document.getElementById("book_number");
-    const surahDropdown = document.getElementById("surah");
-
-    const selectedJuz = "{{ old('book_number', $question->book_number) }}";
-    const selectedSurah = "{{ old('surah', $question->surah) }}";
-
-    function populateSurahs(juzNo) {
-        fetch(`/get-surahs?juz_no=${juzNo}`)
-            .then(response => response.json())
-            .then(surahs => {
-                surahDropdown.innerHTML = '<option value="">Select Surah</option>';
-                surahs.forEach(surah => {
-                    const option = document.createElement("option");
-                    option.value = surah.surah_no;
-                    option.textContent = `${surah.surah_no} - ${surah.surah_name_ar} (${surah.surah_name_roman})`;
-                    if (surah.surah_no == selectedSurah) {
-                        option.selected = true;
+        if (competitionId && ageId && sideId && readId) {
+            fetch(`/check-curriculum?competition_id=${competitionId}&age_category_id=${ageId}&side_category_id=${sideId}&read_category_id=${readId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        curriculum.value = data.curriculum.id;
+                        //updateCurriculumFields(data.curriculum);
+                    } else {
+                        // curriculum.value = '';
+                        showManualFields();
                     }
-                    surahDropdown.appendChild(option);
                 });
-            })
-            .catch(error => console.error('Error fetching Surahs:', error));
+        } else {
+            showManualFields();
+        }
     }
 
-    // Restore selected Juz and populate Surahs on page load
-    if (selectedJuz) {
-        bookDropdown.value = selectedJuz;
-        populateSurahs(selectedJuz);
+    function updateCurriculumFields(curriculumData) {
+        document.getElementById('book_number').value = curriculumData.book_number;
+        document.getElementById('from_ayat_number').value = curriculumData.from_ayat_number;
+        document.getElementById('to_ayat_number').value = curriculumData.to_ayat_number;
+        manualFields.style.display = 'none';
     }
 
-    // Update Surahs dynamically on Juz selection
-    bookDropdown.addEventListener("change", function () {
-        const juzNo = this.value;
-        surahDropdown.innerHTML = '<option value="">Select Surah</option>';
-        if (juzNo) {
-            populateSurahs(juzNo);
+    function showManualFields() {
+        manualFields.style.display = 'block';
+        document.getElementById('book_number').value = '';
+        document.getElementById('from_ayat_number').value = '';
+        document.getElementById('to_ayat_number').value = '';
+    }
+
+    [competition, age, side, read].forEach(el => el.addEventListener('change', checkMatchingCurriculum));
+
+    curriculum.addEventListener('change', function() {
+        const curriculumId = this.value;
+        if (curriculumId) {
+            fetch(`/get-curriculum/${curriculumId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.curriculum) {
+                        updateCurriculumFields(data.curriculum);
+                    }
+                });
+        } else {
+            showManualFields();
         }
     });
 });
-
 </script>
 @endsection

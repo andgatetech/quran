@@ -102,7 +102,7 @@ class QuranManageCertificateController extends Controller
 public function index(Request $request)
 {
     // $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-    $competitions = Competition::get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
 
     $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
 
@@ -332,10 +332,12 @@ public function generatedList(){
 
 public function generatePDF(Request $request)
 {
+    // dd($request);
+
     // Validate the request
     $request->validate([
         'competitor_id' => 'required|exists:competitors,id',
-        'certificate_type' => 'required|string',
+        // 'certificate_type' => 'required|string',
         'body_content' => 'required|string',
         'certificate_settings' => 'required|exists:manage_certificates,id', // Validate settings ID
     ]);
@@ -356,12 +358,10 @@ public function generatePDF(Request $request)
     $designation = 'PRINCIPAL'; // Static
 
     // Prepare data for the view
-    // Prepare data for the view
     $data = [
         'serial_number' => 'SN-' . uniqid(), // Generate a unique serial number
-        // 'logo' => $settings ? Storage::url($settings->office_logo) : asset('defaults/logo.png'), // Use settings logo or default
         'logo' => $settings->office_logo ?? 'N/A', // Institute name
-        'stamp' => $settings ? Storage::url($settings->office_stamp) : asset('defaults/stamp.png'), // Use settings stamp or default
+        'stamp' => $settings ? $settings->office_stamp : asset('defaults/stamp.png'), // Use settings stamp or default
         'office_name' => $competitor->school_name ?? 'N/A', // Institute name
         'name' => $competitor->full_name,
         'id_card_number' => $competitor->id_card_number,
@@ -370,6 +370,9 @@ public function generatePDF(Request $request)
         'signature' => $settings ? $settings->signature_1 : asset('defaults/signature.png'), // Use settings signature or default
         'authorize_person' => $settings->authorize_person_1 ?? 'IBRAHIM HUSSAIN HASSAN', // Use settings or default
         'designation' => $settings->designation_1 ?? 'PRINCIPAL', // Use settings or default
+        'signature2' => $settings ? $settings->signature_2: asset('defaults/signature.png'), // Use settings signature or default
+        'authorize_person2' => $settings->authorize_person_2 ?? 'IBRAHIM HUSSAIN HASSAN', // Use settings or default
+        'designation2' => $settings->designation_2 ?? 'PRINCIPAL', // Use settings or default
     ];
 
 

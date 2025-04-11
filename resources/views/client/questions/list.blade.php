@@ -238,10 +238,10 @@ button[type="submit"]:hover {
 
                 <p><strong>Option #:</strong> {{ $question->option_name }}</p>
                 <?php if($question->option_name=="Book"){ ?>
-                    <p><strong>Book Name #:</strong>Juz {{ $question->book_number }}</p>
+                    <p><strong>Book Name #:</strong>[{{ $question->book->id }}] {{ $question->book->book_name }}</p>
                 <?php }else{ ?>
                   <?php if($question->curriculum_id){ ?>
-                    <p><strong>Curriculum Name #:</strong><?php $curriculum_info=DB::table('curriculum')->where('id',$question->curriculum_id)->first(); ?> {{ $curriculum_info->title }}</p>
+                    <p><strong>Curriculum Name #:</strong>{{ isset($question->curriculum->title)? $question->curriculum->title : '' }}</p>
                   <?php }else{  ?>  
                     <p><strong>Curriculum Name #:</strong></p>
                   <?php } ?>
