@@ -134,14 +134,15 @@
                 <p class="principal1">{{ $authorize_person }}</p>
                 <p class="principal2">{{ $designation }}</p>
             </div>
+<!-- 
             @if ($authorize_person2)
             <div class="left">
-                <img src="{{ storage_path('app/public/'.$signature) }}" alt="signature">
+                <img src="{{ storage_path('app/public/'.$signature2) }}" alt="signature">
                 <hr class="left-line">
-                <p class="principal1">{{ $authorize_person }}</p>
-                <p class="principal2">{{ $designation }}</p>
+                <p class="principal1">{{ $authorize_person2 }}</p>
+                <p class="principal2">{{ $designation2 }}</p>
             </div>
-            @endif
+            @endif -->
 
             <div class="right">
                 <p class="date" style="margin-top: -120px; margin-right: 30px;">{{ $date }}</p>
