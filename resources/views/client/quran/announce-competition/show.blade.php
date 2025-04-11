@@ -1411,6 +1411,56 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="dob" class="form-label">Date of Birth</label>
+                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
+                          <i class="bi bi-calendar3 input-icon"></i>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="age" class="form-label">Age</label>
+                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
+                          <i class="bi bi-123 input-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                   <!-- Guardian Information Section -->
+                  <div class="form-section section-purple" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                    <h4 class="section-title">
+                      <div class="icon">
+                        <i class="bi bi-person-fill"></i>
+                      </div>
+                      Guradian Information
+                    </h4>
+                    
+                    <div class="row g-4">
+                      
+                      
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
+                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
+                          <i class="bi bi-people input-icon"></i>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-control-container">
+                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
+                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
+                          <i class="bi bi-telephone input-icon"></i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   <!-- Address Section -->
@@ -1447,21 +1497,7 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
-                      <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="dob" class="form-label">Date of Birth</label>
-                          <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob" required>
-                          <i class="bi bi-calendar3 input-icon"></i>
-                        </div>
-                      </div>
                       
-                      <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="age" class="form-label">Age</label>
-                          <input type="number" value="{{ old('age') }}" class="form-control" id="age" name="age" placeholder="Your age" required>
-                          <i class="bi bi-123 input-icon"></i>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   
@@ -1483,21 +1519,7 @@ $user = User::find(Auth::guard('client')->id());
                         </div>
                       </div>
                       
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="parentName" class="form-label">Parent name (Dhivehi)</label>
-                          <input type="text" value="{{ old('parent_name') }}" class="form-control" id="parentName" name="parent_name" placeholder="Enter parent's name">
-                          <i class="bi bi-people input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="form-control-container">
-                          <label for="phone" class="form-label">Phone number (Dhivehi)</label>
-                          <input type="tel" value="{{ old('number') }}" class="form-control" id="phone" name="number" placeholder="Enter your phone number" required>
-                          <i class="bi bi-telephone input-icon"></i>
-                        </div>
-                      </div>
+                     
                     </div>
                   </div>
                   
