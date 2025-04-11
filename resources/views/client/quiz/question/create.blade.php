@@ -111,30 +111,39 @@ $user = User::find(Auth::guard('client')->id());
                         @endforeach
                     </select>
 
-                      <!-- New File Upload Fields -->
-                    <div class="row mt-3">
-                        <div class="col-md-6 col-sm-12 mb-3">
-                            <label style="text-align: left;" for="curriculum">Curriculum</label>
-                            <input type="file" class="form-control" id="curriculum" name="curriculum" accept=".pdf,.doc,.docx">
+                      
+                    
+                    <input type="text" id="question_name" value="{{ isset($competition) ? $competition->no_of_days : '' }}" name="question_name" placeholder="Question Name" required>
+                    
+
+                    
+                    <select name="question_option" class="form-select" id="question_option" onchane="javascript:showAnswer();" required>
+                        <option value="">Select Option</option>
+                        <option value="Multiple">Multiple</option>
+                        <option value="Text">Text</option>
+                        
+                    </select>
+                   
+
+                    <input type="hidden" id="count" value="1" />
+                    <div class="row mt-2" id="root_answer">
+                        <div class="col-9">
+                            <input type="text" value="" class="form-control" id="answer_name" name="answer_name[]" placeholder="" required readonly>
+                            
                         </div>
-                        <div class="col-md-6 col-sm-12 mb-3">
-                            <label style="text-align: left;" for="rules">Rules</label>
-                            <input type="file" class="form-control" id="rules" name="rules" accept=".pdf,.doc,.docx">
+                        <div class="col-2">
+                            <button type="button" class="tab-btn" id="answer" onclick="javascript:addAnswer();">+</button>
                         </div>
                     </div>
                 
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 mb-3">
-                            <label style="text-align: left;">Enable from date</label>
-                            <input type="date" value="{{ isset($competition) ? $competition->start_date : '' }}" class="form-control" id="start_date" name="start_date" placeholder="Enable from date" required>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label style="text-align: left;">Disable to date</label>
-                            <input type="date" value="{{ isset($competition) ? $competition->end_date : '' }}" class="form-control" id="end_date" name="end_date" placeholder="Disable to date" required>
-                        </div>
-                    </div>
+                    
+                        
+                        <label style="text-align: left;">Deadline</label>
+                        <input type="date" value="" class="form-control" id="dead_line" name="dead_line" placeholder="Enter Date" required>
+                        
+                   
                 
-                    <input type="text" id="no_of_days" value="{{ isset($competition) ? $competition->no_of_days : '' }}" name="no_of_days" placeholder="Total number of days" readonly>
+                    
                 
                   
                 
@@ -165,7 +174,54 @@ $user = User::find(Auth::guard('client')->id());
 
 
     @include('includes.footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+
+
+        function showAnswer(){
+            alert('test');
+            var check_option=$('#question_option').val();
+            if(check_option=="Multiple"){
+                $('#root_answer').show();
+            }else{
+                $('#root_answer').hide();
+            }    
+        }
+
+        function addAnswer(){
+
+            var count=Number($('#count').val());
+
+            var str='';
+            str +='<div class="row mt-2" id="row_'+count+'">';
+            str +='<div class="col-9">';
+            str +='<input type="text" value="" class="form-control"  name="answer_name[]" placeholder="" required readonly>';
+            str +='</div>';
+            str +='<div class="col-2">';
+            str +='<button type="button" class="tab-btn"  onclick="javascript:removeAnswer('+count+');">-</button>';
+            str +='</div>';
+            str +='</div>';
+            $('#root_answer').append(str);  
+
+            
+            count=Number(count)+1;
+            $('#count').val(count);
+        }
+
+
+        function removeAnswer(id){
+            $('#row_'+id).remove();
+
+            var count=$('#count').val();
+                count=Number(count)-1;
+
+            $('#count').val(count);
+
+        }
+
+
+
+
         document.addEventListener('DOMContentLoaded', function () {
     const startDateInput = document.getElementById('start_date');
     const endDateInput = document.getElementById('end_date');
@@ -180,60 +236,27 @@ $user = User::find(Auth::guard('client')->id());
         alert(message); // Use a better UI for displaying errors if needed
     }
 
-    // Function to calculate and set the number of days
-    function calculateDays() {
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(endDateInput.value);
-
-        if (!startDate || !endDate) {
-            noOfDaysInput.value = '';
-            return;
-        }
-
-        if (endDate < startDate) {
-            showError('End date must be after the start date.');
-            endDateInput.value = ''; // Clear the invalid end date
-            noOfDaysInput.value = ''; // Reset the number of days
-            return;
-        }
-
-        const timeDifference = endDate - startDate;
-        const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-        noOfDaysInput.value = days;
-    }
-
+    
     // Function to encrypt ID into a 6-digit numeric string
     function encryptId(id) {
         const hash = Array.from(id.toString()).reduce((acc, char) => acc + char.charCodeAt(0), 0);
         return (hash % 1000000).toString().padStart(6, '0'); // Ensure it's exactly 6 digits
     }
 
-    // Automatically calculate days on date change with validation
-    startDateInput.addEventListener('change', calculateDays);
-    endDateInput.addEventListener('change', calculateDays);
+    
 
     // Generate URL when the "Generate Url" button is clicked
     generateUrlButton.addEventListener('click', function (e) {
         e.preventDefault();
-
         const competitionId = competitionIdSelect.value;
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(endDateInput.value);
+        
 
         if (!competitionId) {
             showError('Please select a competition.');
             return;
         }
 
-        if (!startDate || !endDate) {
-            showError('Please enter valid start and end dates.');
-            return;
-        }
-
-        if (endDate < startDate) {
-            showError('End date must be after the start date.');
-            return;
-        }
+        
 
         // Encrypt the competition ID
         const encryptedId = encryptId(competitionId);
@@ -241,7 +264,7 @@ $user = User::find(Auth::guard('client')->id());
         // Use the site's base URL dynamically
         const baseUrl = `${window.location.origin}`;
         //const generatedUrl = `${baseUrl}/public/competition/${encryptedId}`;
-        const generatedUrl = `${baseUrl}/public/poetry/competition/${encryptedId}`;
+        const generatedUrl = `${baseUrl}/public/quiz/competition/${encryptedId}`;
         urlInput.value = generatedUrl;
     });
 
@@ -269,9 +292,7 @@ $user = User::find(Auth::guard('client')->id());
     </script>
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function () {
-    const startDateInput = document.getElementById('start_date');
-    const endDateInput = document.getElementById('end_date');
-    const noOfDaysInput = document.getElementById('no_of_days');
+    
     const generateUrlButton = document.getElementById('generate_url');
     const copyUrlButton = document.getElementById('copy_url');
     const competitionIdSelect = document.getElementById('competition_id');
@@ -279,19 +300,7 @@ $user = User::find(Auth::guard('client')->id());
     const encryptedidinput = document.getElementById('encryptedidinput');
 
 
-    // Function to calculate and set the number of days
-    function calculateDays() {
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(endDateInput.value);
-
-        if (startDate && endDate && endDate >= startDate) {
-            const timeDifference = endDate - startDate;
-            const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-            noOfDaysInput.value = days;
-        } else {
-            noOfDaysInput.value = '';
-        }
-    }
+    
 
     // Function to encrypt ID into a 10-digit string
     function encryptId(id) {
@@ -299,9 +308,7 @@ $user = User::find(Auth::guard('client')->id());
         return (hash % 1000000).toString().padStart(6, '0'); // Ensure it's exactly 6 digits
     }
 
-    // Automatically calculate days on date change
-    startDateInput.addEventListener('change', calculateDays);
-    endDateInput.addEventListener('change', calculateDays);
+    
 
     // Generate URL when the "Generate Url" button is clicked
     generateUrlButton.addEventListener('click', function () {
