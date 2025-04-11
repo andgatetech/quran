@@ -59,7 +59,7 @@
                 <select multiple class="form-control" id="bookSelect" name="book[]" required>
                     <option value="">Select Quran Option by Book</option>
                     <?php foreach($books as $book){ ?>
-                        <option <?php if(in_array($book->id,$total_book)) echo 'selected'; ?> value="{{ $book->id}}" data-id="{{ $book->id }}" data-name="{{ $book->book_name }}" data-ayah="{{ $book->total_ayah }}">{{ $book->book_name }}</option>
+                        <option <?php if(in_array($book->id,$total_book)) echo 'selected'; ?> value="{{ $book->id}}" data-id="{{ $book->id }}" data-name="{{ $book->book_name }}" data-ayah="{{ $book->total_ayah }}">[{{ $book->id }}] {{ $book->book_name }}</option>
                     <?php } ?>
                 </select>
         </div>
