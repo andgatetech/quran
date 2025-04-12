@@ -31,6 +31,7 @@ class QuranAnnounceCompetitionController extends Controller
         $moduleName = $this->module;
     
         $competitions = Competition::where('status','On-Going')
+        ->where('competition_type_id',$this->competitionType->id)
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
         return view('client.quran.announce-competition.list',compact('competitions', 'moduleName')); // Path to your Blade file

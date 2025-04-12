@@ -117,7 +117,7 @@ $user = User::find(Auth::guard('client')->id());
                     
 
                     
-                    <select name="question_option" class="form-select" id="question_option" onchane="javascript:showAnswer();" required>
+                    <select name="option_name" class="form-select" id="question_option" onchane="javascript:showAnswer();" required>
                         <option value="">Select Option</option>
                         <option value="Multiple">Multiple</option>
                         <option value="Text">Text</option>
@@ -128,7 +128,7 @@ $user = User::find(Auth::guard('client')->id());
                     <input type="hidden" id="count" value="1" />
                     <div class="row mt-2" id="root_answer">
                         <div class="col-9">
-                            <input type="text" value="" class="form-control" id="answer_name" name="answer_name[]" placeholder="" required readonly>
+                            <input type="text" value="" class="form-control" id="answer_name" name="answer_name[]" placeholder="" required>
                             
                         </div>
                         <div class="col-2">
@@ -195,7 +195,7 @@ $user = User::find(Auth::guard('client')->id());
             var str='';
             str +='<div class="row mt-2" id="row_'+count+'">';
             str +='<div class="col-9">';
-            str +='<input type="text" value="" class="form-control"  name="answer_name[]" placeholder="" required readonly>';
+            str +='<input type="text" value="" class="form-control"  name="answer_name[]" placeholder="" required>';
             str +='</div>';
             str +='<div class="col-2">';
             str +='<button type="button" class="tab-btn"  onclick="javascript:removeAnswer('+count+');">-</button>';
