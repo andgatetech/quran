@@ -10,6 +10,9 @@ use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
 use App\Models\Poetry;
 use App\Models\SideCategory;
+use App\Models\QuizQuestion;
+use App\Models\QuizQuestionAnswer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,11 +26,14 @@ class QuizQuestionController extends Controller
     {
         $moduleName = $this->module;
         $competitionType = CompetitionType::where('name', 'Quiz')->first();
-        $competitions = Competition::where('status','On-Going')
-        ->where('competition_type_id',$competitionType->id)
+        $competitions = Competition::
+        where('competition_type_id',$competitionType->id)
         ->orderBy('updated_at','desc')->get(); // Fetch competitions for logged-in user
         // dd($competitions);
-        return view('client.quiz.question.list',compact('competitions', 'moduleName')); // Path to your Blade file
+
+        $quiz_questions=QuizQuestion::with('questionAnswer')
+        ->get();
+        return view('client.quiz.question.list',compact('quiz_questions','competitions', 'moduleName')); // Path to your Blade file
 
     }
 
@@ -58,16 +64,31 @@ class QuizQuestionController extends Controller
         ]);
  
         // Find the competition
+
+        $quiz_question=new QuizQuestion();
         $competition = Competition::findOrFail($request->competition_id);
     
         
     
         // Update competition details
         
-        $competition->start_date = $request->start_date;
-        $competition->url = $request->url;
+        $quiz_question->competition_id = $request->competition_id;
+        $quiz_question->question_name = $request->question_name;
+        $quiz_question->option_name = $request->option_name;
+        $quiz_question->dead_line =date('Y-m-d',strtotime($request->dead_line));
+        $quiz_question->url = $request->url;
+        $quiz_question->user_id =Auth::guard('client')->id();
         
-        $competition->save();
+        $quiz_question->save();
+
+        if($quiz_question->option_name=="Multiple"){
+            foreach($request->answer_name as $key=>$value){
+                $question_answer=new QuizQuestionAnswer();
+                $question_answer->question_id=$quiz_question->id;
+                $question_answer->answer_name=$value;
+                $question_answer->save();
+            }
+        }
     
         return redirect()->route('quiz.question.list')->with('success', 'Competition announced successfully!');
     }

@@ -136,63 +136,79 @@
   <div class="container">
     <div class="row mb-4">
         <div class="col-md-6 col-sm-12 offset-md-3">
-            <h6 class="heading col-12 py-3 my-3">Announce List</h6>
-            @foreach($competitions as $competition)
+            <h6 class="heading col-12 py-3 my-3"> Question List</h6>
+            @foreach($quiz_questions as $question)
                 <div class="competition-card">
                     <!-- Main Name with Dropdown Toggle -->
                     <div class="competition-main-name" onclick="toggleDropdown(this)">
-                        <p>Competition Name : <span>{{ $competition->main_name }}</span></p>
+                        <p>Competition Name : <span>{{ $question->main_name }}</span></p>
                     </div>
-                    <!-- curriculam and rules -->
-                    @if($competition->curriculum)
-                    <div class="competition-sub-name">
-                        <p>Curriculum : 
-                          <span>
-                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn view-btn">View</a>
-                        <a href="public/{{ $competition->curriculum }}" target="_blank" class="btn download-btn">Download</a>
-                        </span></p>
-                    </div>
-                    <div class="clearfix"></div>
-                    @endif
 
-                    @if($competition->rules)
-                    <div class="competition-sub-name">
-                        <p>Rules : <span>
-                        <button onclick="window.open('{{ route('pdf.view', $competition->rules) }}', '_blank')" class="btn view-btn">View</button>
-                        <a href="public/{{ $competition->rules }}" target="_blank" class="btn download-btn">Download</a>
-                        </span></p>
+                    <!-- Question Name -->
+                    <div class="competition-main-name" onclick="toggleDropdown(this)">
+                        <p>Question Name : <span>{{ $question->question_name }}</span></p>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="clearfix"></div>
-                    @endif
+                    
+                    <!-- Option Name -->
+                    <div class="competition-main-name" onclick="toggleDropdown(this)">
+                        <p>Option Name : <span>{{ $question->option_name }}</span></p>
+                    </div>
+                    @if($question->option_name=="Multiple")
+                      <!-- Answer -->
+                      <div class="competition-main-name" onclick="toggleDropdown(this)">
+                          <p>Answer : <span>{{ $question->option_name }}</span></p>
+                      </div>
+                      @if(count($question->questionAnswer)>0)
+                        @php 
+                        $i=0;
+                        @endphp
+                        @foreach($question->questionAnswer as $answer)
+                          @php
+                          $i++;
+                          @endphp
+                          
+                          <div class="competition-main-name" onclick="toggleDropdown(this)">
+                           <p style="color:red;">{{$i}}.{{$answer->answer_name}}</p>
+                          </div>  
+                        @endforeach
+                      @endif  
 
-                    <!-- Sub Name, initially hidden -->
+                      <!-- Correct Answer -->
+                      <div class="competition-main-name" onclick="toggleDropdown(this)">
+                          <p>Correct Answer :</p>
+                      </div>
+                       @if(count($question->questionAnswer)>0)
+                        @php 
+                        $i=0;
+                        @endphp
+                        @foreach($question->questionAnswer as $answer)
+                          
+                          @php
+                          $i++;
+                          if($answer->correct_answer_status=="No"){
+                            continue;
+                          }
+                          @endphp
+                          
+                          <div class="competition-main-name" onclick="toggleDropdown(this)">
+                           <p style="color:red;">{{$i}}.{{$answer->answer_name}}</p>
+                          </div>  
+                        @endforeach
+                      @endif  
+                    @endif
+                    
                     <div class="competition-sub-name">
-                        <p>From Date : <span>{{ Carbon\Carbon::parse($competition->start_date)->format('d-m-Y') }}</span></p>
+                        <p>Dead Line : <span>{{ Carbon\Carbon::parse($question->dead_line)->format('d-m-Y') }}</span></p>
                     </div>
                     
                     <div class="competition-sub-name">
-                        <p>To Date : <span>{{ Carbon\Carbon::parse($competition->end_date)->format('d-m-Y') }}</span></p>
+                        <p>URL : <span><a href="{{ $question->url }}" target="_blank">{{ $question->url }}</a></span></p>
                     </div>
-                    <div class="competition-sub-name">
-                        <p>Number Of Days : <span>{{ $competition->no_of_days }}</span></p>
-                    </div>
-                    <div class="competition-sub-name">
-                        <p>URL : <span><a href="{{ $competition->url }}" target="_blank">{{ $competition->url }}</a></span></p>
-                    </div>
-                    <div class="competition-sub-name">
-                        <p>Status:
-                            @if(Carbon\Carbon::now()->greaterThan(Carbon\Carbon::parse($competition->end_date)))
-                                <span class="text-danger">Time Limit Expire</span>
-                            @else
-                                <span>{{ str_replace('-', ' ', $competition->status) }}</span>
-                            @endif
-                        </p>
-                    </div>
+                    
                     <!-- Buttons -->
                     <div class="d-flex justify-content-center align-items-center mt-3">
-                    <a href="{{ route('poetry.competition.announce.edit', $competition->id) }}" class="btn edit-btn">Edit</a>
-                    <form action="{{ route('poetry.competition.announce.delete', $competition->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    <a href="{{ route('quiz.question.edit', $question->id) }}" class="btn edit-btn">Edit</a>
+                    <form action="{{ route('quiz.question.delete', $question->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
                         @csrf
                         @method('DELETE')  <!-- Spoofing DELETE request -->
                         <button type="submit" class="btn delete-btn">Delete</button>
@@ -204,7 +220,7 @@
         </div>
     </div>
     @if($competitions->isEmpty())
-        <p>No competitions Announced. Click "Announce" to add one.</p>
+        <p>No Question. Click "Create Question" to add one.</p>
     @endif
 </div>
 

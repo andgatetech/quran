@@ -1508,7 +1508,7 @@ $user = User::find(Auth::guard('client')->id());
                   <div class="form-section section-purple" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                     <h4 class="section-title">
                       <div class="icon">
-                        <i class="bi bi-building"></i>
+                        <i class="bi bi-geo-alt-fill"></i>
                       </div>
                       Additional Information
                     </h4>
