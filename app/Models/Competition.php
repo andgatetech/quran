@@ -26,7 +26,7 @@ class Competition extends Model
 
     public function competionType()
     {
-        return $this->belongsTo(CompetitionTypes::class, 'competition_type_id');
+        return $this->belongsTo(CompetitionType::class, 'competition_type_id');
     }
 
     // Relationship with User

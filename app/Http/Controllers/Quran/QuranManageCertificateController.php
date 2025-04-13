@@ -104,7 +104,7 @@ class QuranManageCertificateController extends Controller
 public function index(Request $request)
 {
     // $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
     $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
 
@@ -231,7 +231,7 @@ public function edit($id)
     }
 
     // Fetch competitions for the dropdown
-    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
     // Return the edit view with the certificate and competitions data
     return view('client.managenertificate.edit', compact('certificate', 'competitions'));
@@ -241,7 +241,7 @@ public function edit($id)
     {
 
         //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
-        $competitions = Competition::get(); // Fetch competitions
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
         $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
             // ->whereHas('competition', function ($query) {
             //     $query->where('user_id', Auth::guard('client')->id());
@@ -289,7 +289,7 @@ public function edit($id)
 
 public function generatedList(){
    //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
-   $competitions = Competition::get(); // Fetch competitions
+   $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
    $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
        // ->whereHas('competition', function ($query) {
        //     $query->where('user_id', Auth::guard('client')->id());

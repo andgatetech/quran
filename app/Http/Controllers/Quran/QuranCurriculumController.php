@@ -57,10 +57,11 @@ public function index()
     public function create()
     {
         $books = Book::get();
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
         return view('client.quran.curriculum.create', compact('books','competitions', 'sideCategories', 'readCategories', 'ageCategories'));
     }
@@ -113,11 +114,10 @@ public function edit($id)
 {
     $books = Book::get();
     $curriculum = Curriculum::findOrFail($id);
-    // Optionally load the related data if needed
-    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
-    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
-    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
     return view('client.quran.curriculum.edit', compact('books','curriculum', 'competitions', 'sideCategories', 'readCategories', 'ageCategories'));
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompetitionType;
 use App\Models\Judge;
 // use App\Models\Competition;
 use App\Models\Competition;
@@ -14,13 +15,23 @@ use Illuminate\Support\Facades\Hash;
 
 class JudgeController extends Controller
 {
+    private $module = "Quran";
+    private $competitionType;
+
+    public function __construct(){
+        // find competition type;
+        $this->competitionType = CompetitionType::where('name', 'Quran')->first();
+    }
     /**
      * Display a listing of the judges.
      */
     public function index()
     {
         // Fetch judges for the logged-in user
-        $judges = Judge::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
+        $judges = Judge::where('user_id', Auth::guard('client')->id())
+        ->whereHas('competition.competitionType', function ($query) {
+            $query->where('name', 'Quran');
+        })->get(); // Filter by user_id
 
         return view('client.judge.list', compact('judges'));
     }
@@ -31,10 +42,10 @@ class JudgeController extends Controller
     public function create()
     {
         // Fetch point categories for the logged-in user
-        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->get();
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
         return view('client.judge.create', compact('competitions', 'pointCategories'));
     }
@@ -149,11 +160,12 @@ class JudgeController extends Controller
      */
     public function edit($id)
     {
-
-        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->get();
+        // Fetch point categories for the logged-in user
+        $pointCategories = PointCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+
         $judge = Judge::findOrFail($id);
         return view('client.judge.edit', compact('judge','pointCategories','competitions'));
     }

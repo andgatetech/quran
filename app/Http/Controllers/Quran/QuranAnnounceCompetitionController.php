@@ -115,9 +115,9 @@ class QuranAnnounceCompetitionController extends Controller
         $moduleName = $this->module;
         
         $competition = Competition::where('encrypted_id',$id)->firstOrFail();
-        $age_categories = AgeCategory::get();
-        $read_categories = ReadCategory::get();
-        $side_categories = SideCategory::get();
+        $age_categories = AgeCategory::where('competition_type_id', $this->competitionType->id)->get();
+        $read_categories = ReadCategory::where('competition_type_id', $this->competitionType->id)->get();
+        $side_categories = SideCategory::where('competition_type_id', $this->competitionType->id)->get();
 
         $moduleName = $competition->main_name;
 
