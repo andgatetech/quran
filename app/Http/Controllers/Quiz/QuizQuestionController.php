@@ -66,7 +66,7 @@ class QuizQuestionController extends Controller
         // Find the competition
 
         $quiz_question=new QuizQuestion();
-        $competition = Competition::findOrFail($request->competition_id);
+        
     
         
     
@@ -161,8 +161,9 @@ class QuizQuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        $competition = Competition::findOrFail($id);
+        $competition = QuizQuestion::findOrFail($id);
         $competition->delete();
+        QuizQuestionAnswer::where('question_id',$id)->delete();
         return redirect()->route('quiz.question.list')->with('success', 'Competition deleted successfully!');
 
     }
