@@ -71,7 +71,10 @@ $user = User::find(Auth::guard('client')->id());
 
 
 <!-- top bar -->
-@include('client.layouts.top-bar')
+<header class="header">
+    <a class="back-btn" href="{{ route('client.menu.quiz') }}"><i class="fas fa-home"></i></a>
+    <h1>Create Question(Quiz)</h1>
+</header>
 
     <div class="container1">
         <div class="tabs">

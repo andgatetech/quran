@@ -2,6 +2,7 @@
 use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\Quiz\QuizCompetitionController;
 use App\Http\Controllers\Quiz\QuizQuestionController;
+use App\Http\Controllers\Quiz\AnswerController;
 
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\ClientAuthMiddleware;
@@ -36,6 +37,11 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::get('question/edit/{id}', [QuizQuestionController::class, 'edit'])->name('quiz.question.edit');
         Route::put('question/update/{id}', [QuizQuestionController::class, 'update'])->name('quiz.question.update');
         Route::delete('question/{id}',[QuizQuestionController::class, 'destroy'])->name('quiz.question.delete');
+
+        // ANSWER
+        
+        Route::get('/answer', [AnswerController::class,'index'])->name('quiz.competator.answer.list');
+        Route::post('answer/status/update',[AnswerController::class , 'updateStatus'])->name('quiz.answer.status.update');
 
 
 

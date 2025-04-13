@@ -123,14 +123,61 @@
 <body>
 
 <!-- top bar -->
-@include('client.layouts.top-bar')
+<header class="header">
+    <a class="back-btn" href="{{ route('client.menu.quiz') }}"><i class="fas fa-home"></i></a>
+    <h1>Question List(Quiz)</h1>
+</header>
 
   <div class="container1">
     <div class="tabs">
 
       <button class="tab-btn" onclick="window.location.href='{{ route('quiz.question.create') }}'">Create Questions</button>
       <button class="tab-btn active" onclick="window.location.href='{{ route('quiz.question.list') }}'">Question List</button>
+   
+   
+      
+   
+   
     </div>
+
+    <form action="{{ route('quiz.question.list') }}" method="get">
+            <div class="row">
+                
+                <div class="col-6">
+                    <select class="form-select" name="competition" id="competition">
+                        <option value=""> Competition</option>
+                       
+                    </select>
+                </div>
+                <div class="col-6">
+                    <select class="form-select" name="age_category" id="age_category">
+                        <option value="">Participants</option>
+                       
+                    </select>
+                </div>
+
+            </div>
+            <div class="row my-3">
+                <div class="col-6">
+                    <select class="form-select" name="option_name" id="side_category">
+                        <option value="">Question Option</option>
+                        <option value="Multiple">Multiple</option>
+                        <option value="Text">Text</option>
+                       
+                    </select>
+                </div>
+                <div class="col-6">
+                    <select class="form-select" name="read_category" id="read_category">
+                        <option value="">From Date/ To Date</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="tabs">
+                <input type="submit" value="Generate" class="tab-btn active px-5">
+            </div>
+        </form>
+
   </div>
 
   <div class="container">
@@ -138,10 +185,13 @@
         <div class="col-md-6 col-sm-12 offset-md-3">
             <h6 class="heading col-12 py-3 my-3"> Question List</h6>
             @foreach($quiz_questions as $question)
+               @php 
+                $competition_info=DB::table('competitions')->where('id',$question->competition_id)->first();
+               @endphp
                 <div class="competition-card">
                     <!-- Main Name with Dropdown Toggle -->
                     <div class="competition-main-name" onclick="toggleDropdown(this)">
-                        <p>Competition Name : <span>{{ $question->main_name }}</span></p>
+                        <p>Competition Name : <span>{{ $competition_info->main_name }}</span></p>
                     </div>
 
                     <!-- Question Name -->
