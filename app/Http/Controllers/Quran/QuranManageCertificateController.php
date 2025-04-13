@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Quran;
 
 use App\Models\AgeCategory;
+use App\Models\CertificateTemplate;
 use App\Models\Competition;
 use App\Models\CompetitionType;
 use App\Models\ReadCategory;
@@ -28,8 +29,9 @@ class QuranManageCertificateController extends Controller
     }
 
     public function create(){
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-        return view("client.managenertificate.create", compact("competitions"));
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $certificateTemplates = CertificateTemplate::get();
+        return view("client.managenertificate.create", compact("competitions", 'certificateTemplates'));
     }
 
     public function certificate_generate(Request $request)
@@ -365,6 +367,7 @@ public function generatePDF(Request $request)
         'office_name' => $competitor->school_name ?? 'N/A', // Institute name
         'name' => $competitor->full_name,
         'id_card_number' => $competitor->id_card_number,
+        'center' => 'Dhaka',
         'body_text' => $request->body_content,
         'date' => now()->format('d F Y'), // Current date
         'signature' => $settings ? $settings->signature_1 : asset('defaults/signature.png'), // Use settings signature or default

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quiz_question_answers', function (Blueprint $table) {
-            $table->bigInteger('id', true);
-            $table->bigInteger('question_id')->index('quiz_question_answers_question_id_foreign');
-            $table->string('answer_name');
-            $table->string('correct_answer_status')->default('No');
+        Schema::create('certificate_templates', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->string('preview_path')->nullable();
+            $table->string('fileName')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quiz_question_answers');
+        Schema::dropIfExists('certificate_templates');
     }
 };

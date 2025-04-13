@@ -155,6 +155,7 @@
                         </form>
                 </div>
             </div>
+    
         @empty
             <p>No certificates found.</p>
         @endforelse

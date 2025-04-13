@@ -413,6 +413,9 @@ Route::get('/client/quiz/menu', function () {
 //Quran Report
 
 Route::resource('report',QuranReportController::class);
+Route::post('report/generate/participants',[QuranReportController::class,'generateParticipantReport'])->name("report.generate.participants");
+Route::post('report/generate/sponsors',[QuranReportController::class,'generateSponsorReport'])->name('report.generate.sponsors');
+Route::post('report/generate/winners',[QuranReportController::class,'generateWinnerReport'])->name('report.generate.winners');
 
 
 

@@ -34,4 +34,8 @@ class Competition extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function sponsor(){
+        return $this->hasOne(Sponsor::class, 'competition_id');
+    }
 }

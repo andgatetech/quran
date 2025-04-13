@@ -174,11 +174,12 @@
                 <option value="2">My Garden</option>
             </select>
             <select name="template" class="form-control" required>
-                <option value="">Template</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option value="">Select Certificate Template</option>
+                @foreach ($certificateTemplates as $template)
+                    <option value="{{ $template->id }}">{{ $template->name }}</option>
+                @endforeach
             </select>
-            <button type="button" class="btn-view">View</button>
+            <a href="#" type="button" class="btn-view">View</a>
         </div>
 
         <!-- Award Date -->

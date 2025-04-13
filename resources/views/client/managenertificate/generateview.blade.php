@@ -203,6 +203,7 @@
                 <div class="details mt-2" style="margin-top: 1rem; color: #555; background-color: #f9f9f9; padding: 1rem; border-radius: 5px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out;">
                     <!-- Competitor Details -->
                     <div style="margin-bottom: 1rem; padding: 1rem; border-bottom: 1px solid #ddd;">
+                        <p><strong>Sponsor Name :</strong> {{ $competitor->competition->sponsor->name ?? 'N/A' }}</p>
                         <p><strong>Place :</strong> {{ isset($competitor->ranking->rank) ? $competitor->ranking->rank : 0 }}</p>
                         <p><strong>Name :</strong> {{ $competitor->full_name }}</p>
                         <p><strong>ID Card# :</strong> {{ $competitor->id_card_number }}</p>
@@ -216,7 +217,7 @@
                             
                             <div class="input-group" style="margin-bottom: 1rem;">
                                 <select name="certificate_settings" class="form-control" style="padding: 0.5rem; border-radius: 0.5rem; font-size: 14px;" required>
-                                    <option value="">Certificate type</option>
+                                    <option value="">Certificate Settings</option>
                                     @foreach ($manageCertificates as $certificateSetting )
                                         <option value="{{ $certificateSetting->id }}">{{ $certificateSetting->id }}</option>
                                     @endforeach
