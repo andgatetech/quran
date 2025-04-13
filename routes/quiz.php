@@ -4,6 +4,7 @@ use App\Http\Controllers\Quiz\QuizCompetitionController;
 use App\Http\Controllers\Quiz\QuizQuestionController;
 use App\Http\Controllers\Quiz\AnswerController;
 use App\Http\Controllers\Quiz\QuizReportController;
+use App\Http\Controllers\Quiz\QuizWinnerAnnounceController;
 
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\ClientAuthMiddleware;
@@ -44,8 +45,13 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         Route::get('/answer', [AnswerController::class,'index'])->name('quiz.competator.answer.list');
         Route::post('answer/status/update',[AnswerController::class , 'updateStatus'])->name('quiz.answer.status.update');
 
+        //WINNER ANNOUNCE
+
+        Route::get('/winner/announce', [QuizWinnerAnnounceController::class, 'announceWinners'])->name('quiz.winner.announce');
+        
         //REPORT
         Route::get('/report',[QuizReportController::class,'index'])->name('quiz.report');
+
 
 
     });
