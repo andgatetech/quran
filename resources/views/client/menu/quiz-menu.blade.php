@@ -75,7 +75,7 @@ position:relative;
     <button class="btn" onclick="window.location.href='{{ route('quiz.question.create') }}'">Questions</button>
     <button class="btn" onclick="window.location.href='{{ route('quiz.competator.answer.list') }}'">Answer</button>
     <button class="btn" onclick="window.location.href='{{ route('questions.create') }}'">Winner Announce</button>
-    <button class="btn" onclick="window.location.href=''">Reports</button>
+    <button class="btn" onclick="window.location.href='{{ route('quiz.report') }}'">Reports</button>
     </div>
   </div>
 
