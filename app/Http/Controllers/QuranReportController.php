@@ -32,6 +32,7 @@ class QuranReportController extends Controller
      */
     public function index()
     {
+        
         $status = request()->status ?? 'Participants';
         $competition_id = request()->competition ?? null;
         $age_category = request()->age_category ?? null;
@@ -51,10 +52,25 @@ class QuranReportController extends Controller
             $query->where('read_category',$read_category);
         })
         ->get();
-        $competitions = Competition::where('status','On-Going')->get();
-        $side_categories = SideCategory::get();
-        $read_categories = ReadCategory::get();
-        $age_categories = AgeCategory::get();
+        $competitions = Competition::
+        where('competition_type_id', $this->competitionType->id)
+        ->get();
+        
+        $side_categories = SideCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id]
+        ])
+        ->get();
+        $read_categories = ReadCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id]
+        ])
+        ->get();
+        $age_categories = AgeCategory::where([
+            ['user_id', '=', Auth::guard('client')->id()],
+            ['competition_type_id', '=', $this->competitionType->id]
+        ])
+        ->get();
 
         
         $reports = Report::where('report_type', $status)->get();

@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-    <h1>Winner Report</h1>
+    <h1>Participant Report</h1>
 
     <h3>Competitions:</h3>
     <ul>
@@ -26,14 +26,14 @@
         @endforeach
     </ul>
 
-    <h3>Recitation Pieces:</h3>
+    <h3>Perform Option:</h3>
     <ul>
         @foreach($recitationPiece as $item)
             <li>{{ $item->name }}</li>
         @endforeach
     </ul>
 
-    <h3>Recitation Methods:</h3>
+    <h3>Method Of Perform:</h3>
     <ul>
         @foreach($recitationMethod as $item)
             <li>{{ $item->name }}</li>

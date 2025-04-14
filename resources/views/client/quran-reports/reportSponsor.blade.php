@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-    <h1>Participant Report</h1>
+    <h1>Sponsor Report</h1>
 
     <h3>Competitions:</h3>
     <ul>

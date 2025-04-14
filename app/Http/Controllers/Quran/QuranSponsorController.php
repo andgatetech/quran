@@ -39,7 +39,10 @@ class QuranSponsorController extends Controller
     public function create()
     {
         // Fetch all competitions and pass them to the view
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $competitionType = CompetitionType::where('name', 'Quran')->first();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get();
         return view('client.quran.sponsor.create', compact('competitions'));
 
     }
@@ -150,8 +153,11 @@ class QuranSponsorController extends Controller
      */
     public function edit($id)
     {
+        $competitionType = CompetitionType::where('name', 'Quran')->first();
         $sponsor = Sponsor::with('competition')->findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get();
 
         return view('client.quran.sponsor.edit', compact('sponsor','competitions'));
     }

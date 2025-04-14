@@ -239,7 +239,7 @@ public function edit($id)
 
     public function generateView(Request $request)
     {
-
+        $competitionType = CompetitionType::where('name', 'Quran')->first();
         //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
         $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
         $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
@@ -272,9 +272,15 @@ public function edit($id)
         // $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
         // $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
-        $sideCategories = SideCategory::get();
-        $readCategories = ReadCategory::get();
-        $ageCategories = AgeCategory::get();
+        $sideCategories = SideCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $readCategories = ReadCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
+        $ageCategories = AgeCategory::
+        where('competition_type_id',$competitionType->id)
+        ->get();
 
 
         return view('client.managenertificate.generateview', compact(
@@ -288,6 +294,7 @@ public function edit($id)
     }
 
 public function generatedList(){
+    $competitionType = CompetitionType::where('name', 'Quran')->first();
    //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
    $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
@@ -317,9 +324,15 @@ public function generatedList(){
    // $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
    // $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
 
-   $sideCategories = SideCategory::get();
-   $readCategories = ReadCategory::get();
-   $ageCategories = AgeCategory::get();
+   $sideCategories = SideCategory::
+   where('competition_type_id',$competitionType->id)
+   ->get();
+   $readCategories = ReadCategory::
+   where('competition_type_id',$competitionType->id)
+   ->get();
+   $ageCategories = AgeCategory::
+   where('competition_type_id',$competitionType->id)
+   ->get();
 
 
    return view('client.managenertificate.generatedList', compact(

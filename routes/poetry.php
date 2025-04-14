@@ -172,7 +172,12 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
         // Route::post('/generate-certificate', [ManageCertificateController::class, 'certificate_generate'])
         //  ->name('certificate.generate');
         Route::get('/certificat/generated/list', [PoetryManageCertificateController::class, 'generatedList'])->name('poetry.managenertificate.generated.list');
+        
+        //REPORT
         Route::get('/report',[PoetryReportController::class,'index'])->name('poetry.report');
+        Route::post('/report/generate/participants',[PoetryReportController::class,'generateParticipantReport'])->name("poetry.report.generate.participants");
+        Route::post('/report/generate/sponsors',[PoetryReportController::class,'generateSponsorReport'])->name('poetry.report.generate.sponsors');
+        Route::post('/report/generate/winners',[PoetryReportController::class,'generateWinnerReport'])->name('poetry.report.generate.winners');
     }); 
 
 });

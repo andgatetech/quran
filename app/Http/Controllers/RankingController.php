@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\CompetitionType;
 use App\Models\Host;
 use App\Models\Ranking;
 use App\Models\Competitor;
@@ -350,6 +350,7 @@ return view('winning-announcement.index', compact('competitors','competition'));
 
     public function announceWinners()
 {
+    $competitionType = CompetitionType::where('name', 'Quran')->first();
     // Retrieve the competition_id from the session
     $competition_id = session('competition_id');
 
@@ -376,9 +377,15 @@ return view('winning-announcement.index', compact('competitors','competition'));
     }
 
     // Retrieve all categories for filtering (if needed)
-    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
-    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
-    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+    $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
+    $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
+    $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())
+    ->where('competition_type_id',$competitionType->id)
+    ->get();
 
     // Pass the data to the view
     return view('client.quran.host.announce', compact('sortedCompetitors', 'competition_id', 'sideCategories', 'readCategories', 'ageCategories'));

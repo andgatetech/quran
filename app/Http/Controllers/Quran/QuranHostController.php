@@ -25,7 +25,10 @@ class QuranHostController extends Controller
     public function create()
     {
         // Fetch competitions for the logged-in user
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Filter by user_id
+        $competitionType = CompetitionType::where('name', 'Quran')->first();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())
+        ->where('competition_type_id',$competitionType->id)
+        ->get(); // Filter by user_id
 
         // Pass the data to the view
         return view('client.quran.host.create', compact('competitions'));
