@@ -259,10 +259,18 @@ $user = User::find(Auth::guard('client')->id());
             return;
         }
 
-        
+        // Random number between min (inclusive) and max (exclusive)
+        function getRandomNumber(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
 
         // Encrypt the competition ID
-        const encryptedId = encryptId(competitionId);
+
+        const rn=getRandomNumber(1,6); 
+        const encryptedId = encryptId(rn);//added by alauddin
+        //const encryptedId = encryptId(competitionId);
+        
         encryptedidinput.value = encryptedId;
         // Use the site's base URL dynamically
         const baseUrl = `${window.location.origin}`;

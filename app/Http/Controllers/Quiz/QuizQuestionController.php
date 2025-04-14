@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Quiz;
 use Illuminate\Routing\Controller;
 use App\Models\AgeCategory;
 use App\Models\Competition;
+use App\Models\Competitor;
 use App\Models\CompetitionType;
 use App\Models\CompetitionApplication;
 use App\Models\ReadCategory;
@@ -12,6 +13,7 @@ use App\Models\Poetry;
 use App\Models\SideCategory;
 use App\Models\QuizQuestion;
 use App\Models\QuizQuestionAnswer;
+use App\Models\CompetatorQuizAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +45,7 @@ class QuizQuestionController extends Controller
     public function create()
     {
         $moduleName = $this->module;
-        $competitionType = CompetitionType::where('name', 'Poetry')->first();
+        $competitionType = CompetitionType::where('name', 'Quiz')->first();
         $competitions = Competition::where('status','Pending')
         ->where('competition_type_id',$competitionType->id)
         ->get(); // Fetch competitions for logged-in user
@@ -77,6 +79,7 @@ class QuizQuestionController extends Controller
         $quiz_question->option_name = $request->option_name;
         $quiz_question->dead_line =date('Y-m-d',strtotime($request->dead_line));
         $quiz_question->url = $request->url;
+        $quiz_question->encrypted_id = $request->encrypted_id;
         $quiz_question->user_id =Auth::guard('client')->id();
         
         $quiz_question->save();
@@ -98,27 +101,18 @@ class QuizQuestionController extends Controller
      */
     public function show(string $id)
     {
-        $moduleName = $this->module;
-        $competitionType = CompetitionType::where('name', 'Poetry')->first();
-        
-        $competition = Competition::where('encrypted_id',$id)->firstOrFail();
-        $age_categories = AgeCategory::
-        where('competition_type_id',$competitionType->id)
-        ->get();
-        $read_categories = ReadCategory::
-        where('competition_type_id',$competitionType->id)
-        ->get();
-        $side_categories = SideCategory::
-        where('competition_type_id',$competitionType->id)
-        ->get();
 
-        $poetries = Poetry::
-        where('competition_id',$competition->id)
-        ->get();
+        $moduleName = $this->module;
+        $competitionType = CompetitionType::where('name', 'Quiz')->first();   
+        $question = QuizQuestion::with('questionAnswer')
+        ->where('encrypted_id',$id)->firstOrFail();
+
+        $competition = Competition::
+        where('id',$question->competition_id)->firstOrFail();
 
         $moduleName = $competition->main_name;
 
-        return view("client.quiz.question.show",compact('moduleName','poetries','competition','side_categories','read_categories','age_categories'));
+        return view("client.quiz.question.show",compact('moduleName','question','competition'));
 
     }
 
@@ -127,9 +121,12 @@ class QuizQuestionController extends Controller
      */
     public function edit(string $id)
     {
+        $competitionType = CompetitionType::where('name', 'Quiz')->first();
         $moduleName = $this->module;
         $competition = Competition::findOrFail($id);
-        $competitions = Competition::where('status','Pending')->get(); // Fetch competitions for logged-in user
+        $competitions = Competition::where('status','Pending')
+        ->where('competition_type_id',$competitionType->id)
+        ->get(); // Fetch competitions for logged-in user
         return view('client.quiz.question.edit',compact('moduleName','competitions','competition')); // Path to your Blade file
     }
 
@@ -167,8 +164,10 @@ class QuizQuestionController extends Controller
         return redirect()->route('quiz.question.list')->with('success', 'Competition deleted successfully!');
 
     }
+
     public function apply(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'id_card' => 'required',
@@ -178,44 +177,34 @@ class QuizQuestionController extends Controller
             'dob' => 'required',
             'age' => 'required',
             'organization' => 'required',
-            'number' => 'required',
-            'age_category' => 'required',
-            'side_category' => 'required',
-            'read_category' => 'required',
             'competition_id' => 'required',
-            'poetry_id' => 'required',
-            'photo' => 'required|mimes:jpg,jpeg,png|max:2048', // 2MB max
-            'id_card_photo' => 'required|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
+            
         ]);
-        $application = new CompetitionApplication();
-        $application->competition_id = $request->competition_id;
-        $application->name = $request->name;
-        $application->name_dhivehi = isset($request->name_Dhivehi) ? $request->name_Dhivehi : '';
-        $application->id_card = $request->id_card;
-        $application->permanent_address = $request->permanent_address;
-        $application->current_address = $request->current_address;
-        $application->city = $request->city;
-        $application->age = $request->age;
-        $application->dob = $request->dob;
-        $application->organization = $request->organization;
-        $application->number = $request->number;
-        $application->age_category = $request->age_category;
-        $application->side_category = $request->side_category;
-        $application->read_category = $request->read_category;
-        $application->poetry_id = $request->poetry_id;
 
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->move(public_path('assets/img'), $request->file('photo')->getClientOriginalName());
-            $application->photo = 'assets/img/' . $request->file('photo')->getClientOriginalName();
-        }
+        $quiz_answer = new CompetatorQuizAnswer();
+        $quiz_answer->question_id = $request->question_id;
+        $quiz_answer->answer_id = $request->answer_id;
+        $quiz_answer->participant_name = $request->name;
+        $quiz_answer->id_card = $request->id_card;
+        $quiz_answer->phone_number = $request->number;
+         
+        $quiz_answer->save();
 
-        // Save the 'id_card_photo' file
-        if ($request->hasFile('id_card_photo')) {
-            $idCardPath = $request->file('id_card_photo')->move(public_path('assets/img'), $request->file('id_card_photo')->getClientOriginalName());
-            $application->id_card_photo = 'assets/img/' . $request->file('id_card_photo')->getClientOriginalName();
-        }
-        $application->save();
-        return redirect()->back()->with('success', 'Application submitted successfully!');
+
+        // $competitor = new Competitor();
+        // $competitor->name = $request->name;
+        // $competitor->name_dhivehi = isset($request->name_Dhivehi) ? $request->name_Dhivehi : '';
+        // $competitor->id_card = $request->id_card;
+        // $competitor->permanent_address = $request->permanent_address;
+        // $competitor->current_address = $request->current_address;
+        // $competitor->city = $request->city;
+        // $competitor->age = $request->age;
+        // $competitor->dob = $request->dob;
+        // $competitor->organization = $request->organization;
+        // $competitor->save();
+        
+
+        return redirect()->back()->with('success', 'Answer submitted successfully!');
 
     }
 }

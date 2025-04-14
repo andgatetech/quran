@@ -55,5 +55,11 @@ Route::prefix('client')->middleware([ClientAuthMiddleware::class])->group(functi
 
 
     });
+    
 });
+
+// public pages/routes for competition
+// Route to display announce competition list
+Route::get('public/quiz/competition/{id}', [QuizQuestionController::class, 'show'])->name('quiz.competition.show');
+Route::post('public/quiz/competition/apply', [QuizQuestionController::class, 'apply'])->name('quiz.competition.apply');
 

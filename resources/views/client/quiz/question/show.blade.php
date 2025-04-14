@@ -1281,103 +1281,56 @@ $user = User::find(Auth::guard('client')->id());
         <!-- Progress Bar -->
         
         
-        <!-- Tabs -->
-        <div class="nav-tabs-container" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-          <ul class="nav nav-tabs justify-content-center" id="formTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link d-flex align-items-center" id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">
-                <span class="icon"><i class="bi bi-book"></i></span>
-                <span class="d-none d-sm-inline">Curriculum</span>
-                <span class="d-inline d-sm-none">Curr.</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link d-flex align-items-center" id="rules-tab" data-bs-toggle="tab" data-bs-target="#rules" type="button" role="tab" aria-controls="rules" aria-selected="false">
-                <span class="icon"><i class="bi bi-list-check"></i></span>
-                <span class="d-none d-sm-inline">Rules</span>
-                <span class="d-inline d-sm-none">Rules</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active d-flex align-items-center" id="form-tab" data-bs-toggle="tab" data-bs-target="#form" type="button" role="tab" aria-controls="form" aria-selected="true">
-                <span class="icon"><i class="bi bi-pencil-square"></i></span>
-                <span class="d-none d-sm-inline">Registration</span>
-                <span class="d-inline d-sm-none">Reg.</span>
-              </button>
-            </li>
-          </ul>
-        </div>
+       
 <div class="m-0"></div>
       
-        <!-- Tab Content -->
-        <div class="tab-content" id="formTabsContent">
-          <!-- Curriculum Tab -->
-          <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-            <div class="card" data-aos="fade-up" data-aos-duration="1000">
-              <div class="card-header light-header">
-                <h3 class="card-title fw-bold text-primary">Curriculum</h3>
-                <p class="card-subtitle text-muted mb-0">Competition curriculum details and learning objectives</p>
-              </div>
-              <div class="card-body p-4">
-                
-                @if (empty($competition->curriculum))
-                        <p class="text-primary">There is no curriculum available.</p>
-                    @else
-                    <div style="text-align:center;">
-                        <button class="tab-btn button  {{ empty($competition->curriculum) ? 'disabled' : '' }}"
-                            onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
-                            title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
-                        Download
-                        </button>
-                        <button class="tab-btn button  {{ empty($competition->curriculum) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->curriculum) ? "window.location.href='" . url('public/' . $competition->curriculum) . "'" : '' }}"
-                                title="{{ empty($competition->curriculum) ? 'No curriculum file available for this record.' : '' }}">
-                            View
-                        </button>
-                    </div>
-                @endif
-              </div>
-            </div>
-          </div>
+       
           
-          <!-- Rules Tab -->
-          <div class="tab-pane fade" id="rules" role="tabpanel" aria-labelledby="rules-tab">
-            <div class="card" data-aos="fade-up" data-aos-duration="1000">
-              <div class="card-header light-header">
-                <h3 class="card-title fw-bold text-primary">Rules</h3>
-                <p class="card-subtitle text-muted mb-0">Competition rules and guidelines</p>
-              </div>
-              <div class="card-body p-4">
-                    @if (empty($competition->rules))
-                        <p class="text-primary">There is no rules available.</p>
-                    @else
-                    <div style="text-align:center;">
-                        <button class="tab-btn button  {{ empty($competition->rules) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
-                                title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
-                            Download
-                        </button>
-                        <button class="tab-btn button {{ empty($competition->rules) ? 'disabled' : '' }}"
-                                onclick="{{ !empty($competition->rules) ? "window.location.href='" . url('public/' . $competition->rules) . "'" : '' }}"
-                                title="{{ empty($competition->rules) ? 'No rules file available for this record.' : '' }}">
-                            View
-                        </button>
-                    </div>    
-                @endif
-              </div>
-            </div>
-          </div>
+          
           
           <!-- Form Tab -->
           <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
             <div class="card" data-aos="fade-up" data-aos-duration="1000">
               <div class="card-header primary-header text-center">
-                <h3 class="card-title fw-bold fs-4 mb-1">To Register This Competition</h3>
+                <h3 class="card-title fw-bold fs-4 mb-1">Dead Line For Answering This Question</h3>
                 <p class="card-subtitle text-white-500 mb-0 mt-2">Due Date & Time :{{$competition->end_date}}</p>
               </div>
               <div class="card-body p-4">
-                <form id="competitionForm" method="POST" action="{{ route('poetry.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
+                <form id="competitionForm" method="POST" action="{{ route('quiz.competition.apply') }}" class="mt-3" enctype="multipart/form-data">
                  @csrf
+
+
+                   <!-- Question Information Section -->
+                  <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <h4 class="section-title">
+                      <div class="icon">
+                        <i class="bi bi-person-fill"></i>
+                      </div>
+                      Today's Question
+                    </h4>
+                    <input type="hidden" value="{{ $competition->id }}" name="competition_id">
+                    <div class="row g-4">
+                      <div class="col-md-12">
+                        <div class="form-control-container" style="text-align:center;">
+                         <input type="hidden" name="question_id" value="{{$question->id}}" />
+                          <h3 class="card-title fw-bold fs-4 mb-1">{{$question->question_name}}<h3>
+                         
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-control-container">
+                          <h3 class="card-title fw-bold fs-4 mb-1">Select Correct Answer<h3>
+                          @foreach($question->questionAnswer as $answer)
+                          <input type="radio" name="answer_id" value="{{$answer->id}}">{{$answer->answer_name}}<br/>
+                          @endforeach
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                  </div>
+
+
                   <!-- Personal Information Section -->
                   <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                     <h4 class="section-title">
@@ -1386,7 +1339,7 @@ $user = User::find(Auth::guard('client')->id());
                       </div>
                       Personal Information
                     </h4>
-                    <input type="hidden" value="{{ $competition->id }}" name="competition_id">
+                    
                     <div class="row g-4">
                       <div class="col-md-6">
                         <div class="form-control-container">
@@ -1501,115 +1454,15 @@ $user = User::find(Auth::guard('client')->id());
                     </div>
                   </div>
                   
-                  <!-- Categories Section -->
-                  <div class="form-section section-teal" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                    <h4 class="section-title">
-                      <div class="icon">
-                        <i class="bi bi-list-check"></i>
-                      </div>
-                      Competition Categories
-                    </h4>
-                    
-                    <div class="row g-4">
-                      <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="ageCategory1" class="form-label">Age Category</label>
-                          <select name="age_category" class="form-select" id="ageCategory1" required>
-                            <option selected disabled value="">Select Age Category</option>
-                            @foreach ($age_categories as $entry)
-                                <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
-                            @endforeach
-                          </select>
-                          <i class="bi bi-filter input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="ageCategory2" class="form-label">Perform Option</label>
-                          <select name="side_category" class="form-select" id="ageCategory2" required>
-                            <option selected disabled value="">Perform Option</option>
-                            @foreach ($side_categories as $entry)
-                                <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
-                            @endforeach
-                          </select>
-                          <i class="bi bi-filter input-icon"></i>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="ageCategory3" class="form-label">Method of Perform</label>
-                          <select name="read_category" class="form-select" id="ageCategory3" required>
-                            <option selected disabled value="">Method of Perform</option>
-                            @foreach ($read_categories as $entry)
-                                <option {{ old('age_category') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->name }}</option>
-                            @endforeach
-                          </select>
-                          <i class="bi bi-filter input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                        <div class="form-control-container">
-                          <label for="poetry3" class="form-label">Poetry</label>
-                          <select name="poetry_id" class="form-select" id="ageCategory3" required>
-                            <option selected disabled value="">Select Poetry</option>
-                            @foreach ($poetries as $entry)
-                                <option {{ old('poetry') == $entry->id ? 'Selected' : ''  }} value="{{ $entry->id }}">{{ $entry->poetry_name }}</option>
-                            @endforeach
-                          </select>
-                          <i class="bi bi-filter input-icon"></i>
-                        </div>
-                      </div>
-                    </div>
-
-
-                  </div>
                   
-                  <!-- Upload Section -->
-                  <div class="form-section section-blue" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
-                    <h4 class="section-title">
-                      <div class="icon">
-                        <i class="bi bi-upload"></i>
-                      </div>
-                      Document Upload
-                    </h4>
-                    
-                    <div class="row g-4">
-                      <div class="col-md-6">
-                        <label class="form-label">Upload Photo</label>
-                        <div class="upload-area" id="uploadPhotoArea">
-                          <div class="upload-icon">
-                            <i class="bi bi-camera"></i>
-                          </div>
-                          <p class="upload-text">Click to upload photo</p>
-                          <p class="upload-subtext">PNG, JPG or JPEG (Max 2MB)</p>
-                          <input type="file" id="uploadPhoto" name="photo" class="d-none" accept="image/*">
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <label class="form-label">ID Card / Passport</label>
-                        <div class="upload-area" id="uploadIDArea">
-                          <div class="upload-icon">
-                            <i class="bi bi-credit-card"></i>
-                          </div>
-                          <p class="upload-text">Click to upload ID</p>
-                          <p class="upload-subtext">PNG, JPG or PDF (Max 2MB)</p>
-                          <input type="file" id="uploadID" name="id_card_photo" class="d-none" accept="image/*,.pdf">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
+                  
                   
                   <!-- Submit Button -->
                   <div class="btn-submit-container text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
                     <button type="submit" class="btn btn-submit px-5">
                       <i class="bi bi-check-circle"></i>
-                      Submit Registration
+                      Submit Answer
                     </button>
                     <div class="success-checkmark mt-4" id="successCheckmark">
                       <div class="check-icon"></div>
