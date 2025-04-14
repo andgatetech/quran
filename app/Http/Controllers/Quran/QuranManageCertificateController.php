@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Quran;
 
 use App\Models\AgeCategory;
+use App\Models\CertificateTemplate;
 use App\Models\Competition;
 use App\Models\CompetitionType;
 use App\Models\ReadCategory;
@@ -28,8 +29,9 @@ class QuranManageCertificateController extends Controller
     }
 
     public function create(){
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-        return view("client.managenertificate.create", compact("competitions"));
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $certificateTemplates = CertificateTemplate::get();
+        return view("client.managenertificate.create", compact("competitions", 'certificateTemplates'));
     }
 
     public function certificate_generate(Request $request)
@@ -102,7 +104,7 @@ class QuranManageCertificateController extends Controller
 public function index(Request $request)
 {
     // $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
     $search_competition_id = isset($request->competition_id) ? $request->competition_id : null;
 
@@ -229,7 +231,7 @@ public function edit($id)
     }
 
     // Fetch competitions for the dropdown
-    $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
+    $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
     // Return the edit view with the certificate and competitions data
     return view('client.managenertificate.edit', compact('certificate', 'competitions'));
@@ -239,7 +241,7 @@ public function edit($id)
     {
 
         //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
-        $competitions = Competition::get(); // Fetch competitions
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
         $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
             // ->whereHas('competition', function ($query) {
             //     $query->where('user_id', Auth::guard('client')->id());
@@ -287,7 +289,7 @@ public function edit($id)
 
 public function generatedList(){
    //$competitions = Competition::where('user_id', Auth::guard('client')->id())->get(); // Fetch competitions
-   $competitions = Competition::get(); // Fetch competitions
+   $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
    $competitors = Competitor::with(['competition', 'sideCategory', 'readCategory', 'ageCategory'])
        // ->whereHas('competition', function ($query) {
        //     $query->where('user_id', Auth::guard('client')->id());
@@ -365,6 +367,7 @@ public function generatePDF(Request $request)
         'office_name' => $competitor->school_name ?? 'N/A', // Institute name
         'name' => $competitor->full_name,
         'id_card_number' => $competitor->id_card_number,
+        'center' => 'Dhaka',
         'body_text' => $request->body_content,
         'date' => now()->format('d F Y'), // Current date
         'signature' => $settings ? $settings->signature_1 : asset('defaults/signature.png'), // Use settings signature or default

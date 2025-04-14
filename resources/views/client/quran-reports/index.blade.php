@@ -152,7 +152,8 @@
                 onclick="window.location.href='{{ route('report.index', 'status=Winners') }}'">Winners</button>
 
         </div>
-        <form action="{{ route('report.index') }}" method="get">
+        <form action="{{ route('report.generate.participants') }}" method="post">
+            @csrf
             <div class="row">
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -166,7 +167,7 @@
                 <input type="hidden" name="status" value="{{ $status }}">
                 <div class="col-6">
                     <select class="form-select" name="competition" id="competition">
-                        <option value=""> Competition</option>
+                        <option value="">Competition</option>
                         @foreach ($competitions as $competition)
                             <option {{ request()->competition == $competition->id ? 'Selected' : '' }}
                                 value="{{ $competition->id }}">{{ $competition->main_name }}</option>
@@ -206,11 +207,11 @@
             </div>
 
             <div class="row my-3">
-
                 <div class="col-6">
                     <select class="form-select" name="read_category" id="read_category">
-                        <option value="">Status</option>
-                        
+                        <option value="">Select Status</option>
+                        <option value="1">Enable</option>
+                        <option value="2">Disable</option>                        
                     </select>
                 </div>
                <div class="col-6">
@@ -230,7 +231,7 @@
 
 
                     
-                
+                @foreach ($reports as $report)
                     <div class="competition-card">
                         <!-- Main Name with Dropdown Toggle -->
                         <div class="competition-main-name" onclick="toggleDropdown(this)">
@@ -245,33 +246,22 @@
                         </div>
                         <!-- Sub Name, initially hidden -->
                         <div class="competition-sub-name">
-                            <p>Competition Name: <span></span></p>
-                            <p>Age Category: <span></span></p>
-                            <p>Recitation Piece : <span></span></p>
-                            <p>Recitation Method : <span></span></p>
-                            <p>Date of Announce : <span></span></p>
-                            <p>Date Of Close : <span></span></p>
-                            <p>Status : <span></span></p>
-                            <p>Date of Report : <span></span></p>
-                            
-                            
-
-                        
-                            
-                            
-                            <div>
-                                
-                                    
-                                        
-                                        <button style="width:200px;background-color:green" type="submit" class="tab-btn active">View</button>
-                                        <button style="width:200px;" type="submit" class="tab-btn active">Download</button>
-                        
-                               
+                            <p>Competition Name: <span>{{ isset($report->competition->main_name) ? $report->competition->main_name : '' }}</span></p>
+                            <p>Age Category: <span>{{ isset($report->ageCategory->name) ? $report->ageCategory->name : '' }}</span></p>
+                            <p>Recitation Piece : <span>{{ isset($report->sideCategory->name)? $report->sideCategory->name : '' }}</span></p>
+                            <p>Recitation Method : <span>{{ isset($report->readCategory->name) ? $report->readCategory->name : '' }}</span></p>
+                            <p>Date of Announce : <span>{{ isset($report->competition->start_date) ? $report->competition->start_date: '' }}</span></p>
+                            <p>Date Of Close : <span>{{ isset($report->competition->end_date) ? $report->competition->end_date: '' }}</span></p>
+                            <p>Status : <span>{{ isset($report->competition->status) ? $report->competition->status : '' }}</span></p>
+                            <p>Date of Report : <span>{{ $report->date_of_report }}</span></p>
+                            <div>                    
+                                        <a href="{{ url('public/' . $report->path) }}" target="_blank" style="width:200px;background-color:green" type="submit" class="tab-btn active">View</a>
+                                        <a href="{{ url('public/' . $report->path) }}" target="_blank" style="width:200px;" type="submit" class="tab-btn active">Download</a>
                             </div>
 
                         </div>
                     </div>
-
+                @endforeach
 
                     
 

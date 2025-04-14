@@ -36,7 +36,9 @@ class QuranCompetitorController extends Controller
             'sideCategory',
             'readCategory',
             'ageCategory'
-        ])->get();
+        ])->whereHas('competition.competionType', function ($query) {
+            $query->where('name', 'Quran');
+        })->get();
         // ->where('user_id', Auth::guard('client')->id()) // Filter by user_id
         // ->get();
 
@@ -50,11 +52,11 @@ class QuranCompetitorController extends Controller
      */
     public function create()
     {
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
-
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        
         return view('client.quran.competitor.create', compact('competitions', 'sideCategories', 'readCategories', 'ageCategories'));
     }
 
@@ -107,10 +109,10 @@ public function store(Request $request)
     public function edit($id)
     {
         $competitor = Competitor::findOrFail($id);
-        $competitions = Competition::where('user_id', Auth::guard('client')->id())->get();
-        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->get();
-        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->get();
-        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->get();
+        $competitions = Competition::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $sideCategories = SideCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $readCategories = ReadCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
+        $ageCategories = AgeCategory::where('user_id', Auth::guard('client')->id())->where('competition_type_id', $this->competitionType->id)->get();
 
         return view('client.quran.competitor.edit',compact('competitor', 'competitions', 'sideCategories', 'readCategories','ageCategories'));
     }

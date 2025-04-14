@@ -26,12 +26,16 @@ class Competition extends Model
 
     public function competionType()
     {
-        return $this->belongsTo(CompetitionTypes::class, 'competition_type_id');
+        return $this->belongsTo(CompetitionType::class, 'competition_type_id');
     }
 
     // Relationship with User
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function sponsor(){
+        return $this->hasOne(Sponsor::class, 'competition_id');
     }
 }

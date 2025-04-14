@@ -38,4 +38,10 @@ class Judge extends Authenticatable
     /**
      * Get the competition that the judge belongs to.
      */
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
+
 }

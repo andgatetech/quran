@@ -152,7 +152,8 @@
                 onclick="window.location.href='{{ route('report.index', 'status=Winners') }}'">Winners</button>
 
         </div>
-        <form action="{{ route('report.index') }}" method="get">
+        <form action="{{ route('report.generate.sponsors') }}" method="post">
+            @csrf
             <div class="row">
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -182,10 +183,6 @@
                 
 
             </div>
-            
-
-             
-
         </form>
     </div>
 
@@ -196,7 +193,7 @@
 
 
                     
-                
+            @foreach ($reports as $report)
                     <div class="competition-card">
                         <!-- Main Name with Dropdown Toggle -->
                         <div class="competition-main-name" onclick="toggleDropdown(this)">
@@ -211,9 +208,9 @@
                         </div>
                         <!-- Sub Name, initially hidden -->
                         <div class="competition-sub-name">
-                            <p>Competition Name: <span></span></p>
+                            <p>Competition Name: <span>{{ isset($report->competition->main_name) ? $report->competition->main_name : '' }}</span></p>
                             
-                            <p>Date of Report : <span></span></p>
+                            <p>Date of Report : <span>{{ $report->date_of_report }}</span></p>
                             
                             
 
@@ -221,18 +218,13 @@
                             
                             
                             <div>
-                                
-                                    
-                                        
-                                        <button style="width:200px;background-color:green" type="submit" class="tab-btn active">View</button>
-                                        <button style="width:200px;" type="submit" class="tab-btn active">Download</button>
-                        
-                               
+                            <a href="{{ url('public/' . $report->path) }}" target="_blank" style="width:200px;background-color:green" type="submit" class="tab-btn active">View</a>
+                            <a href="{{ url('public/' . $report->path) }}" target="_blank" style="width:200px;" type="submit" class="tab-btn active">Download</a>
                             </div>
 
                         </div>
                     </div>
-
+                @endforeach
 
                     
 
